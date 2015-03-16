@@ -1,0 +1,13 @@
+includes/*~
+includes/#*
+lib_libx/*~
+lib_libx/#*
+lib_ncurse/*~
+lib_ncurse/#*
+lib_opengl/*~
+lib_opengl/#*
+logs/*.log
+src/*~
+src/#*
+*~
+#*
