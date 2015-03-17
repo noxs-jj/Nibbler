@@ -15,8 +15,11 @@ public:
 	ft42();
 	~ft42();
 
-	t_data	get_data(void);
-	void	w_log(std::string *str);
+	virtual t_data	get_data(void);
+	virtual void	w_log(std::string *str);
+	virtual void	w_error(std::string *str);
+	
+
 
 	// virtual void			delData( t_data * d );
 	// virtual void			freeAllTab( t_data * d );

@@ -42,7 +42,16 @@ libx:
 	echo "Compil with LibX lib .so"
 
 ncurse:
-	echo "Compil with NCurse lib .so"
+	echo "Compil with NCurse lib .so."
+
+example: src/main.cpp libcircle.so
+	g++ -o example src/main.cpp -ldl
+
+libcircle.so: src/circle.test.cpp includes/circle.test.hpp
+	g++ -shared -o libcircle.so src/circle.test.cpp
+
+soclean:
+	rm -f example libcircle.so
 
 clean:
 	@rm -rf $(OBJ)
