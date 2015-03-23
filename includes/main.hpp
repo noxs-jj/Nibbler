@@ -13,10 +13,7 @@
 #ifndef MAIN_HPP
 # define MAIN_HPP
 
-typedef struct		s_key
-{
-	int				key;
-	struct s_key	*next;
-}					t_key;
+# define MAP_WIDTH 100
+# define MAP_HEIGHT 100
 
 #endif

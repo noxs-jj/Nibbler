@@ -10,12 +10,11 @@
 //                                                                            //
 // ************************************************************************** //
 
-
 class	api
 {
 	public:
-		virtual void		init(void) = 0; //construct
-		virtual void		close(void) = 0; //destruct
-		virtual void		render_scene(char **map) = 0;
-		virtual t_list_key	get_touch_list(void) = 0;
+		virtual void				init( void ) = 0; //construct
+		virtual void				close( void ) = 0; //destruct
+		virtual void				render_scene( char **map ) = 0;
+		virtual std::vector<int>	get_touch_list( void ) = 0;
 };
