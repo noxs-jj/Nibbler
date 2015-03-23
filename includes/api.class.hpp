@@ -10,6 +10,15 @@
 //                                                                            //
 // ************************************************************************** //
 
+#ifndef API_CLASS_HPP
+# define API_CLASS_HPP
+
+# include <stdexcept>
+# include <vector>
+# include <string>
+# include <iostream>
+# include <strings.h>
+
 class	api
 {
 	public:
@@ -18,3 +27,5 @@ class	api
 		virtual void				render_scene( char **map ) = 0;
 		virtual std::vector<int>	get_touch_list( void ) = 0;
 };
+
+#endif

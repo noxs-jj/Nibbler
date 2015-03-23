@@ -16,12 +16,6 @@
 
 # include "../includes/api.class.hpp"
 # include "minilibx_macos/mlx.h"
-# include <stdexcept>
-# include <vector>
-# include <string>
-# include <iostream>
-# include <strings.h>
-
 
 class 				api;
 
