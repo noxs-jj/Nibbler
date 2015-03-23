@@ -7,11 +7,10 @@ class api;
 class	circle : public API
 {
 	public:
-		// virtual init (construct);
-		// virtual render_scene();
-		// virtual close(destruct);
-		// virtual get_touch_list();
-		virtual void draw();
+		virtual void		init(void); //construct
+		virtual void		close(void); //destruct
+		virtual void		render_scene(char **);
+		virtual t_list_key	get_touch_list(void);
 
 };
  
