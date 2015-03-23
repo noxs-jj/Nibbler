@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/21 12:14:58 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/23 17:25:15 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/23 17:36:30 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,7 @@ lib_curse::close( void ) {
 	endwin();
 }
 
-void lib_curse::render_scene( char **map ) {
-	
-}
-
-std::vector<int> lib_curse::get_touch_list( void ) {
+lib_curse::keyboard( void ) {
 	int				key_input[3];
 
 	wtimeout(this->window, 1);
@@ -82,15 +78,22 @@ std::vector<int> lib_curse::get_touch_list( void ) {
 		this->_key.push_back(27);	//ECHAP
 }
 
+void lib_curse::render_scene( char **map ) {
+	keyboard();
+	
+}
 
-std::string			getName( void ) { return (this->_name);}
+std::vector<int> lib_curse::get_touch_list( void ) { return (this->key); }
 
-WINDOW				*getWindow( void ) { return (this->_window);}
 
-int					getSpeed( void ) { return (this->_speed);}
+std::string			getName( void ) { return (this->_name); }
 
-int					getX( void ) { return (this->_x);}
+WINDOW				*getWindow( void ) { return (this->_window); }
 
-int					getY( void ) { return (this->_y);}
+int					getSpeed( void ) { return (this->_speed); }
 
-std::vector<int>	getKey( void ) { return (this->_key);}
+int					getX( void ) { return (this->_x); }
+
+int					getY( void ) { return (this->_y); }
+
+std::vector<int>	getKey( void ) { return (this->_key); }

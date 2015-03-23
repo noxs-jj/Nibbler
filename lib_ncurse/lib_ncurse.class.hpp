@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/23 16:21:21 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/23 17:18:11 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/23 17:36:01 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 # include "../includes/api.class.hpp"
 # include <ncurses.h>
-# include <execption>
+# include <stdexcept>
+# include <vector>
 
 # define TIME_USLEEP 1000	// test value
 
@@ -48,6 +49,7 @@ public:
 	int					getX( void );
 	int					getY( void );
 	std::vector<int>	getKey( void );
+	void				keyboard( void );
 
 protected:
 

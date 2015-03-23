@@ -13,7 +13,7 @@
 class	api
 {
 	public:
-		virtual void				init( void ) = 0; //construct
+		virtual void				init( int x, int y, std::string name ) = 0; //construct
 		virtual void				close( void ) = 0; //destruct
 		virtual void				render_scene( char **map ) = 0;
 		virtual std::vector<int>	get_touch_list( void ) = 0;
