@@ -6,21 +6,23 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/21 12:14:58 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/23 17:36:30 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/23 19:23:29 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-lib_curse::lib_ncurse( int x, int y, std::string name ) :	_window(NULL),
-															_speed(TIME_USLEEP),
-															_x(x),
-															_y(y),
-															_key(NULL) {}
+#include "lib_ncurse.class.hpp"
 
-lib_curse::lib_ncurse( lib_ncurse const & src ) {
+Lib_ncurse::Lib_ncurse( int x, int y, char *name ) :	_window(NULL),
+														_speed(TIME_USLEEP),
+														_x(x),
+														_y(y),
+														_name(name) {}
+
+Lib_ncurse::Lib_ncurse( Lib_ncurse const & src ) {
 	*this = src;
 }
 
-lib_curse & lib_ncurse::operator=( lib_ncurse const & rhs ) {
+Lib_ncurse & Lib_ncurse::operator=( Lib_ncurse const & rhs ) {
 	if (this != &rhs)
 	{
 		this->_name = rhs.getName();
@@ -33,40 +35,40 @@ lib_curse & lib_ncurse::operator=( lib_ncurse const & rhs ) {
 	return (*this);
 }
 
-lib_curse::~lib_ncurse( void ) {}
+Lib_ncurse::~Lib_ncurse( void ) {}
 
 
-lib_curse::init( void ) {
+void	Lib_ncurse::init( void ) {
 	initscr();
 	start_color();
-	init_pair(10, COLOR_WHITE, COLOR_BLACK);	// wall
-	init_pair(1, COLOR_GREEN, COLOR_BLACK);		// snake
-	init_pair(11, COLOR_YELLOW, COLOR_BLACK);	// fruit
-	this->window = newwin(y, x, 0, 0);
-	if (this->window == NULL)
-		throw std::execption;
-	wbkgd(this->window, COLOR_PAIR(0));
+	init_pair(1, COLOR_WHITE, COLOR_BLACK);		// wall
+	init_pair(2, COLOR_GREEN, COLOR_BLACK);		// snake
+	init_pair(3, COLOR_YELLOW, COLOR_BLACK);	// fruit
+	this->_window = newwin(this->_y, this->_x, 0, 0);
+	if (this->_window == NULL)
+		throw std::exception();
+	wbkgd(this->_window, COLOR_PAIR(0));
 	cbreak();
 	noecho();
 	nodelay(stdscr, true);
 	curs_set(0);
-	wrefresh(this->window);
+	wrefresh(this->_window);
 }
 
-lib_curse::close( void ) {
+void	Lib_ncurse::close( void ) {
 	refresh();
-	wrefresh(this->window);
-	delwin(this->window);
+	wrefresh(this->_window);
+	delwin(this->_window);
 	endwin();
 }
 
-lib_curse::keyboard( void ) {
+void	Lib_ncurse::keyboard( void ) {
 	int				key_input[3];
 
-	wtimeout(this->window, 1);
-	key_input[0] = wgetch(this->window);
-	if (key_input[0] == 27 && (key_input[1] = wgetch(this->window)) == 91 &&
-		(key_input[2] = wgetch(this->window)) == 65)	// UP
+	wtimeout(this->_window, 1);
+	key_input[0] = wgetch(this->_window);
+	if (key_input[0] == 27 && (key_input[1] = wgetch(this->_window)) == 91 &&
+		(key_input[2] = wgetch(this->_window)) == 65)	// UP
 		this->_key.push_back(65);
 	else if (key_input[0] == 27 && key_input[1] == 91 && key_input[2] == 66)
 		this->_key.push_back(66);	//DOWN
@@ -78,22 +80,53 @@ lib_curse::keyboard( void ) {
 		this->_key.push_back(27);	//ECHAP
 }
 
-void lib_curse::render_scene( char **map ) {
+void	Lib_ncurse::render_scene( char **map ) {
+	int	x;
+	int	y;
+	int	state = 1;
+
 	keyboard();
-	
+	wattron(this->_window, COLOR_PAIR(1));
+	for (y = 0; y < this->_y; y++)
+	{
+		for (x = 0; x < this->_x; x++)
+		{
+			if (state != 1 && map[this->_y][this->_x] == '#')
+			{
+				wattroff(this->_window, COLOR_PAIR(state));
+				wattron(this->_window, COLOR_PAIR(1));
+				state = 1;
+			}
+			else if (state != 2 && map[this->_y][this->_x] == '@')
+			{
+				wattroff(this->_window, COLOR_PAIR(state));
+				wattron(this->_window, COLOR_PAIR(2));
+				state = 2;
+			}
+			else if (state != 3 && (map[this->_y][this->_x] == '*' || map[this->_y][this->_x] == 'o'))
+			{
+				wattroff(this->_window, COLOR_PAIR(state));
+				wattron(this->_window, COLOR_PAIR(2));
+				state = 2;
+			}
+			mvwprintw(this->_window, y, x, "%c", map[this->_y][this->_x]);
+		}
+	}
+
+
 }
 
-std::vector<int> lib_curse::get_touch_list( void ) { return (this->key); }
+std::vector<int> Lib_ncurse::get_touch_list( void ) { return (this->_key); }
 
 
-std::string			getName( void ) { return (this->_name); }
+char				*Lib_ncurse::getName( void ) const { return (this->_name); }
 
-WINDOW				*getWindow( void ) { return (this->_window); }
+WINDOW				*Lib_ncurse::getWindow( void ) const { return (this->_window); }
 
-int					getSpeed( void ) { return (this->_speed); }
+int					Lib_ncurse::getSpeed( void ) const { return (this->_speed); }
 
-int					getX( void ) { return (this->_x); }
+int					Lib_ncurse::getX( void ) const { return (this->_x); }
 
-int					getY( void ) { return (this->_y); }
+int					Lib_ncurse::getY( void ) const { return (this->_y); }
 
-std::vector<int>	getKey( void ) { return (this->_key); }
+std::vector<int>	Lib_ncurse::getKey( void ) const { return (this->_key); }

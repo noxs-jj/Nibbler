@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/23 16:21:21 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/23 17:36:01 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/23 19:19:35 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include "../includes/api.class.hpp"
 # include <ncurses.h>
-# include <stdexcept>
-# include <vector>
 
 # define TIME_USLEEP 1000	// test value
 
@@ -28,28 +26,33 @@ typedef struct		s_key
 	struct s_key	*next;
 }					t_key;
 
-class lib_ncurse.class {
+class Lib_ncurse {
 private:
 	WINDOW				*_window;
 	int					_speed;
 	int					_x;
 	int					_y;
-	const std::string	_name;
+	char				*_name;
 	std::vector<int> 	_key;
-
+	Lib_ncurse( void );
 public:
-	lib_ncurse( void );
-	lib_ncurse( lib_ncurse const & src );
-	lib_ncurse & operator=( lib_ncurse const & rhs );
-	~lib_ncurse( void );
+	Lib_ncurse( int x, int y, char *name );
+	Lib_ncurse( Lib_ncurse const & src );
+	Lib_ncurse & operator=( Lib_ncurse const & rhs );
+	~Lib_ncurse( void );
 
-	std::string			getName( void );
-	WINDOW				*getWindow( void );
-	int					getSpeed( void );
-	int					getX( void );
-	int					getY( void );
-	std::vector<int>	getKey( void );
+	char				*getName( void ) const;
+	WINDOW				*getWindow( void ) const;
+	int					getSpeed( void ) const;
+	int					getX( void ) const;
+	int					getY( void ) const;
+	std::vector<int>	getKey( void ) const;
 	void				keyboard( void );
+
+	void				init( void );
+	void				close( void );
+	void				render_scene( char **map );
+	std::vector<int>	get_touch_list( void );
 
 protected:
 
