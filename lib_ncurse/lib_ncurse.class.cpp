@@ -6,14 +6,15 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/21 12:14:58 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/24 16:34:52 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/24 18:58:56 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib_ncurse.class.hpp"
 
 Graphic::Graphic( void ) :	_window(NULL),
-							_speed(TIME_USLEEP) {}
+							_speed(TIME_USLEEP),
+							_key(NULL) {}
 
 Graphic::Graphic( Graphic const & src ) {
 	*this = src;
@@ -35,7 +36,6 @@ Graphic & Graphic::operator=( Graphic const & rhs ) {
 Graphic::~Graphic( void ) {}
 
 void	Graphic::init( int ac, char** av, int x, int y, char *title ) {
-	std::cout << "test" << std::endl;
 	this->_x = x;
 	this->_y = y;
 	this->_name = title;
@@ -70,16 +70,31 @@ void	Graphic::keyboard( void ) {
 	wtimeout(this->_window, 1);
 	key_input[0] = wgetch(this->_window);
 	if (key_input[0] == 27 && (key_input[1] = wgetch(this->_window)) == 91 &&
-		(key_input[2] = wgetch(this->_window)) == 65)	// UP
-		this->_key.push_back(KEY_UP);
+		(key_input[2] = wgetch(this->_window)) == 65)
+		{
+			this->_key->push_back(KEY_UP);
+			// std::cout << "KEY_UP" << this->_key->size() << std::endl;
+		}
 	else if (key_input[0] == 27 && key_input[1] == 91 && key_input[2] == 66)
-		this->_key.push_back(KEY_DOWN);	//DOWN
+	{
+		this->_key->push_back(KEY_DOWN);
+		// std::cout << "KEY_DOWN" << this->_key->size() << std::endl;
+	}
 	else if (key_input[0] == 27 && key_input[1] == 91 && key_input[2] == 68)
-		this->_key.push_back(KEY_LEFT);	//LEFT
+	{
+		this->_key->push_back(KEY_LEFT);
+		// std::cout << "KEY_LEFT" << this->_key->size() << std::endl;
+	}
 	else if (key_input[0] == 27 && key_input[1] == 91 && key_input[2] == 67)
-		this->_key.push_back(KEY_RIGHT);	//RIGHT
+	{
+		this->_key->push_back(KEY_RIGHT);
+		// std::cout << "KEY_RIGHT" << this->_key->size() << std::endl;
+	}
 	if (key_input[0] == 27 && key_input[1] == -1)
-		this->_key.push_back(KEY_ECHAP);	//ECHAP
+	{
+		this->_key->push_back(KEY_ECHAP);
+		// std::cout << "KEY_ECHAP" << this->_key->size() << std::endl;
+	}
 }
 
 void	Graphic::render_scene( char **map ) {
@@ -118,7 +133,14 @@ void	Graphic::render_scene( char **map ) {
 	wrefresh(this->_window);
 }
 
-std::vector<int> Graphic::get_touch_list( void ) { return (this->_key); }
+std::vector<int> *Graphic::get_touch_list( void ) {
+	std::vector<int> *cpy = this->_key;
+	
+	if (this->_key != NULL)
+		std::cout << this->_key->size() << std::endl;
+	this->_key = new std::vector<int>;
+	return (cpy);
+}
 
 char				*Graphic::getName( void ) const { return (this->_name); }
 
@@ -130,7 +152,7 @@ int					Graphic::getX( void ) const { return (this->_x); }
 
 int					Graphic::getY( void ) const { return (this->_y); }
 
-std::vector<int>	Graphic::getKey( void ) const { return (this->_key); }
+std::vector<int>	*Graphic::getKey( void ) const {return (this->_key); }
 
 // void				Graphic::delObject( Api *del)
 // {

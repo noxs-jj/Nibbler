@@ -28,22 +28,26 @@ void	do_move(int posx, int posy, int newx, int newy, char **map)
 	map[posy + newy][posx + newx] = TEST_HEAD;
 }
 
-void	move(std::vector<int> key, int posx, int posy, char **map) {
+void	move(std::vector<int> *key, int posx, int posy, char **map) {
 	if (key == NULL)
 		return ;
-	if (this->_key[0] == KEY_UP && posy - 1 >= 0)
-		do_move(posx, poy, 0, -1, map);
-	else if (this->_key[0] == KEY_DOWN && posy + 1 < TEST_SIZE)
-		do_move(posx, poy, 0, 1, map);
-	else if (this->_key[0] == KEY_LEFT && posx - 1 >= 0)
-		do_move(posx, poy, -1, 0, map);
-	else if (this->_key[0] == KEY_RIGHT && posx + 1 < TEST_SIZE)
-		do_move(posx, poy, 1, 0, map);
-	else if (this->_key[0] == KEY_ECHAP)
+	if (key->size() == 0)
+		return ;
+		std::cout << "hello world" << key->size() << std::endl;
+
+	if (key[0] == static_cast<std::vector<int> >(KEY_UP) && posy - 1 >= 0)
+		do_move(posx, posy, 0, -1, map);
+	else if (key[0] == static_cast<std::vector<int> >(KEY_DOWN) && posy + 1 < TEST_SIZE)
+		do_move(posx, posy, 0, 1, map);
+	else if (key[0] == static_cast<std::vector<int> >(KEY_LEFT) && posx - 1 >= 0)
+		do_move(posx, posy, -1, 0, map);
+	else if (key[0] == static_cast<std::vector<int> >(KEY_RIGHT) && posx + 1 < TEST_SIZE)
+		do_move(posx, posy, 1, 0, map);
+	else if (key[0] == static_cast<std::vector<int> >(KEY_ECHAP))
 		;
 	else
 		return ;
-	
+
 }
 
 int	main(int ac, char **av)
@@ -51,7 +55,6 @@ int	main(int ac, char **av)
 	void		*hndl;
  	Api			*(*create)();
  	Api			*graphic;
- 	// char 		map[80][80];
  	std::vector<int>	*key = NULL;
  	char		**map;
  	int posx = TEST_POS_X;
@@ -90,8 +93,13 @@ int	main(int ac, char **av)
 		move(key, posx, posy, map);
 		graphic->render_scene(map);
 		if (key == NULL)
+		{
 			key = graphic->get_touch_list();
-		sleep(1);
+			if (key != NULL)
+				std::cout << "size" << key->size() << std::endl;
+			// std::cout << "get_key" << std::endl;
+		}
+		// sleep(1);
 	}
 
 	graphic->close();

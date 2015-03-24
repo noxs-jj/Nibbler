@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/23 16:21:21 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/24 15:24:38 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/24 18:23:39 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ private:
 	int					_x;
 	int					_y;
 	char				*_name;
-	std::vector<int> 	_key;
+	std::vector<int> 	*_key;
 	
 public:
 	Graphic( void );
@@ -48,13 +48,13 @@ public:
 	int					getSpeed( void ) const;
 	int					getX( void ) const;
 	int					getY( void ) const;
-	std::vector<int>	getKey( void ) const;
+	std::vector<int>	*getKey( void ) const;
 	void				keyboard( void );
 
 	void				init( int ac, char** av, int x, int y, char *title );
 	void				close( void );
 	void				render_scene( char **map );
-	std::vector<int>	get_touch_list( void );
+	std::vector<int>	*get_touch_list( void );
 
 	// void				delObject( Api *del );
 	// void				echo( void );
