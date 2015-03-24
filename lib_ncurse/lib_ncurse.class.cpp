@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/21 12:14:58 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/24 12:27:45 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/24 13:12:28 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ Graphic & Graphic::operator=( Graphic const & rhs ) {
 Graphic::~Graphic( void ) {}
 
 void	Graphic::init( int ac, char** av, int x, int y, char *title ) {
+	std::cout << "test" << std::endl;
 	this->_x = x;
 	this->_y = y;
 	this->_name = title;
@@ -134,7 +135,7 @@ void				Graphic::delObject( void )
 	delete this;
 }
 
-extern "C"	Graphic				*Graphic::newObject( void )
+extern "C"	Graphic				*newObject( void )
 {
 	return (new Graphic());
 }
