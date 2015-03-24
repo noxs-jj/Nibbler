@@ -19,6 +19,11 @@
 # include <iostream>
 # include <strings.h>
 
+# define WALL '#'
+# define HEAD '*'
+# define QUEUE 'o'
+# define FRUIT '@'
+
 class	Api
 {
 	public:

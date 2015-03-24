@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/21 12:14:58 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/24 15:24:46 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/24 16:07:01 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,25 +87,27 @@ void	Graphic::render_scene( char **map ) {
 	int	y;
 	int	state = 1;
 
+	std::cout << "1111" << std::endl;
 	keyboard();	// maybe put keyboard in the for ?
+	std::cout << "22222" << std::endl;
 	wattron(this->_window, COLOR_PAIR(1));
 	for (y = 0; y < this->_y; y++)
 	{
 		for (x = 0; x < this->_x; x++)
 		{
-			if (state != 1 && map[this->_y][this->_x] == '#')
+			if (state != 1 && map[this->_y][this->_x] == WALL)
 			{
 				wattroff(this->_window, COLOR_PAIR(state));
 				wattron(this->_window, COLOR_PAIR(1));
 				state = 1;
 			}
-			else if (state != 2 && map[this->_y][this->_x] == '@')
+			else if (state != 2 && map[this->_y][this->_x] == FRUIT)
 			{
 				wattroff(this->_window, COLOR_PAIR(state));
 				wattron(this->_window, COLOR_PAIR(2));
 				state = 2;
 			}
-			else if (state != 3 && (map[this->_y][this->_x] == '*' || map[this->_y][this->_x] == 'o'))
+			else if (state != 3 && (map[this->_y][this->_x] == QUEUE || map[this->_y][this->_x] == HEAD))
 			{
 				wattroff(this->_window, COLOR_PAIR(state));
 				wattron(this->_window, COLOR_PAIR(2));
