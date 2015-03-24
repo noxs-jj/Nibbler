@@ -24,6 +24,12 @@
 # define QUEUE 'o'
 # define FRUIT '@'
 
+# define KEY_UP		65
+# define KEY_DOWN	66
+# define KEY_LEFT	68
+# define KEY_RIGHT	67
+# define KEY_ECHAP	27
+
 class	Api
 {
 	public:

@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/21 12:14:58 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/24 16:07:01 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/24 16:34:52 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,15 @@ void	Graphic::keyboard( void ) {
 	key_input[0] = wgetch(this->_window);
 	if (key_input[0] == 27 && (key_input[1] = wgetch(this->_window)) == 91 &&
 		(key_input[2] = wgetch(this->_window)) == 65)	// UP
-		this->_key.push_back(65);
+		this->_key.push_back(KEY_UP);
 	else if (key_input[0] == 27 && key_input[1] == 91 && key_input[2] == 66)
-		this->_key.push_back(66);	//DOWN
+		this->_key.push_back(KEY_DOWN);	//DOWN
 	else if (key_input[0] == 27 && key_input[1] == 91 && key_input[2] == 68)
-		this->_key.push_back(68);	//LEFT
+		this->_key.push_back(KEY_LEFT);	//LEFT
 	else if (key_input[0] == 27 && key_input[1] == 91 && key_input[2] == 67)
-		this->_key.push_back(67);	//RIGHT
+		this->_key.push_back(KEY_RIGHT);	//RIGHT
 	if (key_input[0] == 27 && key_input[1] == -1)
-		this->_key.push_back(27);	//ECHAP
+		this->_key.push_back(KEY_ECHAP);	//ECHAP
 }
 
 void	Graphic::render_scene( char **map ) {
@@ -87,35 +87,35 @@ void	Graphic::render_scene( char **map ) {
 	int	y;
 	int	state = 1;
 
-	std::cout << "1111" << std::endl;
 	keyboard();	// maybe put keyboard in the for ?
-	std::cout << "22222" << std::endl;
+	werase(this->_window);
 	wattron(this->_window, COLOR_PAIR(1));
 	for (y = 0; y < this->_y; y++)
 	{
 		for (x = 0; x < this->_x; x++)
 		{
-			if (state != 1 && map[this->_y][this->_x] == WALL)
+			if (state != 1 && map[y][x] == WALL)
 			{
 				wattroff(this->_window, COLOR_PAIR(state));
 				wattron(this->_window, COLOR_PAIR(1));
 				state = 1;
 			}
-			else if (state != 2 && map[this->_y][this->_x] == FRUIT)
+			else if (state != 2 && map[y][x] == FRUIT)
 			{
 				wattroff(this->_window, COLOR_PAIR(state));
 				wattron(this->_window, COLOR_PAIR(2));
 				state = 2;
 			}
-			else if (state != 3 && (map[this->_y][this->_x] == QUEUE || map[this->_y][this->_x] == HEAD))
+			else if (state != 3 && (map[y][x] == QUEUE || map[y][x] == HEAD))
 			{
 				wattroff(this->_window, COLOR_PAIR(state));
 				wattron(this->_window, COLOR_PAIR(2));
 				state = 2;
 			}
-			mvwprintw(this->_window, y, x, "%c", map[this->_y][this->_x]);
+			mvwprintw(this->_window, y, x, "%c", map[y][x]);
 		}
 	}
+	wrefresh(this->_window);
 }
 
 std::vector<int> Graphic::get_touch_list( void ) { return (this->_key); }
