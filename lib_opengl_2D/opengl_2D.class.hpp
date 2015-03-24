@@ -34,7 +34,6 @@
 # define HEAD_G		163
 # define HEAD_B		110
 
-//OpenGL
 # ifdef linux //sudo apt-get install freeglut3 freeglut3-dev
 #	include <GL/gl.h>
 #	include <GL/glu.h>
@@ -71,13 +70,17 @@ public:
 	void				render_scene( char **map );
 	std::vector<int>	*get_touch_list( void );
 
-private:
 	Graphic	& 			operator=( Graphic const & rhs );
 	Graphic( Graphic const & rhs );
+
 	void				draw_border( void );
 	void				draw_queue( int case_x, int case_y );
 	void				draw_head( int case_x, int case_y );
 	void				draw_fruit( int case_x, int case_y );
+
+private:
+	
+	
 };
 
 #endif

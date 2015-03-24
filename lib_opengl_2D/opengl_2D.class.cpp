@@ -12,8 +12,6 @@
 
 #include "opengl_2D.class.hpp"
 
-//virtual void				init( int x, int y, char *name ) = 0; //construct
-
 void				Graphic::close( void ) {}
 
 std::vector<int>	*Graphic::get_touch_list( void ) {
@@ -31,7 +29,7 @@ void				Graphic::addKey(int keyInput) {
 		this->key_list->push_back(keyInput);
 }
 
-void  		keyboard(unsigned char touche, int x, int y)
+void  				keyboard(unsigned char touche, int x, int y)
 {
 	(void)x;
 	(void)y;
