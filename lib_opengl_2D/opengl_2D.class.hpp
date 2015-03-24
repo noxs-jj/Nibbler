@@ -12,9 +12,11 @@
 
 #include "../includes/api.class.hpp"
 
-#ifndef API_CLASS_HPP
-# define API_CLASS_HPP
+#ifndef OPENGL_2D_CLASS_HPP
+# define OPENGL_2D_CLASS_HPP
 
+# define STARTX		100
+# define STARTY		10
 # define X_MULTI	15		//(x * 15) * number case width
 # define Y_MULTI	15		//(y * 15) * number case height
 # define LINE_WIDTH	2.0f
@@ -32,24 +34,50 @@
 # define HEAD_G		163
 # define HEAD_B		110
 
-class 	api;
+//OpenGL
+# ifdef linux //sudo apt-get install freeglut3 freeglut3-dev
+#	include <GL/gl.h>
+#	include <GL/glu.h>
+#	include <GL/glut.h>
+# endif
+# ifdef __APPLE__
+#	include <openGL/gl.h>
+#	include <openGL/glu.h>
+#	include <glut/glut.h>
+# endif
+# ifdef __WIN32__
+#	include <GL/gl.h>
+#	include <GL/glu.h>
+#	include <windows.h>
+# endif
 
-class	opengl_2D : public api
-{
+class 	Api;
+
+void  	keyboard(unsigned char touche, int x, int y);
+
+class	Graphic : public Api {
 public:
 	int					winx;
 	int					winy;
-	std::vector<int>	key_list;
+	std::vector<int>	*key_list;
+	bool				empty;
 
-	opengl_2D( void );
-	~opengl_2D( void );
+	void				addKey(int keyInput);
+
+	Graphic( void );
+	~Graphic( void );
+	void				init( int ac, char** av, int x, int y, char *title );
+	void				close( void );
+	void				render_scene( char **map );
+	std::vector<int>	*get_touch_list( void );
 
 private:
-	opengl_2D	& operator=( opengl_2D const & rhs );
-	opengl_2D( opengl_2D const & src );
-	void		draw_border( void );
-	void		draw_queue( int case_x, int case_y );
-	void		draw_head( int case_x, int case_y );
+	Graphic	& 			operator=( Graphic const & rhs );
+	Graphic( Graphic const & rhs );
+	void				draw_border( void );
+	void				draw_queue( int case_x, int case_y );
+	void				draw_head( int case_x, int case_y );
+	void				draw_fruit( int case_x, int case_y );
 };
 
 #endif

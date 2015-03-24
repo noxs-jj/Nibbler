@@ -14,11 +14,33 @@
 
 //virtual void				init( int x, int y, char *name ) = 0; //construct
 
-void				opengl_2D::close( void ) {}
+void				Graphic::close( void ) {}
 
-std::vector<int>	opengl_2D::get_touch_list( void ) {}
+std::vector<int>	*Graphic::get_touch_list( void ) {
+	return (this->key_list);
+}
 
-void				opengl_2D::render_scene( char **map ) { // render map
+void				Graphic::addKey(int keyInput) {
+	if (true == empty)
+	{
+		this->key_list = new std::vector<int>;
+		this->key_list->push_back(keyInput);
+		this->empty = false;
+	}
+	else
+		this->key_list->push_back(keyInput);
+}
+
+void  		keyboard(unsigned char touche, int x, int y)
+{
+	(void)x;
+	(void)y;
+	if ( touche == 'q' || touche == 27 ) {
+		;
+	}
+}
+
+void				Graphic::render_scene( char **map ) { // render map
 	int i = 0;
 	int y = 0;
 
@@ -30,7 +52,7 @@ void				opengl_2D::render_scene( char **map ) { // render map
 		{
 			if (map[i][0] == QUEUE)
 				this->draw_queue(i, y);
-			else if (map[i][0] == RUIT)
+			else if (map[i][0] == FRUIT)
 				this->draw_fruit(i, y);
 			else if (map[i][0] == HEAD)
 				this->draw_head(i, y);
@@ -40,8 +62,8 @@ void				opengl_2D::render_scene( char **map ) { // render map
 	}
 }
 
-void	opengl_2D::draw_head( int case_x, int case_y ) { // draw on case of smake head
-	glBegin(GL_QUAD);
+void	Graphic::draw_head( int case_x, int case_y ) { // draw on case of smake head
+	glBegin(GL_QUADS);
 		glColor3ub(HEAD_R, HEAD_G, HEAD_B);
 		glVertex2f(case_x * X_MULTI, case_y * Y_MULTI);						// LEFT TOP
 		glVertex2f(case_x * X_MULTI + X_MULTI, case_y * Y_MULTI);			// RIGHT TOP
@@ -50,8 +72,8 @@ void	opengl_2D::draw_head( int case_x, int case_y ) { // draw on case of smake h
 	glEnd();
 }
 
-void	opengl_2D::draw_fruit( int case_x, int case_y ) { // draw on case of FRUIT
-	glBegin(GL_QUAD);
+void	Graphic::draw_fruit( int case_x, int case_y ) { // draw on case of FRUIT
+	glBegin(GL_QUADS);
 		glColor3ub(HEAD_R, HEAD_G, HEAD_B);
 		glVertex2f(case_x * X_MULTI, case_y * Y_MULTI);						// LEFT TOP
 		glVertex2f(case_x * X_MULTI + X_MULTI, case_y * Y_MULTI);			// RIGHT TOP
@@ -60,8 +82,8 @@ void	opengl_2D::draw_fruit( int case_x, int case_y ) { // draw on case of FRUIT
 	glEnd();
 }
 
-void	opengl_2D::draw_queue( int case_x, int case_y ) { // draw on case of snake queue
-	glBegin(GL_QUAD);
+void	Graphic::draw_queue( int case_x, int case_y ) { // draw on case of snake queue
+	glBegin(GL_QUADS);
 		glColor3ub(QUEUE_R, QUEUE_G, QUEUE_B);
 		glVertex2f(case_x * X_MULTI, case_y * Y_MULTI);						// LEFT TOP
 		glVertex2f(case_x * X_MULTI + X_MULTI, case_y * Y_MULTI);			// RIGHT TOP
@@ -70,17 +92,17 @@ void	opengl_2D::draw_queue( int case_x, int case_y ) { // draw on case of snake 
 	glEnd();
 }
 
-void	opengl_2D::draw_border( void ) { // color all map same color
-	glBegin(GL_QUAD);
+void	Graphic::draw_border( void ) { // color all map same color
+	glBegin(GL_QUADS);
 		glColor3ub(WALL_R, WALL_G, WALL_B);
 		glVertex2f(0, 0);
 		glVertex2f(0, this->winy);
 		glVertex2f(this->winx, 0);
-		glVertex2f(this->x, this->y);
+		glVertex2f(this->winx, this->winy);
 	glEnd();
 }
 
-void	opengl_2D::init( int ac, char **av, int x, int y, char *title ) {
+void	Graphic::init( int ac, char **av, int x, int y, char *title ) {
 	glutInit(&ac, av);								// init glut
 	glutInitDisplayMode(GLUT_RGB					// set color to RGB
 				| GLUT_DOUBLE						// set double buffered windows
@@ -98,23 +120,25 @@ void	opengl_2D::init( int ac, char **av, int x, int y, char *title ) {
 	glutSwapBuffers();
 	glLoadIdentity();
 	this->winx = x * X_MULTI;
-	this->wuny = x * Y_MULTI;
+	this->winy = x * Y_MULTI;
 }
 
-opengl_2D & opengl_2D::operator=(opengl_2D const & rhs) {
+Graphic &	Graphic::operator=(Graphic const & rhs) {
 	if (this != &rhs)
 	{
-		this->mlx = rhs.mlx;
+		this->winx = rhs.winx;
+		this->winy = rhs.winy;
+		this->key_list = rhs.key_list;
 	}
 	return *this;
 }
 
-void	opengl_2D::opengl_2D( opengl_2D const & src ) {
-	*this = src;
+Graphic::Graphic( Graphic const & rhs ) {
+	*this = rhs;
 }
 
-opengl_2D::opengl_2D( void ) {}	//construct
+Graphic::Graphic( void ) : winx(0), winy(0), key_list(NULL), empty(true) {}	//construct
 
-opengl_2D::~opengl_2D( void ) {	// destruct
-	std::free(this->img_data);
+Graphic::~Graphic( void ) {	// destruct
+	this->key_list->clear();
 }

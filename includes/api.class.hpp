@@ -34,7 +34,7 @@ class	Api
 		virtual void				init( int ac, char** av, int x, int y, char *title ) = 0;
 		virtual void				close( void ) = 0;
 		virtual void				render_scene( char **map ) = 0;
-		virtual std::vector<int>	get_touch_list( void ) = 0;
+		virtual std::vector<int>	*get_touch_list( void ) = 0;
 		// virtual	void				echo( void ) = 0;
 };
 
