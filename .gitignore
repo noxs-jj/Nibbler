@@ -8,7 +8,7 @@ lib_ncurse/#*
 lib_ncurse/*.o
 lib_opengl_2D/*~
 lib_opengl_2D/#*
-lib_opengl_2D/*.*
+lib_opengl_2D/*.o
 lib_opengl_ISO/*~
 lib_opengl_ISO/#*
 lib_opengl_ISO/*.o
