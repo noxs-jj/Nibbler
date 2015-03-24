@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/23 16:21:21 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/24 13:05:41 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/24 14:57:35 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ typedef struct		s_key
 	struct s_key	*next;
 }					t_key;
 
-class Graphic {
+// Api					*newObject( void );
+
+class Graphic : public Api{
 private:
 	WINDOW				*_window;
 	int					_speed;
@@ -54,10 +56,11 @@ public:
 	void				render_scene( char **map );
 	std::vector<int>	get_touch_list( void );
 
-	Graphic				*newObject( void );
-	void				delObject( void );
+	// void				delObject( Api *del );
+	void				echo( void );
 protected:
 
 };
+
 
 #endif

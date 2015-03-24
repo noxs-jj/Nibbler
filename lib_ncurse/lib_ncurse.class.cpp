@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/21 12:14:58 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/24 13:12:28 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/24 15:08:47 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,12 +130,17 @@ int					Graphic::getY( void ) const { return (this->_y); }
 
 std::vector<int>	Graphic::getKey( void ) const { return (this->_key); }
 
-void				Graphic::delObject( void )
+// void				Graphic::delObject( Api *del)
+// {
+// 	// delete del;
+// }
+
+void		Graphic::echo( void )
 {
-	delete this;
+	std::cout << "hey " << std::endl;
 }
 
-extern "C"	Graphic				*newObject( void )
+extern "C"	Api				*newObject( void )
 {
 	return (new Graphic());
 }
