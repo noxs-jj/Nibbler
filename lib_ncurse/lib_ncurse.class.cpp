@@ -6,23 +6,20 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/21 12:14:58 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/23 19:23:29 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/24 12:27:45 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib_ncurse.class.hpp"
 
-Lib_ncurse::Lib_ncurse( int x, int y, char *name ) :	_window(NULL),
-														_speed(TIME_USLEEP),
-														_x(x),
-														_y(y),
-														_name(name) {}
+Graphic::Graphic( void ) :	_window(NULL),
+							_speed(TIME_USLEEP) {}
 
-Lib_ncurse::Lib_ncurse( Lib_ncurse const & src ) {
+Graphic::Graphic( Graphic const & src ) {
 	*this = src;
 }
 
-Lib_ncurse & Lib_ncurse::operator=( Lib_ncurse const & rhs ) {
+Graphic & Graphic::operator=( Graphic const & rhs ) {
 	if (this != &rhs)
 	{
 		this->_name = rhs.getName();
@@ -35,10 +32,14 @@ Lib_ncurse & Lib_ncurse::operator=( Lib_ncurse const & rhs ) {
 	return (*this);
 }
 
-Lib_ncurse::~Lib_ncurse( void ) {}
+Graphic::~Graphic( void ) {}
 
-
-void	Lib_ncurse::init( void ) {
+void	Graphic::init( int ac, char** av, int x, int y, char *title ) {
+	this->_x = x;
+	this->_y = y;
+	this->_name = title;
+	static_cast<void>(ac);
+	static_cast<void>(av);
 	initscr();
 	start_color();
 	init_pair(1, COLOR_WHITE, COLOR_BLACK);		// wall
@@ -55,14 +56,14 @@ void	Lib_ncurse::init( void ) {
 	wrefresh(this->_window);
 }
 
-void	Lib_ncurse::close( void ) {
+void	Graphic::close( void ) {
 	refresh();
 	wrefresh(this->_window);
 	delwin(this->_window);
 	endwin();
 }
 
-void	Lib_ncurse::keyboard( void ) {
+void	Graphic::keyboard( void ) {
 	int				key_input[3];
 
 	wtimeout(this->_window, 1);
@@ -80,12 +81,12 @@ void	Lib_ncurse::keyboard( void ) {
 		this->_key.push_back(27);	//ECHAP
 }
 
-void	Lib_ncurse::render_scene( char **map ) {
+void	Graphic::render_scene( char **map ) {
 	int	x;
 	int	y;
 	int	state = 1;
 
-	keyboard();
+	keyboard();	// maybe put keyboard in the for ?
 	wattron(this->_window, COLOR_PAIR(1));
 	for (y = 0; y < this->_y; y++)
 	{
@@ -112,21 +113,33 @@ void	Lib_ncurse::render_scene( char **map ) {
 			mvwprintw(this->_window, y, x, "%c", map[this->_y][this->_x]);
 		}
 	}
-
-
 }
 
-std::vector<int> Lib_ncurse::get_touch_list( void ) { return (this->_key); }
+std::vector<int> Graphic::get_touch_list( void ) { return (this->_key); }
+
+char				*Graphic::getName( void ) const { return (this->_name); }
+
+WINDOW				*Graphic::getWindow( void ) const { return (this->_window); }
+
+int					Graphic::getSpeed( void ) const { return (this->_speed); }
+
+int					Graphic::getX( void ) const { return (this->_x); }
+
+int					Graphic::getY( void ) const { return (this->_y); }
+
+std::vector<int>	Graphic::getKey( void ) const { return (this->_key); }
+
+void				Graphic::delObject( void )
+{
+	delete this;
+}
+
+extern "C"	Graphic				*Graphic::newObject( void )
+{
+	return (new Graphic());
+}
 
 
-char				*Lib_ncurse::getName( void ) const { return (this->_name); }
 
-WINDOW				*Lib_ncurse::getWindow( void ) const { return (this->_window); }
 
-int					Lib_ncurse::getSpeed( void ) const { return (this->_speed); }
 
-int					Lib_ncurse::getX( void ) const { return (this->_x); }
-
-int					Lib_ncurse::getY( void ) const { return (this->_y); }
-
-std::vector<int>	Lib_ncurse::getKey( void ) const { return (this->_key); }

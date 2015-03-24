@@ -19,6 +19,8 @@ PLATFORM := $(shell uname)
 
 CFLAGS = -Wall -Werror -Wextra -pedantic -o3
 
+LIB_FLAG = -shared -fPIC
+
 HEAD = 	src/main.hpp \
 		src/ft42.class.hpp
 
@@ -43,6 +45,7 @@ libx:
 
 ncurse:
 	echo "Compil with NCurse lib .so."
+	$(CXX) -lncurses $(LIB_FLAG) -o lib_ncurse.so lib_ncurse.class.cpp
 
 example: src/main.cpp libcircle.so
 	g++ -o example src/main.cpp -ldl
