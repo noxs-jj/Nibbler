@@ -9,7 +9,6 @@ using namespace std;
 int	main(int ac, char **av)
 {
 	void		*hndl;
-	//Api		*newObject()
  	Api			*(*create)();
  	Api			*graphic;
 
@@ -40,8 +39,9 @@ int	main(int ac, char **av)
 	std::cout << "bla" << std::endl;
 	graphic = create();
 	std::cout << "bla1" << std::endl;
-	graphic->echo();
-	// graphic->init(ac, av, 80, 80, str);
+	// graphic->echo();
+	graphic->init(ac, av, 80, 80, str);
+	graphic->close();
 	std::cout << "bla2" << std::endl;
 	// graphic->delObject();
 	std::cout << "bla3" << std::endl;

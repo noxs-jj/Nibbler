@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/23 16:21:21 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/24 14:57:35 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/24 15:24:38 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ public:
 	std::vector<int>	get_touch_list( void );
 
 	// void				delObject( Api *del );
-	void				echo( void );
+	// void				echo( void );
 protected:
 
 };
