@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/21 12:14:58 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/24 18:58:56 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/25 14:53:24 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,19 @@ Graphic & Graphic::operator=( Graphic const & rhs ) {
 		this->_x = rhs.getX();
 		this->_y = rhs.getY();
 		this->_key = rhs.getKey();
+		this->_map = rhs.getMap();
 	}
 	return (*this);
 }
 
 Graphic::~Graphic( void ) {}
 
-void	Graphic::init( int ac, char** av, int x, int y, char *title ) {
+void	Graphic::init( int ac, char** av, int x, int y, char *title, char **map ) {
 	this->_x = x;
 	this->_y = y;
 	this->_name = title;
+	this->_map = map;
+	this->_key = new std::vector<int>;
 	static_cast<void>(ac);
 	static_cast<void>(av);
 	initscr();
@@ -97,7 +100,7 @@ void	Graphic::keyboard( void ) {
 	}
 }
 
-void	Graphic::render_scene( char **map ) {
+void	Graphic::render_scene( void ) {
 	int	x;
 	int	y;
 	int	state = 1;
@@ -109,38 +112,31 @@ void	Graphic::render_scene( char **map ) {
 	{
 		for (x = 0; x < this->_x; x++)
 		{
-			if (state != 1 && map[y][x] == WALL)
+			if (state != 1 && this->_map[y][x] == WALL)
 			{
 				wattroff(this->_window, COLOR_PAIR(state));
 				wattron(this->_window, COLOR_PAIR(1));
 				state = 1;
 			}
-			else if (state != 2 && map[y][x] == FRUIT)
+			else if (state != 2 && this->_map[y][x] == FRUIT)
 			{
 				wattroff(this->_window, COLOR_PAIR(state));
 				wattron(this->_window, COLOR_PAIR(2));
 				state = 2;
 			}
-			else if (state != 3 && (map[y][x] == QUEUE || map[y][x] == HEAD))
+			else if (state != 3 && (this->_map[y][x] == QUEUE || this->_map[y][x] == HEAD))
 			{
 				wattroff(this->_window, COLOR_PAIR(state));
 				wattron(this->_window, COLOR_PAIR(2));
 				state = 2;
 			}
-			mvwprintw(this->_window, y, x, "%c", map[y][x]);
+			mvwprintw(this->_window, y, x, "%c", this->_map[y][x]);
 		}
 	}
 	wrefresh(this->_window);
 }
 
-std::vector<int> *Graphic::get_touch_list( void ) {
-	std::vector<int> *cpy = this->_key;
-	
-	if (this->_key != NULL)
-		std::cout << this->_key->size() << std::endl;
-	this->_key = new std::vector<int>;
-	return (cpy);
-}
+std::vector<int> **Graphic::get_touch_list( void ) { return (&this->_key); }
 
 char				*Graphic::getName( void ) const { return (this->_name); }
 
@@ -153,6 +149,8 @@ int					Graphic::getX( void ) const { return (this->_x); }
 int					Graphic::getY( void ) const { return (this->_y); }
 
 std::vector<int>	*Graphic::getKey( void ) const {return (this->_key); }
+
+char				**Graphic::getMap( void ) const {return (this->_map); }
 
 // void				Graphic::delObject( Api *del)
 // {
