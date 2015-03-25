@@ -10,29 +10,38 @@
 //                                                                            //
 // ************************************************************************** //
 
-#include "../includes/api.class.hpp"
+
 
 #ifndef OPENGL_2D_CLASS_HPP
 # define OPENGL_2D_CLASS_HPP
 
+# include "../includes/api.class.hpp"
+# include <time.h>
+# include <unistd.h>
+
 # define STARTX		100
-# define STARTY		10
-# define X_MULTI	15		//(x * 15) * number case width
-# define Y_MULTI	15		//(y * 15) * number case height
-# define LINE_WIDTH	2.0f
-# define POINT_SIZE	3.0f
+# define STARTY		100
+# define X_MULTI	15.0f		//(x * 15) * number case width
+# define Y_MULTI	15.0f		//(y * 15) * number case height
+# define LINE_WIDTH	1.0f
+# define POINT_SIZE	1.0f
+# define SCALE_GL	0.001f
 
-# define WALL_R		200
-# define WALL_G		250
-# define WALL_B		230
+# define WALL_R		13
+# define WALL_G		13
+# define WALL_B		13
 
-# define QUEUE_R	14
-# define QUEUE_G	24
-# define QUEUE_B	34
+# define QUEUE_R	255
+# define QUEUE_G	0
+# define QUEUE_B	0
 
-# define HEAD_R		120
-# define HEAD_G		163
-# define HEAD_B		110
+# define HEAD_R		0
+# define HEAD_G		0
+# define HEAD_B		255
+
+# define FRUIT_R	0
+# define FRUIT_G	255
+# define FRUIT_B	0
 
 # ifdef linux //sudo apt-get install freeglut3 freeglut3-dev
 #	include <GL/gl.h>
@@ -56,6 +65,7 @@ class 					Api;
 
 void  					keyboard(unsigned char touche, int x, int y);
 void					drawCallback(char **map);
+void					timer(int extra);
 
 class	Graphic : public Api {
 public:
@@ -75,15 +85,16 @@ public:
 	void				close( void );
 	void				render_scene( void );
 	void				show_scene( void );
-	std::vector<int>	*get_touch_list( void );
+	std::vector<int>	**get_touch_list( void );
+
 
 	Graphic	& 			operator=( Graphic const & rhs );
 	Graphic( Graphic const & rhs );
 
 	void				draw_border( void );
-	void				draw_queue( int case_x, int case_y );
-	void				draw_head( int case_x, int case_y );
-	void				draw_fruit( int case_x, int case_y );
+	void				draw_queue( float case_x, float case_y );
+	void				draw_head( float case_x, float case_y );
+	void				draw_fruit( float case_x, float case_y );
 	void				setCurrentInstance( void );
 
 private:

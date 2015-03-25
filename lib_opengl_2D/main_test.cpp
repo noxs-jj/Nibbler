@@ -19,7 +19,12 @@ int	main(int ac, char **av)
 			std::cerr << "map malloc error" << std::endl;
 			return (-1);
 		}
-		map[i] = strncpy(map[i], "# oo * @ #", 10);
+		if (i == 0 || i == 9)
+			map[i] = strncpy(map[i], "##########", 10);
+		else if (i = 4)
+			map[i] = strncpy(map[i], "# oo * @ #", 10);
+		else
+			map[i] = strncpy(map[i], "#        #", 10);
 		i++;
 	}
 
@@ -33,6 +38,7 @@ int	main(int ac, char **av)
 	graphic->init(ac, av, 10, 10, "Test snake", map);
 	std::cout << "Debugg 1" << std::endl;
 	graphic->render_scene();
+	std::cout << "Debugg 2" << std::endl;
 
 	return (0);
 }
