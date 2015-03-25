@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/23 16:21:21 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/25 14:27:37 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/25 15:33:43 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ typedef struct		s_key
 	int				key;
 	struct s_key	*next;
 }					t_key;
-
-// Api					*newObject( void );
 
 class Graphic : public Api{
 private:

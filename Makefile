@@ -13,19 +13,22 @@
 CXX = g++
 CLANG = clang
 
-NAME = mod1
+NAME = nibbler
 
 PLATFORM := $(shell uname)
 
-CFLAGS = -Wall -Werror -Wextra -pedantic -o3
+CFLAGS = -Wall -Werror -Wextra -o3
 
 LIB_FLAG = -shared -fPIC
 
-HEAD = 	src/main.hpp \
-		src/ft42.class.hpp
+HEAD = 	includes/main.hpp
 
-SRC = 	includes/main.cpp \
-		includes/fts.cpp
+SRC = 	src/main.cpp
+
+SRC_NCURSE =	lib_ncurse/lib_ncurse.class.cpp \
+				Api.class.cpp
+
+SO_NAME = lib_graphic.so
 
 OBJ = $(SRC:.cpp=.cpp.o)
 
@@ -35,7 +38,8 @@ OBJ = $(SRC:.cpp=.cpp.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(CXX) $(CFLAGS) $(OBJ) -o $(NAME) $(GL)
+	$(CXX) $(CFLAGS) $(OBJ) $(SO_NAME) -o $(NAME)
+	# @$(CXX) $(CFLAGS) $(OBJ) -o $(NAME) $(GL)
 
 opengl:
 	echo "Compil with OpenGL lib .so"
@@ -45,7 +49,7 @@ libx:
 
 ncurse:
 	echo "Compil with NCurse lib .so."
-	$(CXX) -lncurses $(LIB_FLAG) -o lib_ncurse.so lib_ncurse.class.cpp
+	$(CXX) $(CFLAGS) -lncurses $(LIB_FLAG) -o $(SO_NAME) $(SRC_NCURSE)
 
 example: src/main.cpp libcircle.so
 	g++ -o example src/main.cpp -ldl

@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/21 12:14:58 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/25 14:53:24 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/25 15:19:58 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,29 +73,29 @@ void	Graphic::keyboard( void ) {
 	wtimeout(this->_window, 1);
 	key_input[0] = wgetch(this->_window);
 	if (key_input[0] == 27 && (key_input[1] = wgetch(this->_window)) == 91 &&
-		(key_input[2] = wgetch(this->_window)) == 65)
+		(key_input[2] = wgetch(this->_window)) == UP)	//KEY_UP
 		{
-			this->_key->push_back(KEY_UP);
+			this->_key->push_back(UP);
 			// std::cout << "KEY_UP" << this->_key->size() << std::endl;
 		}
-	else if (key_input[0] == 27 && key_input[1] == 91 && key_input[2] == 66)
+	else if (key_input[0] == 27 && key_input[1] == 91 && key_input[2] == DOWN) //KEY_DOWN
 	{
-		this->_key->push_back(KEY_DOWN);
+		this->_key->push_back(DOWN);
 		// std::cout << "KEY_DOWN" << this->_key->size() << std::endl;
 	}
-	else if (key_input[0] == 27 && key_input[1] == 91 && key_input[2] == 68)
+	else if (key_input[0] == 27 && key_input[1] == 91 && key_input[2] == LEFT) //KEY_LEFT
 	{
-		this->_key->push_back(KEY_LEFT);
+		this->_key->push_back(LEFT);
 		// std::cout << "KEY_LEFT" << this->_key->size() << std::endl;
 	}
-	else if (key_input[0] == 27 && key_input[1] == 91 && key_input[2] == 67)
+	else if (key_input[0] == 27 && key_input[1] == 91 && key_input[2] == RIGHT) //KEY_RIGHT
 	{
-		this->_key->push_back(KEY_RIGHT);
+		this->_key->push_back(RIGHT);
 		// std::cout << "KEY_RIGHT" << this->_key->size() << std::endl;
 	}
 	if (key_input[0] == 27 && key_input[1] == -1)
 	{
-		this->_key->push_back(KEY_ECHAP);
+		this->_key->push_back(27);
 		// std::cout << "KEY_ECHAP" << this->_key->size() << std::endl;
 	}
 }

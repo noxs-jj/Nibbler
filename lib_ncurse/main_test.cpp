@@ -31,15 +31,15 @@ void	do_move(int posx, int posy, int newx, int newy, char **map)
 void	move(std::vector<int> **key, int posx, int posy, char **map) {
 	if (key == NULL || (*key)->size() == 0)
 		return ;
-	if ((*key)[0] == static_cast<std::vector<int> >(KEY_UP) && posy - 1 >= 0)
+	if ((*key)->front() == (KEY_UP) && posy - 1 >= 0)
 		do_move(posx, posy, 0, -1, map);
-	else if ((*key)[0] == static_cast<std::vector<int> >(KEY_DOWN) && posy + 1 < TEST_SIZE)
+	else if ((*key)->front() == (KEY_DOWN) && posy + 1 < TEST_SIZE)
 		do_move(posx, posy, 0, 1, map);
-	else if ((*key)[0] == static_cast<std::vector<int> >(KEY_LEFT) && posx - 1 >= 0)
+	else if ((*key)->front() == (KEY_LEFT) && posx - 1 >= 0)
 		do_move(posx, posy, -1, 0, map);
-	else if ((*key)[0] == static_cast<std::vector<int> >(KEY_RIGHT) && posx + 1 < TEST_SIZE)
+	else if ((*key)->front() == (KEY_RIGHT) && posx + 1 < TEST_SIZE)
 		do_move(posx, posy, 1, 0, map);
-	else if ((*key)[0] == static_cast<std::vector<int> >(KEY_ECHAP))
+	else if ((*key)->front() == (KEY_ECHAP))
 		;
 	(*key)->erase((*key)->begin());
 	return ;
@@ -48,22 +48,22 @@ void	move(std::vector<int> **key, int posx, int posy, char **map) {
 int	main(int ac, char **av)
 {
 	void		*hndl;
- 	Api			*(*create)();
- 	Api			*graphic;
- 	std::vector<int>	**key = NULL;
- 	char		**map = NULL;
- 	int posx = TEST_POS_X;
- 	int posy = TEST_POS_Y;
+	Api			*(*create)();
+	Api			*graphic;
+	std::vector<int>	**key = NULL;
+	char		**map = NULL;
+	int posx = TEST_POS_X;
+	int posy = TEST_POS_Y;
 
-    static_cast<void>(ac);
-    static_cast<void>(av);
-    hndl = dlopen("lib_ncurse.so", RTLD_LAZY | RTLD_LOCAL);
-    if (hndl == NULL)
-    {
+	static_cast<void>(ac);
+	static_cast<void>(av);
+	hndl = dlopen("lib_ncurse.so", RTLD_LAZY | RTLD_LOCAL);
+	if (hndl == NULL)
+	{
 		cerr << "dlopen : "<< dlerror() << endl; 
 		exit(EXIT_FAILURE);
-    }
- 	if ((create = reinterpret_cast<Api* (*)()>(dlsym(hndl, "newObject"))) == NULL)
+	}
+	if ((create = reinterpret_cast<Api* (*)()>(dlsym(hndl, "newObject"))) == NULL)
 	{ 
 		cerr << "dlsym : " << dlerror() << endl;
 		exit(EXIT_FAILURE);
@@ -93,10 +93,9 @@ int	main(int ac, char **av)
 		graphic->render_scene();
 		if (key == NULL || (*key)->size() == 0)
 			key = graphic->get_touch_list();
-		sleep(1);
 	}
 
 	graphic->close();
-    dlclose(hndl);
-    return (EXIT_SUCCESS);
+	dlclose(hndl);
+	return (EXIT_SUCCESS);
 }
