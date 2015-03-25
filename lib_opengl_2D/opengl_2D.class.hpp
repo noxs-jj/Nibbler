@@ -50,10 +50,9 @@
 # endif
 # ifdef __APPLE__
 #	include <openGL/gl.h>
-//#	include <openGL/gl3.h>
-//#	include <OpenGL/OpenGL.h>
 #	include <openGL/glu.h>
 #	include <glut/glut.h>
+//#	include "openglut.h"
 # endif
 # ifdef __WIN32__
 #	include <GL/gl.h>
@@ -64,8 +63,8 @@
 class 					Api;
 
 void  					keyboard(unsigned char touche, int x, int y);
-void					drawCallback(char **map);
-void					timer(int extra);
+void					drawCallback();
+void					callAddKey(int keyInput);
 
 class	Graphic : public Api {
 public:

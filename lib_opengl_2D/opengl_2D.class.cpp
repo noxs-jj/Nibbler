@@ -19,6 +19,10 @@ void				drawCallback() { // glutDisplayFunc(drawCallback)
 	g_currentInstance->show_scene();
 }
 
+void				callAddKey(int keyInput) {
+	g_currentInstance->addKey(keyInput);
+}
+
 void				Graphic::render_scene( void ) { // from main graphic->rander_scene
 	this->show_scene();
 }
@@ -28,19 +32,36 @@ void				Graphic::setCurrentInstance( void ) {
 }
 // END ###############################################
 
-void				timer(int extra) {
-	glutPostRedisplay();
-	glutTimerFunc(0, timer, 0);
-}
-
 void  				keyboard(unsigned char touche, int x, int y)
 {
 	(void)x;
 	(void)y;
 	if ( touche == 'q' || touche == 27 )
 		exit(0);
+	else if (touche == 'a')
+	{
+		std::cout << "LEFT: " << touche << std::endl;
+		callAddKey(68);
+	}
+	else if (touche == 'd')
+	{
+		std::cout << "RIGHT: " << touche << std::endl;
+		callAddKey(67);
+	}
+	else if (touche == 'w')
+	{
+		std::cout << "UP: " << touche << std::endl;
+		callAddKey(65);
+	}
+	else if (touche == 's')
+	{
+		std::cout << "DOWN: " << touche << std::endl;
+		callAddKey(66);
+	}
 	else
-		std::cout << touche << std::endl;
+	{
+		std::cout << "touche: " << touche << std::endl;
+	}
 }
 
 void				Graphic::show_scene( void ) { // render map
@@ -58,10 +79,7 @@ void				Graphic::show_scene( void ) { // render map
 			if (QUEUE  == this->map[y][x])
 				draw_queue(x, y);
 			if (HEAD == this->map[y][x])
-			{
-				//std::cout << "HEAD find" << std::endl;
 				draw_head(x, y);
-			}
 			else if (FRUIT == this->map[y][x])
 				draw_fruit(x, y);
 			x++;
@@ -71,6 +89,10 @@ void				Graphic::show_scene( void ) { // render map
 	glFlush();
 	glutSwapBuffers();
 	glLoadIdentity();
+	std::cout << "show_scene" << std::endl;
+	while (42)
+		;
+	//glutLeaveMainLoop ();
 	//usleep(3000000);
 }
 
@@ -96,30 +118,30 @@ void				Graphic::init( int ac, char **av, int x, int y, char *title, char **map 
 	this->mapYsize = y;
 	this->map = map;
 	//###############################
-	int i = 0;
-	y = 0;
-	while (y < 10)
-	{
-		i = 0;
-		while (i < 10)
-		{
-			std::cout << map[y][i];
-			i++;
-		}
-		std::cout << std::endl;
-		y++;
-	}
-	std::cout << std::endl;
+	// int i = 0;
+	// y = 0;
+	// while (y < 10)
+	// {
+	// 	i = 0;
+	// 	while (i < 10)
+	// 	{
+	// 		std::cout << map[y][i];
+	// 		i++;
+	// 	}
+	// 	std::cout << std::endl;
+	// 	y++;
+	// }
+	// std::cout << std::endl;
 	//###############################
 	this->setCurrentInstance();
 	glutKeyboardFunc(keyboard);					// function for keyboard event
 	glutDisplayFunc(drawCallback);
-	glutTimerFunc(0, timer, 0);
-	glutMainLoop();
+	//glutMainLoop();
+	//glutMainLoopEvent();
+	//glutleavemainloop();
 }
 
 void				Graphic::draw_head( float case_x, float case_y ) { // draw on case of smake head
-	//	(this->winx / 2)	(this->winy / 2)
 	glBegin(GL_QUADS);
 		glColor3ub(HEAD_R, HEAD_G, HEAD_B);
 		glVertex2f(-(this->winx / 2) + case_x * X_MULTI, -(this->winy / 2) + case_y * Y_MULTI + Y_MULTI);	// LEFT TOP
@@ -151,8 +173,6 @@ void				Graphic::draw_queue( float case_x, float case_y ) { // draw on case of s
 }
 
 void				Graphic::draw_border( void ) { // color all map same color
-
-//	(this->winx / 2)	(this->winy / 2)
 	glBegin(GL_QUADS);
 		glColor3ub(WALL_R, WALL_G, WALL_B);
 		glVertex2i(-1, 1);	// LEFT TOP
