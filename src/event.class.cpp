@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/25 18:45:11 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/25 19:25:02 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/25 19:35:27 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,4 +106,3 @@ void	Event::close_all(t_data *d) {
 	if (d != NULL)
 		free(d);
 }
-

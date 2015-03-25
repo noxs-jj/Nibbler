@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   event.class.hpp                                    :+:      :+:    :+:   */
+/*   game.class.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/03/25 18:45:16 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/25 19:28:23 by vjacquie         ###   ########.fr       */
+/*   Created: 2015/03/25 19:28:55 by vjacquie          #+#    #+#             */
+/*   Updated: 2015/03/25 19:34:14 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EVENT_CLASS_HPP
-# define EVENT_CLASS_HPP
+#ifndef GAME_CLASS_HPP
+# define GAME_CLASS_HPP
 
 # include "main.hpp"
 
-class Event {
+class Game {
 private:
 
 public:
-	Event( void );
-	Event( Event const & src );
-	Event & operator=( Event const & rhs );
-	~Event( void );
+	Game( void );
+	Game( Game const & src );
+	Game & operator=( Game const & rhs );
+	~Game( void );
 
-	void	init(t_data *d, int ac, char **av);
-	void	open_lib(t_data *d);
-	void	close_all(t_data *d);
-	void	init_map(t_data *d);
+	void	run(t_data *d);
+	void	change_dir(t_data *d);
+	void	move(t_data *d);
+	void	inc_map(t_data *d);
+	void	dec_map(t_data *d, int dec);
+	int		check_move(t_data *d);
 protected:
 
 };
