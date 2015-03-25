@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/23 16:21:21 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/25 18:42:25 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/25 19:22:43 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,12 @@
 # define QUEUE 'o'
 # define FRUIT '@'
 
+class Event;
+
 typedef struct	s_data
 {
+	Api			*graphic;
+	void		*hndl;
 	char		*head;
 	char		*after_head;
 	char		*queue;

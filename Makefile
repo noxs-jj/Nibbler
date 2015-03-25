@@ -23,7 +23,7 @@ LIB_FLAG = -shared -fPIC
 
 HEAD = 	includes/main.hpp
 
-SRC = 	src/main.cpp
+SRC = 	src/main.cpp src/event.class.cpp
 
 SRC_NCURSE =	lib_ncurse/lib_ncurse.class.cpp \
 				Api.class.cpp

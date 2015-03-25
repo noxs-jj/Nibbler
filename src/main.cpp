@@ -6,11 +6,12 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/21 12:14:58 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/25 18:42:55 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/25 19:24:54 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/main.hpp"
+#include "../includes/event.class.hpp"
 
 int		check_move(t_data *d)
 {
@@ -123,99 +124,34 @@ void    change_dir(t_data *d) {
 	return ;
 }
 
-void	init_map(t_data *d)
-{
-	d->map = static_cast<char **>(std::malloc(sizeof(char*) * MAP_HEIGHT ));
-	d->map_info = static_cast<int **>(std::malloc(sizeof(int*) * MAP_HEIGHT ));
-	for (int i = 0; i < MAP_HEIGHT; ++i)
-	{
-		d->map[i] = static_cast<char *>(std::malloc(sizeof(char) * MAP_HEIGHT ));
-		d->map_info[i] = static_cast<int *>(std::malloc(sizeof(int) * MAP_HEIGHT ));
-		memset(d->map[i], '\0', MAP_HEIGHT);
-		memset(d->map_info[i], '0', MAP_HEIGHT);
-	}
-	for (int y = 0; y < MAP_WIDTH; ++y)
-	{
-		for (int i = 0; i < MAP_HEIGHT; ++i)
-		{
-			if (y == 0 || y == MAP_WIDTH - 1 || i == 0 || i == MAP_HEIGHT - 1)
-				d->map[y][i] = WALL;
-		}
-	}
-	d->map[d->posy - 3][d->posx] = QUEUE;
-	d->map_info[d->posy - 3][d->posx] = 1;
 
-	d->map[d->posy - 2][d->posx] = QUEUE;
-	d->map_info[d->posy - 2][d->posx] = 2;
 
-	d->map[d->posy - 1][d->posx] = QUEUE;
-	d->map_info[d->posy - 1][d->posx] = 3;
-
-	d->map[d->posy][d->posx] = HEAD;
-	d->map_info[d->posy][d->posx] = 4;
-
-	d->head = &(d->map[d->posy][d->posx]);
-	d->after_head = &(d->map[d->posy - 1][d->posx]);
-	d->before_queue = &(d->map[d->posy - 2][d->posx]);
-	d->queue = &(d->map[d->posy - 3][d->posx]);
-}
-
-void	game(t_data *d, Api *graphic)
+void	game(t_data *d)
 {
 	d->game = true;
 	while (d->game == true)
 	{
 		change_dir(d);
 		move(d);
-		graphic->render_scene();
+		d->graphic->render_scene();
 		if (d->key == NULL || (*d->key)->size() == 0)
-			d->key = graphic->get_touch_list();
+			d->key = d->graphic->get_touch_list();
 		usleep(d->speed);
 	}
 }
 
 int main(int ac, char **av)
 {
-	void				*hndl;
-	Api					*(*create)();
-	Api					*graphic;
 	t_data 				*d;
+	Event				event;
 
-	static_cast<void>(ac);
-	static_cast<void>(av);
 	if ((d = static_cast<t_data *>(std::malloc(sizeof(t_data)))) == NULL)
 	{
 		std::cerr << "t_data malloc error" << std::endl; 
 		exit(EXIT_FAILURE);
 	}
-	d->key = NULL;
-	d->map = NULL;
-	d->winx = MAP_WIDTH;
-	d->winy = MAP_HEIGHT;
-	d->posx = d->winx / 2;
-	d->posy = d->winy / 2;
-	d->eat = 0;
-	d->dir = 2;
-	d->speed = BASIC_SPEED;
-
-	hndl = dlopen("lib_graphic.so", RTLD_LAZY | RTLD_LOCAL);
-	if (hndl == NULL)
-	{
-		std::cerr << "dlopen : "<< dlerror() << std::endl; 
-		exit(EXIT_FAILURE);
-	}
-	if ((create = reinterpret_cast<Api* (*)()>(dlsym(hndl, "newObject"))) == NULL)
-	{ 
-		std::cerr << "dlsym : " << dlerror() << std::endl;
-		exit(EXIT_FAILURE);
-	}
-	init_map(d);
-	graphic = create();
-	graphic->init(ac, av, d->winx, d->winy, NULL, d->map);
-
-	game(d, graphic);
-
-	graphic->close();
-	dlclose(hndl);
+	event.init(d, ac, av);
+	game(d);
+	event.close_all(d);
 	return (EXIT_SUCCESS);
 }
