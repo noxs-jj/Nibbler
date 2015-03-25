@@ -39,6 +39,8 @@ void  				keyboard(unsigned char touche, int x, int y)
 	(void)y;
 	if ( touche == 'q' || touche == 27 )
 		exit(0);
+	else
+		std::cout << touche << std::endl;
 }
 
 void				Graphic::show_scene( void ) { // render map
@@ -53,15 +55,15 @@ void				Graphic::show_scene( void ) { // render map
 		x = 0;
 		while(x < this->mapXsize)
 		{
-			//if (QUEUE  == this->map[y][x])
-				//draw_queue(x, y);
+			if (QUEUE  == this->map[y][x])
+				draw_queue(x, y);
 			if (HEAD == this->map[y][x])
 			{
 				//std::cout << "HEAD find" << std::endl;
 				draw_head(x, y);
 			}
-			//else if (FRUIT == this->map[y][x])
-				//draw_fruit(x, y);
+			else if (FRUIT == this->map[y][x])
+				draw_fruit(x, y);
 			x++;
 		}
 		y++;
@@ -123,31 +125,31 @@ void				Graphic::draw_head( float case_x, float case_y ) { // draw on case of sm
 		glVertex2f(-(this->winx / 2) + case_x * X_MULTI, -(this->winy / 2) + case_y * Y_MULTI + Y_MULTI);	// LEFT TOP
 		glVertex2f(-(this->winx / 2) + case_x * X_MULTI + X_MULTI, -(this->winy / 2) + case_y * Y_MULTI + Y_MULTI);	// RIGHT TOP
 		glVertex2f(-(this->winx / 2) + case_x * X_MULTI + X_MULTI, -(this->winy / 2) + case_y * Y_MULTI);	// RIGHT BOTTOM
-		glVertex2f(-(this->winx / 2) + case_x, -(this->winy / 2) + case_y);	// LEFT BOTTOM
+		glVertex2f(-(this->winx / 2) + case_x * X_MULTI, -(this->winy / 2) + case_y * Y_MULTI);	// LEFT BOTTOM
 	glEnd();
 }
 
-/*
+
 void				Graphic::draw_fruit( float case_x, float case_y ) { // draw on case of FRUIT
 	glBegin(GL_QUADS);
 		glColor3ub(FRUIT_R, FRUIT_G, FRUIT_B);
-		glVertex2f(case_x * X_MULTI * 10 - (this->winx / 2), case_y * Y_MULTI * 10 - (this->winy / 2));						// LEFT TOP
-		glVertex2f(case_x * X_MULTI * 10 + X_MULTI * 10 - (this->winx / 2), case_y * Y_MULTI * 10 - (this->winy / 2));			// RIGHT TOP
-		glVertex2f(case_x * X_MULTI * 10 + X_MULTI * 10 - (this->winx / 2), case_y * Y_MULTI * 10 + Y_MULTI * 10 - (this->winy / 2));	// RIGHT BOTTOM
-		glVertex2f(case_x * X_MULTI * 10 - (this->winx / 2), case_y * Y_MULTI * 10 + Y_MULTI * 10 - (this->winy / 2));			// LEFT BOTTOM
+		glVertex2f(-(this->winx / 2) + case_x * X_MULTI, -(this->winy / 2) + case_y * Y_MULTI + Y_MULTI);	// LEFT TOP
+		glVertex2f(-(this->winx / 2) + case_x * X_MULTI + X_MULTI, -(this->winy / 2) + case_y * Y_MULTI + Y_MULTI);	// RIGHT TOP
+		glVertex2f(-(this->winx / 2) + case_x * X_MULTI + X_MULTI, -(this->winy / 2) + case_y * Y_MULTI);	// RIGHT BOTTOM
+		glVertex2f(-(this->winx / 2) + case_x * X_MULTI, -(this->winy / 2) + case_y * Y_MULTI);	// LEFT BOTTOM
 	glEnd();
 }
 
 void				Graphic::draw_queue( float case_x, float case_y ) { // draw on case of snake queue
 	glBegin(GL_QUADS);
 		glColor3ub(QUEUE_R, QUEUE_G, QUEUE_B);
-		glVertex2f(case_x * X_MULTI * 10 - (this->winx / 2), case_y * Y_MULTI * 10 - (this->winy / 2));						// LEFT TOP
-		glVertex2f(case_x * X_MULTI * 10 + X_MULTI * 10 - (this->winx / 2), case_y * Y_MULTI * 10 - (this->winy / 2));			// RIGHT TOP
-		glVertex2f(case_x * X_MULTI * 10 + X_MULTI * 10 - (this->winx / 2), case_y * Y_MULTI * 10 + Y_MULTI * 10 - (this->winy / 2)); // RIGHT BOTTOM
-		glVertex2f(case_x * X_MULTI * 10 - (this->winx / 2), case_y * Y_MULTI * 10 + Y_MULTI * 10 - (this->winy / 2));			// LEFT BOTTOM
+		glVertex2f(-(this->winx / 2) + case_x * X_MULTI, -(this->winy / 2) + case_y * Y_MULTI + Y_MULTI);	// LEFT TOP
+		glVertex2f(-(this->winx / 2) + case_x * X_MULTI + X_MULTI, -(this->winy / 2) + case_y * Y_MULTI + Y_MULTI);	// RIGHT TOP
+		glVertex2f(-(this->winx / 2) + case_x * X_MULTI + X_MULTI, -(this->winy / 2) + case_y * Y_MULTI);	// RIGHT BOTTOM
+		glVertex2f(-(this->winx / 2) + case_x * X_MULTI, -(this->winy / 2) + case_y * Y_MULTI);	// LEFT BOTTOM
 	glEnd();
 }
-*/
+
 void				Graphic::draw_border( void ) { // color all map same color
 
 //	(this->winx / 2)	(this->winy / 2)

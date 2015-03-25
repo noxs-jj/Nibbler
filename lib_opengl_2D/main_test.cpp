@@ -19,12 +19,20 @@ int	main(int ac, char **av)
 			std::cerr << "map malloc error" << std::endl;
 			return (-1);
 		}
+
 		if (i == 0 || i == 9)
+		{
 			map[i] = strncpy(map[i], "##########", 10);
-		else if (i = 4)
-			map[i] = strncpy(map[i], "# oo * @ #", 10);
+		}
+		else if (i == 4)
+		{
+			map[i] = strncpy(map[i], "# ooo*  @#", 10);
+		}
 		else
+		{
 			map[i] = strncpy(map[i], "#        #", 10);
+		}
+
 		i++;
 	}
 

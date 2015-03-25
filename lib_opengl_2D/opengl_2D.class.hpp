@@ -21,11 +21,11 @@
 
 # define STARTX		100
 # define STARTY		100
-# define X_MULTI	15.0f		//(x * 15) * number case width
-# define Y_MULTI	15.0f		//(y * 15) * number case height
+# define X_MULTI	20.0f		//(x * 15) * number case width
+# define Y_MULTI	20.0f		//(y * 15) * number case height
 # define LINE_WIDTH	1.0f
 # define POINT_SIZE	1.0f
-# define SCALE_GL	0.001f
+# define SCALE_GL	0.01f
 
 # define WALL_R		13
 # define WALL_G		13
