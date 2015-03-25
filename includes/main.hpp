@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/23 16:21:21 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/25 15:43:12 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/25 16:57:08 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,19 @@
 # define HEAD '*'
 # define QUEUE 'o'
 # define FRUIT '@'
+
+typedef struct	s_data
+{
+	char		**head;
+	char		**after_head;
+	char		**queue;
+	char		**before_queue;
+	int			posx;
+	int			posy;
+	int			winx;
+	int			winy;
+	std::vector<int>	**key;
+	char				**map;
+}				t_data;
 
 #endif
