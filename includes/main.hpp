@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/23 16:21:21 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/25 16:57:08 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/25 17:47:26 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,19 @@
 
 typedef struct	s_data
 {
-	char		**head;
-	char		**after_head;
-	char		**queue;
-	char		**before_queue;
+	char		*head;
+	char		*after_head;
+	char		*queue;
+	char		*before_queue;
 	int			posx;
 	int			posy;
 	int			winx;
 	int			winy;
 	std::vector<int>	**key;
 	char				**map;
+	int					**map_info;
+	int			dir; // actual direction (1 up, 2 down, 3 left, 4 right)
+	int			eat; // true if eat
 }				t_data;
 
 #endif
