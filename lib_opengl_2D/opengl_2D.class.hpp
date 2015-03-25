@@ -41,6 +41,8 @@
 # endif
 # ifdef __APPLE__
 #	include <openGL/gl.h>
+//#	include <openGL/gl3.h>
+//#	include <OpenGL/OpenGL.h>
 #	include <openGL/glu.h>
 #	include <glut/glut.h>
 # endif
@@ -50,14 +52,18 @@
 #	include <windows.h>
 # endif
 
-class 	Api;
+class 					Api;
 
-void  	keyboard(unsigned char touche, int x, int y);
+void  					keyboard(unsigned char touche, int x, int y);
+void					drawCallback(char **map);
 
 class	Graphic : public Api {
 public:
 	int					winx;
 	int					winy;
+	int 				mapXsize;
+	int 				mapYsize;
+	char				**map;
 	std::vector<int>	*key_list;
 	bool				empty;
 
@@ -65,9 +71,10 @@ public:
 
 	Graphic( void );
 	~Graphic( void );
-	void				init( int ac, char** av, int x, int y, char *title );
+	void				init( int ac, char** av, int x, int y, char *title, char **map );
 	void				close( void );
-	void				render_scene( char **map );
+	void				render_scene( void );
+	void				show_scene( void );
 	std::vector<int>	*get_touch_list( void );
 
 	Graphic	& 			operator=( Graphic const & rhs );
@@ -77,10 +84,10 @@ public:
 	void				draw_queue( int case_x, int case_y );
 	void				draw_head( int case_x, int case_y );
 	void				draw_fruit( int case_x, int case_y );
+	void				setCurrentInstance( void );
 
 private:
-	
-	
+
 };
 
 #endif

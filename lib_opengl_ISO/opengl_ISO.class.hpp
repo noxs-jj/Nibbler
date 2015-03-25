@@ -63,7 +63,32 @@ public:
 	bool				empty;
 
 	//ISOMETRIQUE
-	
+	double			posx; // OK
+	double			posy; // OK
+	double			dirx;
+	double			diry;
+	double			planex; // OK
+	double			planey; // OK
+	int				ic; // OK
+	double			camx; // OK
+	double			rayposx; // OK
+	double			rayposy; // OK
+	double			raydirx;
+	double			raydiry;
+	int				mapx;
+	int				mapy;
+	double			sidedistx;
+	double			sidedisty;
+	double			deltadistx; // OK
+	double			deltadisty; // OK
+	int				stepx; // OK
+	int				stepy; // OK
+	int				hit; // OK
+	int				side; // OK
+	double			perpwalldist; // OK
+	double			olddirx;
+	double			oldplanex;
+	double			lineheight;
 
 
 	void				addKey(int keyInput);
