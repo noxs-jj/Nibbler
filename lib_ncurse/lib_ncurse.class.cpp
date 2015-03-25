@@ -6,14 +6,13 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/21 12:14:58 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/25 15:19:58 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/25 18:41:58 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib_ncurse.class.hpp"
 
 Graphic::Graphic( void ) :	_window(NULL),
-							_speed(TIME_USLEEP),
 							_key(NULL) {}
 
 Graphic::Graphic( Graphic const & src ) {
@@ -25,7 +24,6 @@ Graphic & Graphic::operator=( Graphic const & rhs ) {
 	{
 		this->_name = rhs.getName();
 		this->_window = rhs.getWindow();
-		this->_speed = rhs.getSpeed();
 		this->_x = rhs.getX();
 		this->_y = rhs.getY();
 		this->_key = rhs.getKey();
@@ -141,8 +139,6 @@ std::vector<int> **Graphic::get_touch_list( void ) { return (&this->_key); }
 char				*Graphic::getName( void ) const { return (this->_name); }
 
 WINDOW				*Graphic::getWindow( void ) const { return (this->_window); }
-
-int					Graphic::getSpeed( void ) const { return (this->_speed); }
 
 int					Graphic::getX( void ) const { return (this->_x); }
 

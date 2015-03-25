@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/23 16:21:21 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/25 15:33:43 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/25 18:41:37 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include "../includes/api.class.hpp"
 # include <ncurses.h>
-
-# define TIME_USLEEP 1000	// test value
 
 class api;
 
@@ -29,7 +27,6 @@ typedef struct		s_key
 class Graphic : public Api{
 private:
 	WINDOW				*_window;
-	int					_speed;
 	int					_x;
 	int					_y;
 	char				*_name;
@@ -44,7 +41,6 @@ public:
 
 	char				*getName( void ) const;
 	WINDOW				*getWindow( void ) const;
-	int					getSpeed( void ) const;
 	int					getX( void ) const;
 	int					getY( void ) const;
 	std::vector<int>	*getKey( void ) const;

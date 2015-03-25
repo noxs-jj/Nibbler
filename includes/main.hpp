@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/23 16:21:21 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/25 17:47:26 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/25 18:42:25 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 # define MAP_WIDTH 40
 # define MAP_HEIGHT 40
+# define BASIC_SPEED 100000
 
 # define UP     65
 # define DOWN   66
@@ -49,7 +50,9 @@ typedef struct	s_data
 	char				**map;
 	int					**map_info;
 	int			dir; // actual direction (1 up, 2 down, 3 left, 4 right)
-	int			eat; // true if eat
+	int			eat; // >= 1 if need to grow
+	bool		game;
+	int			speed;
 }				t_data;
 
 #endif

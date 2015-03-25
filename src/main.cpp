@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/21 12:14:58 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/25 17:47:30 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/25 18:42:55 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,28 +32,83 @@ int		check_move(t_data *d)
 	return (0);
 }
 
+void	dec_map(t_data *d, int dec)
+{
+	for (int y = 0; y < d->winy; ++y)
+	{
+		for (int x = 0; x < d->winx; ++x)
+		{
+			if (d->map_info[y][x] > 0)
+				d->map_info[y][x] -= dec;
+		}
+	}
+}
+
+void	inc_map(t_data *d)
+{
+	for (int y = 0; y < d->winy; ++y)
+	{
+		for (int x = 0; x < d->winx; ++x)
+		{
+			if (d->map_info[y][x] > 0)
+				d->map_info[y][x] += 1;
+		}
+	}
+}
+
 void    move(t_data *d)
 {
+	int 	movx = 0;
+	int 	movy = 0;
+
 	if (check_move(d) < 0)
-		;	// die
+	{
+		d->game = false;
+		return ;
+	}
 
-
-
-
-
-
-
-	// d->map[d->posy][d->posx] = ' ';
-	d->map[d->posy + newy][d->posx + newx] = HEAD;
+	if (d->eat > 0)
+		inc_map(d);
+	if (d->dir == 1)
+		movy = -1;
+	else if (d->dir == 2)
+		movy = 1;
+	else if (d->dir == 3)
+		movx = -1;
+	else if (d->dir == 4)
+		movx = 1;
+	d->map_info[d->posy + movy][d->posx + movx] = d->map_info[d->posy][d->posx] + 1;
+	dec_map(d, 1);
+	if (d->eat > 0)
+		d->eat--;
 	d->after_head = d->head;
-	d->posy += newy;
-	d->posx += newx;
+	d->head[0] = QUEUE;
+	d->posy += movy;
+	d->posx += movx;
 	d->head = &(d->map[d->posy][d->posx]);
+	if (d->head[0] == FRUIT)
+		d->eat++;
+	d->head[0] = HEAD;
+	d->queue[0] = ' ';
+	d->queue = d->before_queue;
+
+	for (int y = 0; y < d->winy; ++y)
+	{
+		for (int x = 0; x < d->winx; ++x)
+		{
+			if (d->map_info[y][x] == 2)
+			{
+				d->before_queue = &(d->map[y][x]);
+				return ;
+			}
+		}
+	}
 }
 
 void    change_dir(t_data *d) {
 	if (d->key == NULL || (*d->key)->size() == 0)
 		return ;
+	// move(d); // REMOVE
 	if ((*d->key)->front() == (UP) && d->posy - 1 >= 0 && d->dir != 2)
 		d->dir = 1;
 	else if ((*d->key)->front() == (DOWN) && d->posy + 1 < MAP_HEIGHT && d->dir != 1)
@@ -103,7 +158,20 @@ void	init_map(t_data *d)
 	d->after_head = &(d->map[d->posy - 1][d->posx]);
 	d->before_queue = &(d->map[d->posy - 2][d->posx]);
 	d->queue = &(d->map[d->posy - 3][d->posx]);
-	// d->head[0] = FRUIT;
+}
+
+void	game(t_data *d, Api *graphic)
+{
+	d->game = true;
+	while (d->game == true)
+	{
+		change_dir(d);
+		move(d);
+		graphic->render_scene();
+		if (d->key == NULL || (*d->key)->size() == 0)
+			d->key = graphic->get_touch_list();
+		usleep(d->speed);
+	}
 }
 
 int main(int ac, char **av)
@@ -128,6 +196,7 @@ int main(int ac, char **av)
 	d->posy = d->winy / 2;
 	d->eat = 0;
 	d->dir = 2;
+	d->speed = BASIC_SPEED;
 
 	hndl = dlopen("lib_graphic.so", RTLD_LAZY | RTLD_LOCAL);
 	if (hndl == NULL)
@@ -143,14 +212,8 @@ int main(int ac, char **av)
 	init_map(d);
 	graphic = create();
 	graphic->init(ac, av, d->winx, d->winy, NULL, d->map);
-	while (1)
-	{
-		change_dir(d);
-		// move(d);
-		graphic->render_scene();
-		if (d->key == NULL || (*d->key)->size() == 0)
-			d->key = graphic->get_touch_list();
-	}
+
+	game(d, graphic);
 
 	graphic->close();
 	dlclose(hndl);
