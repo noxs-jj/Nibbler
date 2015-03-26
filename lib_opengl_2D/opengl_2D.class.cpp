@@ -16,6 +16,7 @@ Graphic	*g_currentInstance;
 
 // START #############################################
 void				drawCallback() { // glutDisplayFunc(drawCallback)
+	g_currentInstance->show = true;
 	g_currentInstance->show_scene();
 }
 
@@ -65,35 +66,38 @@ void  				keyboard(unsigned char touche, int x, int y)
 }
 
 void				Graphic::show_scene( void ) { // render map
-	int x = 0;
-	int y = 0;
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glScalef(SCALE_GL, SCALE_GL, SCALE_GL);
-
-	draw_border();
-	while (y < this->mapYsize)
+	if (true == this->show)
 	{
-		x = 0;
-		while(x < this->mapXsize)
+		int x = 0;
+		int y = 0;
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glScalef(SCALE_GL, SCALE_GL, SCALE_GL);
+
+		draw_border();
+		while (y < this->mapYsize)
 		{
-			if (QUEUE  == this->map[y][x])
-				draw_queue(x, y);
-			if (HEAD == this->map[y][x])
-				draw_head(x, y);
-			else if (FRUIT == this->map[y][x])
-				draw_fruit(x, y);
-			x++;
+			x = 0;
+			while(x < this->mapXsize)
+			{
+				if (QUEUE  == this->map[y][x])
+					draw_queue(x, y);
+				if (HEAD == this->map[y][x])
+					draw_head(x, y);
+				else if (FRUIT == this->map[y][x])
+					draw_fruit(x, y);
+				x++;
+			}
+			y++;
 		}
-		y++;
+		glFlush();
+		glLoadIdentity();
+		std::cout << "show_scene" << std::endl;
+		// while (42)
+		// 	std::cout << "show_scene blabla" << std::endl;
+		//glutLeaveMainLoop ();
+		//usleep(3000000);
+		this->show = false;
 	}
-	glFlush();
-	glutSwapBuffers();
-	glLoadIdentity();
-	std::cout << "show_scene" << std::endl;
-	while (42)
-		;
-	//glutLeaveMainLoop ();
-	//usleep(3000000);
 }
 
 void				Graphic::init( int ac, char **av, int x, int y, char *title, char **map ) {
@@ -136,7 +140,7 @@ void				Graphic::init( int ac, char **av, int x, int y, char *title, char **map 
 	this->setCurrentInstance();
 	glutKeyboardFunc(keyboard);					// function for keyboard event
 	glutDisplayFunc(drawCallback);
-	//glutMainLoop();
+	glutMainLoop();
 	//glutMainLoopEvent();
 	//glutleavemainloop();
 }
@@ -216,7 +220,7 @@ Graphic::Graphic( Graphic const & rhs ) {
 }
 
 Graphic::Graphic( void ) : winx(0), winy(0), mapXsize(0), mapYsize(0),
-map(NULL), key_list(NULL), empty(true) { //construct
+map(NULL), key_list(NULL), empty(true), show(true) { //construct
 }
 
 Graphic::~Graphic( void ) {	// destruct

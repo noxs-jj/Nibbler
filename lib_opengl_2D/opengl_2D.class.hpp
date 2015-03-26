@@ -18,6 +18,7 @@
 # include "../includes/api.class.hpp"
 # include <time.h>
 # include <unistd.h>
+#include <GLFW/glfw3.h>
 
 # define STARTX		100
 # define STARTY		100
@@ -75,6 +76,7 @@ public:
 	char				**map;
 	std::vector<int>	*key_list;
 	bool				empty;
+	bool				show;
 
 	void				addKey(int keyInput);
 

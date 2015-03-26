@@ -16,7 +16,7 @@ NAME = lib_opengl_2D.so
 
 GL = -framework GLUT -framework OpenGL -framework Cocoa
 
-CFLAGS = -Wall -Werror -Wextra -o3 -stdlib=libc++ -w
+CFLAGS = -Wall -Werror -Wextra -o3 -stdlib=libc++ -Wno-deprecated -w
 
 LIB_FLAG = -shared -fPIC
 
@@ -40,11 +40,22 @@ run:
 test:
 	$(CLANG) $(CFLAGS) -o test_main $(SRC) $(GL)
 
-sdl:
-	clear ; clang++ -Wall -Werror -Wextra -stdlib=libc++ -w \
-	-L/nfs/zfs-student-2/users/2013/jmoiroux/.brew/lib -lSDL2 \
-	-I/nfs/zfs-student-2/users/2013/jmoiroux/.brew/include/SDL2 -D_THREAD_SAFE \
-	main_test.cpp opengl_sdl_2D.cpp ../Api.class.cpp -o test_main
+sdl2:
+	clear ; clang++ -Wall -Werror -Wextra -std=c++98 -std=gnu++98 -w -o test_main\
+	`sdl2-config --libs` \
+	`sdl2-config --cflags` \
+	main_test.cpp opengl_sdl_2D.cpp ../Api.class.cpp \
+	-framework OpenGL -framework SDL2 \
+	-I/System/Library/Frameworks/OpenGL.framework/Headers \
+	-framework SDL2 -framework Cocoa -framework OpenGL
+	
+
+sdl1:
+	clear ; clang++ -Wall -Werror -Wextra -std=c++98 -std=gnu++98 -w \
+	`sdl-config --libs` \
+	`sdl-config --cflags` \
+	-framework OpenGL -framework SDL \
+	-o test_main main_test.cpp opengl_sdl_2D.cpp ../Api.class.cpp
 
 clean:
 	rm -rf $(OBJ)
