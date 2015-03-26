@@ -40,6 +40,12 @@ run:
 test:
 	$(CLANG) $(CFLAGS) -o test_main $(SRC) $(GL)
 
+sdl:
+	clear ; clang++ -Wall -Werror -Wextra -stdlib=libc++ -w \
+	-L/nfs/zfs-student-2/users/2013/jmoiroux/.brew/lib -lSDL2 \
+	-I/nfs/zfs-student-2/users/2013/jmoiroux/.brew/include/SDL2 -D_THREAD_SAFE \
+	main_test.cpp opengl_sdl_2D.cpp ../Api.class.cpp -o test_main
+
 clean:
 	rm -rf $(OBJ)
 

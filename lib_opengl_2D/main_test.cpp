@@ -1,10 +1,9 @@
 #include "../includes/api.class.hpp"
-#include "opengl_2d.class.hpp"
+#include "opengl_sdl_2D.hpp"
 
-// clear ; clang -Wall -Werror -Wextra -framework GLUT -framework OpenGL -framework Cocoa ../Api.class.cpp opengl_2D.class.cpp
+//clear ; clang++ `sdl2-config --libs` `sdl2-config --cflags` main_test.cpp opengl_sdl_2D.cpp -o test_main
 
-// clang -Wall -Werror -Wextra -pedantic -o3 -shared -fPIC -o lib_opengl_2D.so -w -framework GLUT -framework OpenGL -framework Cocoa Api.class.cpp opengl_2D.class.cpp 
-
+// clear ; clang++ -Wall -Werror -Wextra -stdlib=libc++ `sdl2-config --libs` `sdl2-config --cflags` main_test.cpp opengl_sdl_2D.cpp ../Api.class.cpp -o test_main
 int	main(int ac, char **av)
 {
 	int		i = 0;
@@ -45,8 +44,9 @@ int	main(int ac, char **av)
 	std::cout << "Debugg 0" << std::endl;
 	graphic->init(ac, av, 10, 10, "Test snake", map);
 	std::cout << "Debugg 1" << std::endl;
-	graphic->render_scene();
+	graphic->close();
 	std::cout << "Debugg 2" << std::endl;
+	//graphic->render_scene();
 
 	return (0);
 }
