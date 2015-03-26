@@ -6,17 +6,20 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/23 16:21:21 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/25 19:34:40 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/26 13:09:30 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAIN_HPP
 # define MAIN_HPP
 
-#include <unistd.h>
-#include <iostream>
-#include <dlfcn.h>
-#include "../includes/api.class.hpp"
+# include <unistd.h>
+# include <iostream>
+# include <dlfcn.h>
+# include <stdlib.h>
+# include <time.h>
+#include <random>
+# include "../includes/api.class.hpp"
 
 # define MAP_WIDTH 40
 # define MAP_HEIGHT 40
@@ -58,6 +61,7 @@ typedef struct	s_data
 	int			eat; // >= 1 if need to grow
 	bool		game;
 	int			speed;
+	bool		fruit;
 }				t_data;
 
 #endif

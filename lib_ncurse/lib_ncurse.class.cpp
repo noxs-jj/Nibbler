@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/21 12:14:58 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/25 18:41:58 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/26 12:54:30 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	Graphic::init( int ac, char** av, int x, int y, char *title, char **map ) {
 	start_color();
 	init_pair(1, COLOR_WHITE, COLOR_BLACK);		// wall
 	init_pair(2, COLOR_GREEN, COLOR_BLACK);		// snake
-	init_pair(3, COLOR_YELLOW, COLOR_BLACK);	// fruit
+	init_pair(3, COLOR_CYAN, COLOR_BLACK);		// fruit
 	this->_window = newwin(this->_y, this->_x, 0, 0);
 	if (this->_window == NULL)
 		throw std::exception();
@@ -116,13 +116,13 @@ void	Graphic::render_scene( void ) {
 				wattron(this->_window, COLOR_PAIR(1));
 				state = 1;
 			}
-			else if (state != 2 && this->_map[y][x] == FRUIT)
+			else if (state != 3 && this->_map[y][x] == FRUIT)
 			{
 				wattroff(this->_window, COLOR_PAIR(state));
-				wattron(this->_window, COLOR_PAIR(2));
-				state = 2;
+				wattron(this->_window, COLOR_PAIR(3));
+				state = 3;
 			}
-			else if (state != 3 && (this->_map[y][x] == QUEUE || this->_map[y][x] == HEAD))
+			else if (state != 2 && (this->_map[y][x] == QUEUE || this->_map[y][x] == HEAD))
 			{
 				wattroff(this->_window, COLOR_PAIR(state));
 				wattron(this->_window, COLOR_PAIR(2));

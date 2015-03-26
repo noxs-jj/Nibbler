@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/25 18:45:11 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/25 19:35:27 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/26 14:05:11 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	Event::init_map(t_data *d)
 	{
 		d->map[i] = static_cast<char *>(std::malloc(sizeof(char) * MAP_HEIGHT ));
 		d->map_info[i] = static_cast<int *>(std::malloc(sizeof(int) * MAP_HEIGHT ));
-		memset(d->map[i], '\0', MAP_HEIGHT);
+		memset(d->map[i], ' ', MAP_HEIGHT);
 		memset(d->map_info[i], '0', MAP_HEIGHT);
 	}
 	for (int y = 0; y < MAP_WIDTH; ++y)
@@ -65,6 +65,7 @@ void	Event::init_map(t_data *d)
 void	Event::init(t_data *d, int ac, char **av) {
 	d->key = NULL;
 	d->map = NULL;
+	d->fruit = false;
 	d->winx = MAP_WIDTH;
 	d->winy = MAP_HEIGHT;
 	d->posx = d->winx / 2;
