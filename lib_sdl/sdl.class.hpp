@@ -28,12 +28,12 @@
 # define X_MULTI	15.0f		//(x * 15) * number case width
 # define Y_MULTI	15.0f		//(y * 15) * number case height
 # define LINE_WIDTH	1.0f
-# define POINT_SIZE	1.0f
-# define SCALE_GL	0.01f
+# define POINT_SIZE	2.0f
+# define SCALE_GL	0.003f
 
-# define WALL_R		13
-# define WALL_G		13
-# define WALL_B		13
+# define WALL_R		255
+# define WALL_G		255
+# define WALL_B		255
 
 # define QUEUE_R	255
 # define QUEUE_G	0
@@ -79,10 +79,10 @@ public:
 	Graphic	& 			operator=( Graphic const & rhs );
 	Graphic( Graphic const & rhs );
 
-	void				draw_border( void );
 	void				draw_queue( float case_x, float case_y );
 	void				draw_head( float case_x, float case_y );
 	void				draw_fruit( float case_x, float case_y );
+	void				draw_wall( float case_x, float case_y );
 
 private:
 

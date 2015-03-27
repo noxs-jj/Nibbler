@@ -13,6 +13,7 @@
 CLANG = clang++
 
 NAME = lib_sdl_2d.so
+
 NAME_TEST = test_sdl
 
 GL = -framework opengl
@@ -21,20 +22,21 @@ CFLAGS = -Wall -Werror -Wextra -stdlib=libc++ -w
 
 LIB_FLAG = -shared -fPIC
 
+HEADER = sdl.class.hpp
+
 SRC =	sdl.class.cpp \
 		../Api.class.cpp
 
 OBJ = $(SRC:.cpp=.cpp.o)
 
 %.cpp.o: %.cpp
-	$(CLANG) $(CFLAGS) -c $< -o $@
+	$(CLANG) $(CFLAGS) `sdl2-config --libs` `sdl2-config --cflags` -c $< -o $@
 
 all: $(NAME)
 
-$(NAME):
+$(NAME): $(OBJ) $(HEADER)
 	$(CLANG) $(CFLAGS) $(LIB_FLAG) `sdl2-config --libs` `sdl2-config --cflags` \
-	-o $(NAME) $(SRC) $(GL)
-
+	-o $(NAME) $(OBJ) $(GL)
 
 run:
 	$(CLANG) $(CFLAGS) -o run_test $(NAME) $(GL)
