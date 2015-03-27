@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/25 18:45:16 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/25 19:28:23 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/27 16:27:08 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ public:
 	~Event( void );
 
 	void	init(t_data *d, int ac, char **av);
-	void	open_lib(t_data *d);
+	void	open_lib(t_data *d, char *name);
 	void	close_all(t_data *d);
 	void	init_map(t_data *d);
 protected:

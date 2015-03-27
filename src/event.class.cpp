@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/25 18:45:11 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/26 14:05:11 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/27 16:27:18 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,15 @@ void	Event::init(t_data *d, int ac, char **av) {
 	d->eat = 0;
 	d->dir = 2;
 	d->speed = BASIC_SPEED;
-	this->open_lib(d);
+	this->open_lib(d, av[1]);
 	this->init_map(d);
 	d->graphic->init(ac, av, d->winx, d->winy, NULL, d->map);
 }
 
-void	Event::open_lib(t_data *d) {
+void	Event::open_lib(t_data *d, char *name ) {
 	Api					*(*create)();
 
-	d->hndl = dlopen("lib_graphic.so", RTLD_LAZY | RTLD_LOCAL);
+	d->hndl = dlopen(name, RTLD_LAZY | RTLD_LOCAL);
 	if (d->hndl == NULL)
 	{
 		std::cerr << "dlopen : "<< dlerror() << std::endl; 
