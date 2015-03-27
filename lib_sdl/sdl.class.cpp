@@ -1,22 +1,22 @@
 // ************************************************************************** //
 //                                                                            //
 //                                                        :::      ::::::::   //
-//   opengl_2D.class.cpp                                :+:      :+:    :+:   //
+//   sdl.class.cpp                                      :+:      :+:    :+:   //
 //                                                    +:+ +:+         +:+     //
 //   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
-//   Created: 2015/03/16 15:41:13 by jmoiroux          #+#    #+#             //
-//   Updated: 2015/03/16 15:41:14 by jmoiroux         ###   ########.fr       //
+//   Created: 2015/03/27 12:41:33 by jmoiroux          #+#    #+#             //
+//   Updated: 2015/03/27 12:41:33 by jmoiroux         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
-#include "opengl_2D.class.hpp"
+#include "sdl.class.hpp"
+
 
 Graphic	*g_currentInstance;
 
 // START #############################################
 void				drawCallback() { // glutDisplayFunc(drawCallback)
-	g_currentInstance->show = true;
 	g_currentInstance->show_scene();
 }
 
@@ -66,8 +66,6 @@ void  				keyboard(unsigned char touche, int x, int y)
 }
 
 void				Graphic::show_scene( void ) { // render map
-	if (true == this->show)
-	{
 		int x = 0;
 		int y = 0;
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -90,32 +88,31 @@ void				Graphic::show_scene( void ) { // render map
 			y++;
 		}
 		glFlush();
-		glLoadIdentity();
+		SDL_GL_SwapBuffers();
 		std::cout << "show_scene" << std::endl;
-		// while (42)
-		// 	std::cout << "show_scene blabla" << std::endl;
-		//glutLeaveMainLoop ();
-		//usleep(3000000);
-		this->show = false;
-	}
+
+		usleep(3000000);
+
 }
 
 void				Graphic::init( int ac, char **av, int x, int y, char *title, char **map ) {
-	glutInit(&ac, av);								// init glut
-	glutInitDisplayMode(GLUT_RGB					// set color to RGB
-				| GLUT_DOUBLE						// set double buffered windows
-				| GLUT_DEPTH);						// Bit mask to select a window with a depth buffer.
-	glutInitWindowSize(static_cast<int>(x * X_MULTI), static_cast<int>(x * Y_MULTI));	// Size of windows
-	glutInitWindowPosition(STARTX, STARTY);   		// where the windos in create on Xserver/Desktop
-	glutCreateWindow(title);						// Create windows with title in param char *
+	SDL_Init(SDL_INIT_VIDEO);
+    SDL_WM_SetCaption(title,NULL);
+    SDL_SetVideoMode(x * X_MULTI, y * Y_MULTI, 32, SDL_OPENGL);
+
 	glClearColor(0.5f, 0.5f, 0.5f, 1); 				//purple set background/void color
 	glEnable(GL_DEPTH_TEST);
 	glPointSize(POINT_SIZE);
 	glLineWidth(LINE_WIDTH);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glFlush();
-	glutSwapBuffers();
 	glLoadIdentity();
+	SDL_GL_SwapBuffers();
+
+	(void)ac;
+	(void)av;
+
+	this->setCurrentInstance();
 	this->winx = x * X_MULTI;
 	this->winy = y * Y_MULTI;
 	this->mapXsize = x;
@@ -137,12 +134,8 @@ void				Graphic::init( int ac, char **av, int x, int y, char *title, char **map 
 	// }
 	// std::cout << std::endl;
 	//###############################
-	this->setCurrentInstance();
-	glutKeyboardFunc(keyboard);					// function for keyboard event
-	glutDisplayFunc(drawCallback);
-	glutMainLoop();
-	//glutMainLoopEvent();
-	//glutleavemainloop();
+	
+
 }
 
 void				Graphic::draw_head( float case_x, float case_y ) { // draw on case of smake head
@@ -212,7 +205,7 @@ Graphic &	Graphic::operator=(Graphic const & rhs) {
 }
 
 void				Graphic::close( void ) {
-	// REMPLIR
+	SDL_Quit();
 }
 
 Graphic::Graphic( Graphic const & rhs ) {
@@ -220,7 +213,7 @@ Graphic::Graphic( Graphic const & rhs ) {
 }
 
 Graphic::Graphic( void ) : winx(0), winy(0), mapXsize(0), mapYsize(0),
-map(NULL), key_list(NULL), empty(true), show(true) { //construct
+map(NULL), key_list(NULL) { //construct
 }
 
 Graphic::~Graphic( void ) {	// destruct

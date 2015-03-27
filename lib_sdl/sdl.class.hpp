@@ -1,24 +1,27 @@
 // ************************************************************************** //
 //                                                                            //
 //                                                        :::      ::::::::   //
-//   opengl_2D.class.hpp                                :+:      :+:    :+:   //
+//   sdl.class.hpp                                      :+:      :+:    :+:   //
 //                                                    +:+ +:+         +:+     //
 //   By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
-//   Created: 2015/03/24 10:09:47 by jmoiroux          #+#    #+#             //
-//   Updated: 2015/03/24 10:09:50 by jmoiroux         ###   ########.fr       //
+//   Created: 2015/03/27 12:41:44 by jmoiroux          #+#    #+#             //
+//   Updated: 2015/03/27 12:41:45 by jmoiroux         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
-
-
-#ifndef OPENGL_2D_CLASS_HPP
-# define OPENGL_2D_CLASS_HPP
+#ifndef SDL_CLASS_HPP
+# define SDL_CLASS_HPP
 
 # include "../includes/api.class.hpp"
+# include <stdio.h>
+# include <stdlib.h>
 # include <time.h>
 # include <unistd.h>
-#include <GLFW/glfw3.h>
+# include <string>
+# include <SDL.h>
+# include <openGL/gl.h>
+# include <openGL/glu.h>
 
 # define STARTX		100
 # define STARTY		100
@@ -44,23 +47,6 @@
 # define FRUIT_G	255
 # define FRUIT_B	0
 
-# ifdef linux //sudo apt-get install freeglut3 freeglut3-dev
-#	include <GL/gl.h>
-#	include <GL/glu.h>
-#	include <GL/glut.h>
-# endif
-# ifdef __APPLE__
-#	include <openGL/gl.h>
-#	include <openGL/glu.h>
-#	include <glut/glut.h>
-//#	include "openglut.h"
-# endif
-# ifdef __WIN32__
-#	include <GL/gl.h>
-#	include <GL/glu.h>
-#	include <windows.h>
-# endif
-
 class 					Api;
 
 void  					keyboard(unsigned char touche, int x, int y);
@@ -73,10 +59,11 @@ public:
 	int					winy;
 	int 				mapXsize;
 	int 				mapYsize;
-	char				**map;
-	std::vector<int>	*key_list;
+	char **				map;
+	std::vector<int> *	key_list;
 	bool				empty;
-	bool				show;
+	bool				run;
+	SDL_Event 			event;
 
 	void				addKey(int keyInput);
 
