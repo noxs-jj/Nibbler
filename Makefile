@@ -28,6 +28,14 @@ SRC = 	src/main.cpp src/event.class.cpp src/game.class.cpp
 SRC_NCURSE =	lib_ncurse/lib_ncurse.class.cpp \
 				Api.class.cpp
 
+SRC_SFML = lib_sfml/lib_sfml.class.cpp \
+				Api.class.cpp
+
+SFML_FLAGS = -I ~/.brew/Cellar/sfml/2.2/include \
+				-L ~/.brew/Cellar/sfml/2.2/lib \
+				-lsfml-graphics -lsfml-window -lsfml-system
+
+
 SO_NAME = lib_graphic.so
 
 OBJ = $(SRC:.cpp=.cpp.o)
@@ -51,6 +59,9 @@ ncurse:
 	echo "Compil with NCurse lib .so."
 	$(CXX) $(CFLAGS) -lncurses $(LIB_FLAG) -o $(SO_NAME) $(SRC_NCURSE)
 
+sfml:
+	# export LD_LIBRARY_PATH=~/.brew/Cellar/sfml/2.2/lib
+	$(CXX) $(CFLAGS) $(LIB_FLAG) $(SFML_FLAGS) -o $(SO_NAME) $(SRC_SFML)
 example: src/main.cpp libcircle.so
 	g++ -o example src/main.cpp -ldl
 
