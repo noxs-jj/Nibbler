@@ -20,6 +20,7 @@ int	main(int ac, char **av)
 
 	(void)ac;
 	(void)av;
+	i = 0;
 	while ( i < 10)
 	{
 		map[i] = (char *)std::malloc(sizeof(char) * 10 + 1);
@@ -44,12 +45,42 @@ int	main(int ac, char **av)
 		return (-1);
 	}
 
-	std::cout << "Debugg 0" << std::endl;
-	graphic->init(ac, av, 10, 10, "Test snake", map);
-	std::cout << "Debugg 1" << std::endl;
-	graphic->render_scene();
-	std::cout << "Debugg 3" << std::endl;
+	while (1) {
 
+		std::cout << "Debugg 0" << std::endl;
+		graphic->init(ac, av, 10, 10, "Test snake", map);
+		std::cout << "Debugg 1" << std::endl;
+		graphic->render_scene();
+		std::cout << "Debugg 3" << std::endl;
+		i = 0;
+		while ( i < 10)
+		{
+			if (i == 0 || i == 9)
+				map[i] = strncpy(map[i], "# ooo*  @#", 10);
+			else if (i == 4)
+				map[i] = strncpy(map[i], "# ooo*  @#", 10);
+			else
+				map[i] = strncpy(map[i], "#        #", 10);
+			i++;
+		}
+		graphic->render_scene();
+		std::cout << "Debugg 4" << std::endl;
+		i = 0;
+		while ( i < 10)
+		{
+			if (i == 0 || i == 9)
+				map[i] = strncpy(map[i], "##########", 10);
+			else if (i == 4)
+				map[i] = strncpy(map[i], "##########", 10);
+			else
+				map[i] = strncpy(map[i], "# ooo*  @#", 10);
+			i++;
+		}
+		graphic->render_scene();
+		std::cout << "Debugg 5" << std::endl;
+		
+	}
+	graphic->close();
 	return (0);
 }
 

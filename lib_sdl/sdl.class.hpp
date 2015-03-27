@@ -25,8 +25,8 @@
 
 # define STARTX		100
 # define STARTY		100
-# define X_MULTI	20.0f		//(x * 15) * number case width
-# define Y_MULTI	20.0f		//(y * 15) * number case height
+# define X_MULTI	15.0f		//(x * 15) * number case width
+# define Y_MULTI	15.0f		//(y * 15) * number case height
 # define LINE_WIDTH	1.0f
 # define POINT_SIZE	1.0f
 # define SCALE_GL	0.01f
@@ -49,10 +49,6 @@
 
 class 					Api;
 
-void  					keyboard(unsigned char touche, int x, int y);
-void					drawCallback();
-void					callAddKey(int keyInput);
-
 class	Graphic : public Api {
 public:
 	int					winx;
@@ -64,6 +60,9 @@ public:
 	bool				empty;
 	bool				run;
 	SDL_Event 			event;
+	SDL_Window *		window;
+	SDL_Surface *		screen;
+	SDL_GLContext 		opengl3_context;
 
 	void				addKey(int keyInput);
 
@@ -74,6 +73,7 @@ public:
 	void				render_scene( void );
 	void				show_scene( void );
 	std::vector<int>	**get_touch_list( void );
+	void  				keyboard( void );
 
 
 	Graphic	& 			operator=( Graphic const & rhs );
@@ -83,7 +83,6 @@ public:
 	void				draw_queue( float case_x, float case_y );
 	void				draw_head( float case_x, float case_y );
 	void				draw_fruit( float case_x, float case_y );
-	void				setCurrentInstance( void );
 
 private:
 

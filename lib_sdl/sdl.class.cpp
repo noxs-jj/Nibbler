@@ -12,130 +12,123 @@
 
 #include "sdl.class.hpp"
 
-
-Graphic	*g_currentInstance;
-
 // START #############################################
-void				drawCallback() { // glutDisplayFunc(drawCallback)
-	g_currentInstance->show_scene();
-}
-
-void				callAddKey(int keyInput) {
-	g_currentInstance->addKey(keyInput);
-}
-
-void				Graphic::render_scene( void ) { // from main graphic->rander_scene
-	this->show_scene();
-}
-
-void				Graphic::setCurrentInstance( void ) {
-	g_currentInstance = this;
+extern "C"	Api				*newObject( void )
+{
+	return (new Graphic());
 }
 // END ###############################################
 
-void  				keyboard(unsigned char touche, int x, int y)
+void  				Graphic::keyboard( void )
 {
-	(void)x;
-	(void)y;
-	if ( touche == 'q' || touche == 27 )
-		exit(0);
-	else if (touche == 'a')
-	{
-		std::cout << "LEFT: " << touche << std::endl;
-		callAddKey(68);
-	}
-	else if (touche == 'd')
-	{
-		std::cout << "RIGHT: " << touche << std::endl;
-		callAddKey(67);
-	}
-	else if (touche == 'w')
-	{
-		std::cout << "UP: " << touche << std::endl;
-		callAddKey(65);
-	}
-	else if (touche == 's')
-	{
-		std::cout << "DOWN: " << touche << std::endl;
-		callAddKey(66);
-	}
-	else
-	{
-		std::cout << "touche: " << touche << std::endl;
+	usleep(300000);
+	while (SDL_PollEvent(&this->event)) {
+		std::cout << "event 1" << std::endl;
+		if (this->event.type == SDL_KEYDOWN)
+		{
+			std::cout << "event 2" << std::endl;
+			switch((this->event).key.keysym.sym)
+			{
+				case SDL_QUIT:
+				std::cout << "SDL_QUIT " << std::endl;
+				this->close();
+				exit(0);
+				break;
+
+				case SDLK_HOME:
+				std::cout << "SDL_QUIT " << std::endl;
+				this->close();
+				exit(0);
+				break;
+
+				case SDLK_ESCAPE:
+				std::cout << "ESCAPE" << std::endl;
+				this->addKey(ECHAP);
+				break;
+
+				case SDLK_DOWN:
+				std::cout << "DOWN" << std::endl;
+				this->addKey(DOWN);
+				break;
+
+				case SDLK_UP:
+				std::cout << "UP" << std::endl;
+				this->addKey(UP);
+				break;
+
+				case SDLK_RIGHT:
+				std::cout << "RIGHT" << std::endl;
+				this->addKey(RIGHT);
+				break;
+
+				case SDLK_LEFT:
+				std::cout << "LEFT" << std::endl;
+				this->addKey(LEFT);
+				break;
+			}
+		}
 	}
 }
 
-void				Graphic::show_scene( void ) { // render map
+void				Graphic::render_scene( void ) { // render map
 		int x = 0;
 		int y = 0;
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glScalef(SCALE_GL, SCALE_GL, SCALE_GL);
-
-		draw_border();
+		glClear(GL_COLOR_BUFFER_BIT);
+		this->keyboard();
+		this->draw_border();
+		this->keyboard();
 		while (y < this->mapYsize)
 		{
 			x = 0;
 			while(x < this->mapXsize)
 			{
 				if (QUEUE  == this->map[y][x])
-					draw_queue(x, y);
+					this->draw_queue(x, y);
 				if (HEAD == this->map[y][x])
-					draw_head(x, y);
+					this->draw_head(x, y);
 				else if (FRUIT == this->map[y][x])
-					draw_fruit(x, y);
+					this->draw_fruit(x, y);
 				x++;
 			}
 			y++;
 		}
 		glFlush();
-		SDL_GL_SwapBuffers();
+		SDL_GL_SwapWindow(this->window);
 		std::cout << "show_scene" << std::endl;
-
-		usleep(3000000);
-
 }
 
 void				Graphic::init( int ac, char **av, int x, int y, char *title, char **map ) {
 	SDL_Init(SDL_INIT_VIDEO);
-    SDL_WM_SetCaption(title,NULL);
-    SDL_SetVideoMode(x * X_MULTI, y * Y_MULTI, 32, SDL_OPENGL);
 
-	glClearColor(0.5f, 0.5f, 0.5f, 1); 				//purple set background/void color
-	glEnable(GL_DEPTH_TEST);
+
+	this->window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+									x * X_MULTI, y * Y_MULTI,
+									SDL_WINDOW_OPENGL |
+									SDL_WINDOW_INPUT_GRABBED |
+									SDL_WINDOW_SHOWN);
+
+	this->opengl3_context = SDL_GL_CreateContext(this->window);
+
+	std::cout << "debugg 1" << std::endl;
+	glScalef(SCALE_GL, SCALE_GL, SCALE_GL);
 	glPointSize(POINT_SIZE);
 	glLineWidth(LINE_WIDTH);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glFlush();
-	glLoadIdentity();
-	SDL_GL_SwapBuffers();
 
 	(void)ac;
 	(void)av;
-
-	this->setCurrentInstance();
 	this->winx = x * X_MULTI;
 	this->winy = y * Y_MULTI;
 	this->mapXsize = x;
 	this->mapYsize = y;
 	this->map = map;
-	//###############################
-	// int i = 0;
-	// y = 0;
-	// while (y < 10)
-	// {
-	// 	i = 0;
-	// 	while (i < 10)
-	// 	{
-	// 		std::cout << map[y][i];
-	// 		i++;
-	// 	}
-	// 	std::cout << std::endl;
-	// 	y++;
-	// }
-	// std::cout << std::endl;
-	//###############################
-	
+	this->key_list = new std::vector<int>;
+}
 
+
+void				Graphic::close( void ) {
+	SDL_GL_DeleteContext(this->opengl3_context);
+	SDL_DestroyWindow(this->window);
+	SDL_Quit();
 }
 
 void				Graphic::draw_head( float case_x, float case_y ) { // draw on case of smake head
@@ -180,14 +173,7 @@ void				Graphic::draw_border( void ) { // color all map same color
 }
 
 void				Graphic::addKey(int keyInput) {
-	if (true == empty)
-	{
-		this->key_list = new std::vector<int>;
-		this->key_list->push_back(keyInput);
-		this->empty = false;
-	}
-	else
-		this->key_list->push_back(keyInput);
+	this->key_list->push_back(keyInput);
 }
 
 std::vector<int>	**Graphic::get_touch_list( void ) { // get list key
@@ -204,16 +190,12 @@ Graphic &	Graphic::operator=(Graphic const & rhs) {
 	return *this;
 }
 
-void				Graphic::close( void ) {
-	SDL_Quit();
-}
-
 Graphic::Graphic( Graphic const & rhs ) {
 	*this = rhs;
 }
 
 Graphic::Graphic( void ) : winx(0), winy(0), mapXsize(0), mapYsize(0),
-map(NULL), key_list(NULL) { //construct
+map(NULL), key_list(NULL), empty(true) { //construct
 }
 
 Graphic::~Graphic( void ) {	// destruct

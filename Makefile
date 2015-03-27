@@ -46,14 +46,9 @@ OBJ = $(SRC:.cpp=.cpp.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CXX) $(CFLAGS) $(OBJ) $(SO_NAME) -o $(NAME)
+	$(CXX) $(CFLAGS) $(OBJ) -o $(NAME)
 	# @$(CXX) $(CFLAGS) $(OBJ) -o $(NAME) $(GL)
 
-opengl:
-	echo "Compil with OpenGL lib .so"
-
-libx:
-	echo "Compil with LibX lib .so"
 
 ncurse:
 	echo "Compil with NCurse lib .so."
