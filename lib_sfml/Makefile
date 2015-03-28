@@ -5,46 +5,40 @@
 #                                                     +:+ +:+         +:+      #
 #    By: jmoiroux <jmoiroux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2015/03/27 12:42:13 by jmoiroux          #+#    #+#              #
-#    Updated: 2015/03/27 12:42:14 by jmoiroux         ###   ########.fr        #
+#    Created: 2015/03/28 21:14:09 by jmoiroux          #+#    #+#              #
+#    Updated: 2015/03/28 21:14:10 by jmoiroux         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 CLANG = clang++
 
-NAME = lib_sdl_2d.so
+NAME = lib_sfml_2d.so
 
-NAME_TEST = test_sdl
-
-GL = -framework opengl
+GL = -framework opengl -L ~/.brew/Cellar/sfml/2.2/lib -lsfml-graphics -lsfml-window -lsfml-system
 
 CFLAGS = -Wall -Werror -Wextra
 
 LIB_FLAG = -shared -fPIC
 
-HEADER = sdl.class.hpp
+SFML_FLAGS = -I ~/.brew/Cellar/sfml/2.2/include
+
+HEADER = lib_sfml.class.hpp
 
 SRC =	../Api.class.cpp \
-		sdl.class.cpp		
+		lib_sfml.class.cpp			
 
 OBJ = $(SRC:.cpp=.cpp.o)
 
 %.cpp.o: %.cpp
-	$(CLANG) $(CFLAGS) `sdl2-config --cflags` -c $< -o $@
+	$(CLANG) $(CFLAGS) $(SFML_FLAGS) -c $< -o $@
 
 all: $(NAME)
 
 $(NAME): $(OBJ) $(HEADER)
-	$(CLANG) $(CFLAGS) $(LIB_FLAG) `sdl2-config --libs` -o $(NAME) $(OBJ) $(GL)
+	$(CLANG) $(CFLAGS) $(LIB_FLAG) $(SFML_FLAGS) -o $(NAME) $(OBJ) $(GL)
 
 run:
 	$(CLANG) $(CFLAGS) -o run_test $(NAME) $(GL)
-
-test:
-	clear ; $(CLANG) -Wall -Werror -Wextra -stdlib=libc++ -w -o $(NAME_TEST) \
-	sdl.class.cpp ../Api.class.cpp main_test.cpp \
-	`sdl2-config --libs` `sdl2-config --cflags` \
-	-framework opengl
 
 clean:
 	rm -rf $(OBJ)
