@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/25 19:28:45 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/27 15:42:58 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/30 12:40:40 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,19 +118,20 @@ void	Game::move(t_data *d) {
 }
 
 void	Game::change_dir(t_data *d) {
-	if (d->key == NULL || (*d->key)->size() == 0)
-		return ;
-	if ((*d->key)->front() == (UP) && d->posy - 1 >= 0 && d->dir != 2)
-		d->dir = 1;
-	else if ((*d->key)->front() == (DOWN) && d->posy + 1 < MAP_HEIGHT && d->dir != 1)
-		d->dir = 2;
-	else if ((*d->key)->front() == (LEFT) && d->posx - 1 >= 0 && d->dir != 4)
-		d->dir = 3;
-	else if ((*d->key)->front() == (RIGHT) && d->posx + 1 < MAP_WIDTH && d->dir != 3)
-		d->dir = 4;
-	else if ((*d->key)->front() == (ECHAP))
-		d->game = false;
-	(*d->key)->erase((*d->key)->begin());
+	while (d->key != NULL && (*d->key)->size() != 0)
+	{
+		if ((*d->key)->front() == (UP) && d->posy - 1 >= 0 && d->dir != 2)
+			d->dir = 1;
+		else if ((*d->key)->front() == (DOWN) && d->posy + 1 < MAP_HEIGHT && d->dir != 1)
+			d->dir = 2;
+		else if ((*d->key)->front() == (LEFT) && d->posx - 1 >= 0 && d->dir != 4)
+			d->dir = 3;
+		else if ((*d->key)->front() == (RIGHT) && d->posx + 1 < MAP_WIDTH && d->dir != 3)
+			d->dir = 4;
+		else if ((*d->key)->front() == (ECHAP))
+			d->game = false;
+		(*d->key)->erase((*d->key)->begin());
+	}
 	return ;
 }
 
@@ -143,6 +144,8 @@ void	Game::run(t_data *d) {
 	while (d->game == true)
 	{
 		change_dir(d);
+		if (d->game == false)
+			return ;
 		move(d);
 		if (d->fruit == false)
 			add_fruit(d);

@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/21 12:14:58 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/26 12:54:30 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/30 12:41:58 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	Graphic::init( int ac, char** av, int x, int y, char *title, char **map ) {
 	noecho();
 	nodelay(stdscr, true);
 	curs_set(0);
+	keypad(this->_window, true);
 	wrefresh(this->_window);
 }
 
@@ -66,35 +67,31 @@ void	Graphic::close( void ) {
 }
 
 void	Graphic::keyboard( void ) {
-	int				key_input[3];
+	int			key;
+	int				touch = 1;
 
 	wtimeout(this->_window, 1);
-	key_input[0] = wgetch(this->_window);
-	if (key_input[0] == 27 && (key_input[1] = wgetch(this->_window)) == 91 &&
-		(key_input[2] = wgetch(this->_window)) == UP)	//KEY_UP
+	while (touch == 1)
+	{
+		key = wgetch(this->_window);
+		if (has_key(key) == true)
 		{
-			this->_key->push_back(UP);
-			// std::cout << "KEY_UP" << this->_key->size() << std::endl;
+			if (key == KEY_DOWN)
+				this->_key->push_back(DOWN);
+			else if (key == KEY_UP)
+				this->_key->push_back(UP);
+			else if (key == KEY_LEFT)
+				this->_key->push_back(LEFT);
+			else if (key == KEY_RIGHT)
+				this->_key->push_back(RIGHT);
 		}
-	else if (key_input[0] == 27 && key_input[1] == 91 && key_input[2] == DOWN) //KEY_DOWN
-	{
-		this->_key->push_back(DOWN);
-		// std::cout << "KEY_DOWN" << this->_key->size() << std::endl;
-	}
-	else if (key_input[0] == 27 && key_input[1] == 91 && key_input[2] == LEFT) //KEY_LEFT
-	{
-		this->_key->push_back(LEFT);
-		// std::cout << "KEY_LEFT" << this->_key->size() << std::endl;
-	}
-	else if (key_input[0] == 27 && key_input[1] == 91 && key_input[2] == RIGHT) //KEY_RIGHT
-	{
-		this->_key->push_back(RIGHT);
-		// std::cout << "KEY_RIGHT" << this->_key->size() << std::endl;
-	}
-	if (key_input[0] == 27 && key_input[1] == -1)
-	{
-		this->_key->push_back(27);
-		// std::cout << "KEY_ECHAP" << this->_key->size() << std::endl;
+		else if (key == 27)
+		{
+			this->_key->push_back(27);
+			return ;
+		}
+		else if (key == -1)
+			touch = 0;
 	}
 }
 
@@ -103,7 +100,7 @@ void	Graphic::render_scene( void ) {
 	int	y;
 	int	state = 1;
 
-	keyboard();	// maybe put keyboard in the for ?
+	keyboard();
 	werase(this->_window);
 	wattron(this->_window, COLOR_PAIR(1));
 	for (y = 0; y < this->_y; y++)
