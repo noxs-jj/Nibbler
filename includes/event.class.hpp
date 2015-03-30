@@ -28,6 +28,7 @@ public:
 	void	open_lib(t_data *d, char *name);
 	void	close_all(t_data *d);
 	void	init_map(t_data *d);
+	int 	parse_option(t_data *d, int ac, char **av);
 protected:
 
 };

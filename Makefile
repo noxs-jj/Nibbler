@@ -46,7 +46,6 @@ OBJ = $(SRC:.cpp=.cpp.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	export LD_LIBRARY_PATH=~/.brew/Cellar/sfml/2.2/lib
 	$(CXX) $(CFLAGS) $(OBJ) -o $(NAME)
 	# @$(CXX) $(CFLAGS) $(OBJ) -o $(NAME) $(GL)
 

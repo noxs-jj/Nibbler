@@ -18,7 +18,8 @@
 # include <dlfcn.h>
 # include <stdlib.h>
 # include <time.h>
-#include <random>
+# include <stdlib.h>
+# include <random>
 # include "../includes/api.class.hpp"
 
 # define MAP_WIDTH 40
@@ -39,29 +40,30 @@
 # define QUEUE 'o'
 # define FRUIT '@'
 
-class Event;
-class Game;
+class 					Event;
+class 					Game;
 
-typedef struct	s_data
+typedef struct			s_data
 {
-	Api			*graphic;
-	void		*hndl;
-	char		*head;
-	char		*after_head;
-	char		*queue;
-	char		*before_queue;
-	int			posx;
-	int			posy;
-	int			winx;
-	int			winy;
+	Api					*graphic;
+	void				*hndl;
+	char				*head;
+	char				*after_head;
+	char				*queue;
+	char				*before_queue;
+	int 				i_argv;
+	int					posx;
+	int					posy;
+	int					winx;
+	int					winy;
 	std::vector<int>	**key;
 	char				**map;
 	int					**map_info;
-	int			dir; // actual direction (1 up, 2 down, 3 left, 4 right)
-	int			eat; // >= 1 if need to grow
-	bool		game;
-	int			speed;
-	bool		fruit;
-}				t_data;
+	int					dir; // actual direction (1 up, 2 down, 3 left, 4 right)
+	int					eat; // >= 1 if need to grow
+	bool				game;
+	int					speed;
+	bool				fruit;
+}						t_data;
 
 #endif

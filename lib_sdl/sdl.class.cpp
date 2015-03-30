@@ -12,12 +12,10 @@
 
 #include "sdl.class.hpp"
 
-// START #############################################
-extern "C"	Api				*newObject( void )
+extern "C"	Api		*newObject( void )
 {
 	return (new Graphic());
 }
-// END ###############################################
 
 void  				Graphic::keyboard( void )
 {
@@ -26,25 +24,11 @@ void  				Graphic::keyboard( void )
 		{
 			switch((this->event).key.keysym.sym)
 			{
-				case SDLK_ESCAPE:
-				this->addKey(ECHAP);
-				break;
-
-				case SDLK_DOWN:
-				this->addKey(UP);
-				break;
-
-				case SDLK_UP:
-				this->addKey(DOWN);
-				break;
-
-				case SDLK_RIGHT:
-				this->addKey(RIGHT);
-				break;
-
-				case SDLK_LEFT:
-				this->addKey(LEFT);
-				break;
+				case SDLK_ESCAPE: this->addKey(ECHAP); break;
+				case SDLK_DOWN: this->addKey(UP); break;
+				case SDLK_UP: this->addKey(DOWN); break;
+				case SDLK_RIGHT: this->addKey(RIGHT); break;
+				case SDLK_LEFT: this->addKey(LEFT); break;
 			}
 		}
 	}
@@ -54,7 +38,6 @@ void				Graphic::render_scene( void ) { // render map
 		int x = 0;
 		int y = 0;
 		glClear(GL_COLOR_BUFFER_BIT);
-		//glScalef(SCALE_GL, SCALE_GL, SCALE_GL);
 		this->keyboard();
 		this->keyboard();
 		while (y < this->mapYsize)
@@ -79,6 +62,12 @@ void				Graphic::render_scene( void ) { // render map
 }
 
 void				Graphic::init( int ac, char **av, int x, int y, char *title, char **map ) {
+	float	scale = 0.1f;
+
+	if (x > y)
+		scale /= x;
+	else
+		scale /= y;
 	SDL_Init(SDL_INIT_VIDEO);
 	this->window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 									x * X_MULTI, y * Y_MULTI,
@@ -86,10 +75,9 @@ void				Graphic::init( int ac, char **av, int x, int y, char *title, char **map 
 									SDL_WINDOW_INPUT_GRABBED |
 									SDL_WINDOW_SHOWN);
 	this->opengl3_context = SDL_GL_CreateContext(this->window);
-	glScalef(SCALE_GL, SCALE_GL, SCALE_GL);
+	glScalef(scale, scale, scale);
 	glPointSize(POINT_SIZE);
 	glLineWidth(LINE_WIDTH);
-
 	(void)ac;
 	(void)av;
 	this->winx = x * X_MULTI;

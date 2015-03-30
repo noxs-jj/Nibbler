@@ -25,22 +25,54 @@ Event & Event::operator=( Event const & rhs ) {
 }
 Event::~Event( void ) {}
 
+int 	Event::parse_option(t_data *d, int ac, char **av)
+{
+	int tmp = 0;
+
+	while (1)
+	{
+		if (av[d->i_argv][0] == 'x' && strlen(&av[d->i_argv][1]) >= 2 && strlen(&av[d->i_argv][1]) <= 5 && isdigit(av[d->i_argv][1]))
+		{
+			tmp = atoi(&av[d->i_argv][1]);
+			if (tmp >= 10 && tmp <= 80)
+
+				d->winx = tmp;
+			d->i_argv++;
+		}
+		else if (av[d->i_argv][0] == 'y' && strlen(&av[d->i_argv][1]) >= 2 && strlen(&av[d->i_argv][1]) <= 5 && isdigit(av[d->i_argv][1]))
+		{
+			tmp = atoi(&av[d->i_argv][1]);
+			if (tmp >= 10 && tmp <= 80)
+				d->winy = tmp;
+			d->i_argv++;
+		}
+		else
+			d->i_argv++;
+		if (strncmp(av[d->i_argv], "lib", 3) == 0)
+			break ;
+	}
+
+	(void)ac;
+	(void)d;
+	return (0);
+}
+
 void	Event::init_map(t_data *d)
 {
-	d->map = static_cast<char **>(std::malloc(sizeof(char*) * MAP_HEIGHT ));
-	d->map_info = static_cast<int **>(std::malloc(sizeof(int*) * MAP_HEIGHT ));
-	for (int i = 0; i < MAP_HEIGHT; ++i)
+	d->map = static_cast<char **>(std::malloc(sizeof(char*) * d->winy ));
+	d->map_info = static_cast<int **>(std::malloc(sizeof(int*) * d->winy ));
+	for (int i = 0; i < d->winy; ++i)
 	{
-		d->map[i] = static_cast<char *>(std::malloc(sizeof(char) * MAP_HEIGHT ));
-		d->map_info[i] = static_cast<int *>(std::malloc(sizeof(int) * MAP_HEIGHT ));
-		memset(d->map[i], ' ', MAP_HEIGHT);
-		memset(d->map_info[i], '0', MAP_HEIGHT);
+		d->map[i] = static_cast<char *>(std::malloc(sizeof(char) * d->winx ));
+		d->map_info[i] = static_cast<int *>(std::malloc(sizeof(int) * d->winx ));
+		memset(d->map[i], ' ', d->winx);
+		memset(d->map_info[i], '0', d->winx);
 	}
-	for (int y = 0; y < MAP_WIDTH; ++y)
+	for (int y = 0; y < d->winy; ++y)
 	{
-		for (int i = 0; i < MAP_HEIGHT; ++i)
+		for (int i = 0; i < d->winx; ++i)
 		{
-			if (y == 0 || y == MAP_WIDTH - 1 || i == 0 || i == MAP_HEIGHT - 1)
+			if (y == 0 || y == d->winy - 1 || i == 0 || i == d->winx - 1)
 				d->map[y][i] = WALL;
 		}
 	}
@@ -66,14 +98,16 @@ void	Event::init(t_data *d, int ac, char **av) {
 	d->key = NULL;
 	d->map = NULL;
 	d->fruit = false;
+	d->i_argv = 1;
 	d->winx = MAP_WIDTH;
 	d->winy = MAP_HEIGHT;
+	this->parse_option(d, ac, av);
 	d->posx = d->winx / 2;
 	d->posy = d->winy / 2;
 	d->eat = 0;
 	d->dir = 2;
 	d->speed = BASIC_SPEED;
-	this->open_lib(d, av[1]);
+	this->open_lib(d, av[d->i_argv]);
 	this->init_map(d);
 	d->graphic->init(ac, av, d->winx, d->winy, NULL, d->map);
 }

@@ -29,7 +29,7 @@
 # define Y_MULTI	15.0f		//(y * 15) * number case height
 # define LINE_WIDTH	1.0f
 # define POINT_SIZE	2.0f
-# define SCALE_GL	0.003f
+# define SCALE_GL	0.01f
 
 # define WALL_R		255
 # define WALL_G		255
