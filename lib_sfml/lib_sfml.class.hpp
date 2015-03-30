@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/26 15:07:26 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/27 15:56:51 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/30 12:01:27 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ public:
 	~Graphic( void );
 
 	char				*getName( void ) const;
-	// WINDOW				*getWindow( void ) const;
+	sf::RenderWindow	*getWindow( void ) const;
 	int					getX( void ) const;
 	int					getY( void ) const;
 	std::vector<int>	*getKey( void ) const;

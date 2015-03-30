@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/26 15:07:24 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/27 16:11:06 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/30 12:03:18 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ Graphic & Graphic::operator=( Graphic const & rhs ) {
 	if (this != &rhs)
 	{
 		this->_name = rhs.getName();
-		// this->_window = rhs.getWindow();
+		this->_window = rhs.getWindow();
 		this->_x = rhs.getX();
 		this->_y = rhs.getY();
 		this->_key = rhs.getKey();
@@ -70,19 +70,21 @@ void	Graphic::close( void ) {
 }
 
 void	Graphic::keyboard( void ) {
-	this->_window->pollEvent(*this->_event);
-	if (this->_event->type == sf::Event::KeyPressed)
+	while (this->_window->pollEvent(*this->_event))
 	{
-		if (this->_event->key.code == sf::Keyboard::Left)
-			this->_key->push_back(LEFT);
-		else if (this->_event->key.code == sf::Keyboard::Right)
-			this->_key->push_back(RIGHT);
-		else if (this->_event->key.code == sf::Keyboard::Up)
-			this->_key->push_back(UP);
-		else if (this->_event->key.code == sf::Keyboard::Down)
-			this->_key->push_back(DOWN);
-		else if (this->_event->key.code == sf::Keyboard::Escape)
-			this->_key->push_back(27);
+		if (this->_event->type == sf::Event::KeyPressed)
+		{
+			if (this->_event->key.code == sf::Keyboard::Left)
+				this->_key->push_back(LEFT);
+			else if (this->_event->key.code == sf::Keyboard::Right)
+				this->_key->push_back(RIGHT);
+			else if (this->_event->key.code == sf::Keyboard::Up)
+				this->_key->push_back(UP);
+			else if (this->_event->key.code == sf::Keyboard::Down)
+				this->_key->push_back(DOWN);
+			else if (this->_event->key.code == sf::Keyboard::Escape)
+				this->_key->push_back(27);
+		}
 	}
 }
 
@@ -119,48 +121,11 @@ void	Graphic::render_scene( void ) {
 	keyboard();
 }
 
-// void	Graphic::render_scene( void ) {
-// 	int	x;
-// 	int	y;
-// 	int	state = 1;
-
-// 	keyboard();	// maybe put keyboard in the for ?
-// 	werase(this->_window);
-// 	wattron(this->_window, COLOR_PAIR(1));
-// 	for (y = 0; y < this->_y; y++)
-// 	{
-// 		for (x = 0; x < this->_x; x++)
-// 		{
-// 			if (state != 1 && this->_map[y][x] == WALL)
-// 			{
-// 				wattroff(this->_window, COLOR_PAIR(state));
-// 				wattron(this->_window, COLOR_PAIR(1));
-// 				state = 1;
-// 			}
-// 			else if (state != 3 && this->_map[y][x] == FRUIT)
-// 			{
-// 				wattroff(this->_window, COLOR_PAIR(state));
-// 				wattron(this->_window, COLOR_PAIR(3));
-// 				state = 3;
-// 			}
-// 			else if (state != 2 && (this->_map[y][x] == QUEUE || this->_map[y][x] == HEAD))
-// 			{
-// 				wattroff(this->_window, COLOR_PAIR(state));
-// 				wattron(this->_window, COLOR_PAIR(2));
-// 				state = 2;
-// 			}
-// 			mvwprintw(this->_window, y, x, "%c", this->_map[y][x]);
-// 		}
-// 	}
-// 	wrefresh(this->_window);
-// }
-
-
 std::vector<int> **Graphic::get_touch_list( void ) { return (&this->_key); }
 
 char				*Graphic::getName( void ) const { return (this->_name); }
 
-// WINDOW				*Graphic::getWindow( void ) const { return (this->_window); }
+sf::RenderWindow	*Graphic::getWindow( void ) const { return (this->_window); }
 
 int					Graphic::getX( void ) const { return (this->_x); }
 
