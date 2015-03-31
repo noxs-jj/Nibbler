@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/25 18:45:16 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/31 14:58:08 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/31 15:23:33 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,44 @@
 
 class Event {
 private:
-
+	char				*_lib_name[3];
+	Api					*_graphic;
+	void				*_hndl;
+	char				*_head;
+	char				*_after_head;
+	char				*_queue;
+	char				*_before_queue;
+	int					_posx;
+	int					_posy;
+	int					_winx;
+	int					_winy;
+	std::vector<int>	**_key;
+	char				**_map;
+	int					**_map_info;
+	int					_dir; // actual direction (1 up, 2 down, 3 left, 4 right)
+	int					_eat; // >= 1 if need to grow
+	bool				_game;
+	int					_speed;
+	bool				_fruit;
 public:
 	Event( void );
 	Event( Event const & src );
 	Event & operator=( Event const & rhs );
 	~Event( void );
 
-	void	init(t_data *d, int ac, char **av);
-	void	open_lib(t_data *d, char *name);
-	void	close_all(t_data *d);
-	void	init_map(t_data *d);
-	int 	parse_option(t_data *d, int ac, char **av);
+	void	init(int ac, char **av);
+	void	open_lib(char *name);
+	void	close_all( void );
+	void	init_map( void );
+	int 	parse_option(int ac, char **av);
 
-	void	run(t_data *d);
-	void	change_dir(t_data *d);
-	void	move(t_data *d);
-	void	inc_map(t_data *d);
-	void	dec_map(t_data *d, int dec);
-	int		check_move(t_data *d);
-	void	add_fruit(t_data *d);
+	void	run( void );
+	void	change_dir( void );
+	void	move( void );
+	void	inc_map( void );
+	void	dec_map(int dec );
+	int		check_move( void );
+	void	add_fruit( void );
 protected:
 
 };

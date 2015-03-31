@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/23 16:21:21 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/31 15:14:55 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/31 15:25:15 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define FRUIT '@'
 
 class 					Event;
-
+/*
 typedef struct			s_data
 {
 	char				*lib_name[3];
@@ -65,5 +65,5 @@ typedef struct			s_data
 	int					speed;
 	bool				fruit;
 }						t_data;
-
+*/
 #endif
