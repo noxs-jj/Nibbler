@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/25 18:45:11 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/31 15:26:44 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/31 16:11:05 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,48 @@ void	Event::inc_map( void ) {
 	}
 }
 
+void	Event::pro_spawn_obstacle( int rock )
+{
+	int 	x;
+	int 	y;
+
+	x = (rand() + this->_posx / this->_posy * this->_dir) % this->_winx;
+	y = (rand() + this->_posy / this->_posx * this->_dir) % this->_winy;
+	while (rock > 0)
+	{
+		while (this->_map[y][x] != ' ')
+		{
+			x = (rand() + this->_posx / this->_posy * this->_dir) % this->_winx;
+			y = (rand() + this->_posy / this->_posx * this->_dir) % this->_winy;
+		}
+		this->_map[y][x] = WALL;
+		rock--;
+	}
+}
+
+void	Event::pro_get_special( void ) {
+	int i = rand() % 50;
+
+	if (i >= 20 && i <= 30)	// bonus
+	{
+		this->_score += 100;
+		this->_special = false;
+	}
+	else if ((i % 2) == 0)	// malus
+	{
+		this->_score = ((this->_score - 100 >= 100) ? (this->_score - 100) : 0);
+		this->_eat += 1;
+		this->_special = false;
+	}
+	else	// malus
+	{
+		this->_eat += 2;
+		pro_spawn_obstacle(2);
+		this->_special = false;
+	}
+}
+
+
 void	Event::move( void ) {
 	int 	movx = 0;
 	int 	movy = 0;
@@ -98,9 +140,19 @@ void	Event::move( void ) {
 	this->_head = &(this->_map[this->_posy][this->_posx]);
 	if (this->_head[0] == FRUIT)
 	{
+		if (this->_game_mode == 2)
+			pro_spawn_obstacle(1);
 		this->_fruit = false;
+		this->_score += 10;
 		this->_eat++;
 	}
+	else if (this->_head[0] == SPECIAL && this->_game_mode != 2)
+	{
+		this->_score += 50;
+		this->_special = false;
+	}
+	else if (this->_head[0] == SPECIAL && this->_game_mode == 2)
+		pro_get_special();
 	this->_head[0] = HEAD;
 	this->_queue[0] = ' ';
 	this->_queue = this->_before_queue;
@@ -136,24 +188,33 @@ void	Event::change_dir( void ) {
 	return ;
 }
 
+void	Event::run_level( void ) {
 
+}
 
 void	Event::run( void ) {
 	
 	this->_game = true;
 	srand(time(NULL));
-	while (this->_game == true)
+	if (this->_game_mode == 1)
+		run_level();
+	else
 	{
-		change_dir();
-		if (this->_game == false)
-			return ;
-		move();
-		if (this->_fruit == false)
-			add_fruit();
-		this->_graphic->render_scene();
-		if (this->_key == NULL || (*this->_key)->size() == 0)
-			this->_key = this->_graphic->get_touch_list();
-		usleep(this->_speed);
+		while (this->_game == true)
+		{
+			change_dir();
+			if (this->_game == false)
+				return ;
+			move();
+			if (this->_fruit == false)
+				add_fruit();
+			this->_graphic->render_scene();
+			if (this->_key == NULL || (*this->_key)->size() == 0)
+				this->_key = this->_graphic->get_touch_list();
+			if (this->_game_mode == 2)
+				this->_speed = ((BASIC_SPEED - this->_score <= 0) ? 1 : (BASIC_SPEED - this->_score));
+			usleep(this->_speed);
+		}
 	}
 }
 
@@ -197,6 +258,10 @@ int 	Event::parse_option(int ac, char **av)
 			this->_lib_name[lib] = av[i];
 			lib++;
 		}
+		else if (strstr(av[i], "-level") != NULL && lib < 3)
+			this->_game_mode = 1;
+		else if (strstr(av[i], "-pro") != NULL && lib < 3)
+			this->_game_mode = 2;
 		i++;
 	}
 	if (lib <= 0)
@@ -248,8 +313,10 @@ void	Event::init(int ac, char **av) {
 	this->_key = NULL;
 	this->_map = NULL;
 	this->_fruit = false;
+	this->_special = false;
 	this->_winx = MAP_WIDTH;
 	this->_winy = MAP_HEIGHT;
+	this->_score = 0;
 	this->_lib_name[0] = NULL;
 	this->_lib_name[1] = NULL;
 	this->_lib_name[2] = NULL;
@@ -290,6 +357,4 @@ void	Event::close_all( void ) {
 		delete[] this->_map;
 	if (this->_map_info != NULL)
 		delete[] this->_map_info;
-	// if (d != NULL)
-	// 	free(d);
 }

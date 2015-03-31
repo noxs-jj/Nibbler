@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/23 16:21:21 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/31 15:25:15 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/31 16:11:36 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <random>
 # include <string.h>
 # include "../includes/api.class.hpp"
+
+# define PARAM "./nibbler [xPOSX] [yPOSY] [-level | -pro] <lib>"
 
 # define MAP_WIDTH 40
 # define MAP_HEIGHT 40
@@ -40,6 +42,7 @@
 # define HEAD '*'
 # define QUEUE 'o'
 # define FRUIT '@'
+# define SPECIAL '?'
 
 class 					Event;
 /*

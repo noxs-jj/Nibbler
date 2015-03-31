@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/25 18:45:16 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/31 15:23:33 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/31 15:58:47 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ private:
 	bool				_game;
 	int					_speed;
 	bool				_fruit;
+	int 				_game_mode;	// 0: normal, 1:level, 2:pro
+	unsigned int 		_score;
+	bool				_special;
 public:
 	Event( void );
 	Event( Event const & src );
@@ -49,6 +52,10 @@ public:
 	int 	parse_option(int ac, char **av);
 
 	void	run( void );
+	void	run_level( void );
+
+	void	pro_get_special( void );
+	void	pro_spawn_obstacle( int rock );
 	void	change_dir( void );
 	void	move( void );
 	void	inc_map( void );
