@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/23 16:21:21 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/31 16:11:36 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/31 16:30:56 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define MAP_WIDTH 40
 # define MAP_HEIGHT 40
 # define BASIC_SPEED 100000
+# define SPECIAL_TIME 40
 
 # define UP     65
 # define DOWN   66

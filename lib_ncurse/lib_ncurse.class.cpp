@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/21 12:14:58 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/30 12:41:58 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/31 16:13:29 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	Graphic::init( int ac, char** av, int x, int y, char *title, char **map ) {
 	init_pair(1, COLOR_WHITE, COLOR_BLACK);		// wall
 	init_pair(2, COLOR_GREEN, COLOR_BLACK);		// snake
 	init_pair(3, COLOR_CYAN, COLOR_BLACK);		// fruit
+	init_pair(4, COLOR_RED, COLOR_BLACK);		// special
 	this->_window = newwin(this->_y, this->_x, 0, 0);
 	if (this->_window == NULL)
 		throw std::exception();
@@ -124,6 +125,12 @@ void	Graphic::render_scene( void ) {
 				wattroff(this->_window, COLOR_PAIR(state));
 				wattron(this->_window, COLOR_PAIR(2));
 				state = 2;
+			}
+			else if (state != 4 && this->_map[y][x] == SPECIAL)
+			{
+				wattroff(this->_window, COLOR_PAIR(state));
+				wattron(this->_window, COLOR_PAIR(4));
+				state = 4;
 			}
 			mvwprintw(this->_window, y, x, "%c", this->_map[y][x]);
 		}

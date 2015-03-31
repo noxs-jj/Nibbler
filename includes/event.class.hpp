@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/25 18:45:16 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/31 15:58:47 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/31 16:28:23 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ private:
 	bool				_fruit;
 	int 				_game_mode;	// 0: normal, 1:level, 2:pro
 	unsigned int 		_score;
-	bool				_special;
+	int					_special;
+	char 				*_spec;
 public:
 	Event( void );
 	Event( Event const & src );
@@ -62,6 +63,7 @@ public:
 	void	dec_map(int dec );
 	int		check_move( void );
 	void	add_fruit( void );
+	void	add_special( void );
 protected:
 
 };

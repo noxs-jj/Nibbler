@@ -23,6 +23,7 @@
 # define HEAD '*'
 # define QUEUE 'o'
 # define FRUIT '@'
+# define SPECIAL '?'
 
 # define UP		65
 # define DOWN	66
