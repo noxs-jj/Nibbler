@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/21 12:14:58 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/25 19:35:33 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/31 15:00:19 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int main(int ac, char **av)
 {
 	t_data 				*d;
 	Event				event;
-	Game				game;
 
 	if ((d = static_cast<t_data *>(std::malloc(sizeof(t_data)))) == NULL)
 	{
@@ -27,7 +26,7 @@ int main(int ac, char **av)
 		exit(EXIT_FAILURE);
 	}
 	event.init(d, ac, av);
-	game.run(d);
+	event.run(d);
 	event.close_all(d);
 	return (EXIT_SUCCESS);
 }

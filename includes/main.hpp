@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/23 16:21:21 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/26 13:09:30 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/31 15:14:55 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <time.h>
 # include <stdlib.h>
 # include <random>
+# include <string.h>
 # include "../includes/api.class.hpp"
 
 # define MAP_WIDTH 40
@@ -41,17 +42,16 @@
 # define FRUIT '@'
 
 class 					Event;
-class 					Game;
 
 typedef struct			s_data
 {
+	char				*lib_name[3];
 	Api					*graphic;
 	void				*hndl;
 	char				*head;
 	char				*after_head;
 	char				*queue;
 	char				*before_queue;
-	int 				i_argv;
 	int					posx;
 	int					posy;
 	int					winx;
