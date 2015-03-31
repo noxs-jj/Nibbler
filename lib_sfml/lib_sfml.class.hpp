@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/26 15:07:26 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/30 12:01:27 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/31 16:31:58 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ private:
 	sf::CircleShape		*_queue;
 	sf::CircleShape		*_head;
 	sf::CircleShape		*_fruit;
+	sf::CircleShape		*_special;
 	sf::CircleShape		*_wall;
+
 	sf::Event 			*_event;
 	
 public:

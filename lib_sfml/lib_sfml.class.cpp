@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/26 15:07:24 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/30 12:03:18 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/03/31 16:33:07 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ void	Graphic::init( int ac, char** av, int x, int y, char *title, char **map ) {
 
 	this->_fruit = new sf::CircleShape(5.f, 4);
 	this->_fruit->setFillColor(sf::Color::Cyan);
+
+	this->_special = new sf::CircleShape(5.f, 4);
+	this->_special->setFillColor(sf::Color::Yellow);
 
 	this->_wall = new sf::CircleShape(5.f);
 	this->_wall->setFillColor(sf::Color::Green);
@@ -114,6 +117,11 @@ void	Graphic::render_scene( void ) {
 			{
 				this->_fruit->setPosition(x * 10.f, y * 10.f);
 				this->_window->draw(*this->_fruit);
+			}
+			else if (this->_map[y][x] == SPECIAL)
+			{
+				this->_special->setPosition(x * 10.f, y * 10.f);
+				this->_window->draw(*this->_special);
 			}
 		}
 	}
