@@ -30,6 +30,9 @@
 # define LEFT	68
 # define RIGHT	67
 # define ECHAP	27
+# define ONE	49
+# define TWO	50
+# define THREE	51
 
 class	Api
 {

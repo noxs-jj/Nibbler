@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/25 18:45:16 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/31 16:28:23 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/04/01 13:05:55 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 class Event {
 private:
+	t_data				*_d;
 	char				*_lib_name[3];
 	Api					*_graphic;
 	void				*_hndl;
@@ -46,8 +47,9 @@ public:
 	Event & operator=( Event const & rhs );
 	~Event( void );
 
-	void	init(int ac, char **av);
+	void	init(t_data *d);
 	void	open_lib(char *name);
+	void	change_lib(int lib);
 	void	close_all( void );
 	void	init_map( void );
 	int 	parse_option(int ac, char **av);
@@ -64,6 +66,7 @@ public:
 	int		check_move( void );
 	void	add_fruit( void );
 	void	add_special( void );
+
 protected:
 
 };

@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/21 12:14:58 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/31 15:25:06 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/04/01 13:05:08 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,12 @@
 
 int main(int ac, char **av)
 {
-	// t_data 				*d;
+	t_data 				d;
 	Event				event;
 
-	// if ((d = static_cast<t_data *>(std::malloc(sizeof(t_data)))) == NULL)
-	// {
-	// 	std::cerr << "t_data malloc error" << std::endl; 
-	// 	exit(EXIT_FAILURE);
-	// }
-	event.init(ac, av);
+	d.ac = ac;
+	d.av = av;
+	event.init(&d);
 	event.run();
 	event.close_all();
 	return (EXIT_SUCCESS);

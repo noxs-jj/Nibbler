@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/25 18:45:11 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/31 16:30:12 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/04/01 13:36:14 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,18 @@ void	Event::move( void ) {
 	}
 }
 
+void	Event::change_lib(int lib)
+{
+	if (this->_lib_name[lib] == NULL)
+		return ;
+	this->_graphic->close();
+	dlclose(this->_hndl);
+	open_lib(this->_lib_name[lib]);
+	this->_graphic->init(this->_d->ac, this->_d->av, this->_winx, this->_winy, NULL, this->_map);
+	this->_graphic->render_scene();
+}
+
+
 void	Event::change_dir( void ) {
 	while (this->_key != NULL && (*this->_key)->size() != 0)
 	{
@@ -183,6 +195,12 @@ void	Event::change_dir( void ) {
 			this->_dir = 4;
 		else if ((*this->_key)->front() == (ECHAP))
 			this->_game = false;
+		else if ((*this->_key)->front() == ONE)
+			change_lib(0);
+		else if ((*this->_key)->front() == TWO)
+			change_lib(1);
+		else if ((*this->_key)->front() == THREE)
+			change_lib(2);
 		(*this->_key)->erase((*this->_key)->begin());
 	}
 	return ;
@@ -336,7 +354,8 @@ void	Event::init_map( void )
 	this->_queue = &(this->_map[this->_posy - 3][this->_posx]);
 }
 
-void	Event::init(int ac, char **av) {
+void	Event::init( t_data *d ) {
+	this->_d = d;
 	this->_key = NULL;
 	this->_map = NULL;
 	this->_spec = NULL;
@@ -348,7 +367,7 @@ void	Event::init(int ac, char **av) {
 	this->_lib_name[0] = NULL;
 	this->_lib_name[1] = NULL;
 	this->_lib_name[2] = NULL;
-	parse_option(ac, av);
+	parse_option(d->ac, d->av);
 	this->_posx = this->_winx / 2;
 	this->_posy = this->_winy / 2;
 	this->_eat = 0;
@@ -356,16 +375,16 @@ void	Event::init(int ac, char **av) {
 	this->_speed = BASIC_SPEED;
 	this->open_lib(this->_lib_name[0]);
 	this->init_map();
-	this->_graphic->init(ac, av, this->_winx, this->_winy, NULL, this->_map);
+	this->_graphic->init(d->ac, d->av, this->_winx, this->_winy, NULL, this->_map);
 }
 
-void	Event::open_lib(char *name ) {
+void	Event::open_lib( char *name ) {
 	Api					*(*create)();
 
 	this->_hndl = dlopen(name, RTLD_LAZY | RTLD_LOCAL);
 	if (this->_hndl == NULL)
 	{
-		std::cerr << "dlopen : "<< dlerror() << std::endl; 
+		std::cerr << "dlopen : "<< dlerror() << std::endl;
 		exit(EXIT_FAILURE);
 	}
 	if ((create = reinterpret_cast<Api* (*)()>(dlsym(this->_hndl, "newObject"))) == NULL)

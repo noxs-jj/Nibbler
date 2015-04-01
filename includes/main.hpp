@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/23 16:21:21 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/31 16:30:56 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/04/01 13:03:47 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@
 # define LEFT   68
 # define RIGHT  67
 # define ECHAP  27
+# define ONE	49
+# define TWO	50
+# define THREE	51
 
 # define START_X (MAP_WIDTH / 2)
 # define START_Y (MAP_HEIGHT / 2)
@@ -46,28 +49,11 @@
 # define SPECIAL '?'
 
 class 					Event;
-/*
+
 typedef struct			s_data
 {
-	char				*lib_name[3];
-	Api					*graphic;
-	void				*hndl;
-	char				*head;
-	char				*after_head;
-	char				*queue;
-	char				*before_queue;
-	int					posx;
-	int					posy;
-	int					winx;
-	int					winy;
-	std::vector<int>	**key;
-	char				**map;
-	int					**map_info;
-	int					dir; // actual direction (1 up, 2 down, 3 left, 4 right)
-	int					eat; // >= 1 if need to grow
-	bool				game;
-	int					speed;
-	bool				fruit;
+	int					ac;
+	char				**av;
 }						t_data;
-*/
+
 #endif

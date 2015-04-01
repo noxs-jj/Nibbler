@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/21 12:14:58 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/31 16:13:29 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/04/01 12:44:28 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,12 @@ void	Graphic::keyboard( void ) {
 			this->_key->push_back(27);
 			return ;
 		}
+		else if (key == ONE)
+			this->_key->push_back(ONE);
+		else if (key == TWO)
+			this->_key->push_back(TWO);
+		else if (key == THREE)
+			this->_key->push_back(THREE);
 		else if (key == -1)
 			touch = 0;
 	}

@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/26 15:07:24 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/03/31 16:33:07 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/04/01 13:36:42 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,13 @@ void	Graphic::init( int ac, char** av, int x, int y, char *title, char **map ) {
 void	Graphic::close( void ) {
 	this->_window->clear();
 	this->_window->close();
+	delete this->_event;
+	delete this->_window;
+	delete this->_queue;
+	delete this->_head;
+	delete this->_fruit;
+	delete this->_special;
+	delete this->_wall;
 }
 
 void	Graphic::keyboard( void ) {
@@ -87,6 +94,12 @@ void	Graphic::keyboard( void ) {
 				this->_key->push_back(DOWN);
 			else if (this->_event->key.code == sf::Keyboard::Escape)
 				this->_key->push_back(27);
+			else if (this->_event->key.code == sf::Keyboard::Num1)
+				this->_key->push_back(ONE);
+			else if (this->_event->key.code == sf::Keyboard::Num2)
+				this->_key->push_back(TWO);
+			else if (this->_event->key.code == sf::Keyboard::Num3)
+				this->_key->push_back(THREE);
 		}
 	}
 }
