@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/25 18:45:11 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/04/01 13:36:14 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/04/04 15:03:07 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,20 +179,23 @@ void	Event::change_lib(int lib)
 	open_lib(this->_lib_name[lib]);
 	this->_graphic->init(this->_d->ac, this->_d->av, this->_winx, this->_winy, NULL, this->_map);
 	this->_graphic->render_scene();
+
 }
 
 
 void	Event::change_dir( void ) {
+	int 	dir = this->_dir;
+
 	while (this->_key != NULL && (*this->_key)->size() != 0)
 	{
 		if ((*this->_key)->front() == (UP) && this->_posy - 1 >= 0 && this->_dir != 2)
-			this->_dir = 1;
+			dir = 1;
 		else if ((*this->_key)->front() == (DOWN) && this->_posy + 1 < MAP_HEIGHT && this->_dir != 1)
-			this->_dir = 2;
+			dir = 2;
 		else if ((*this->_key)->front() == (LEFT) && this->_posx - 1 >= 0 && this->_dir != 4)
-			this->_dir = 3;
+			dir = 3;
 		else if ((*this->_key)->front() == (RIGHT) && this->_posx + 1 < MAP_WIDTH && this->_dir != 3)
-			this->_dir = 4;
+			dir = 4;
 		else if ((*this->_key)->front() == (ECHAP))
 			this->_game = false;
 		else if ((*this->_key)->front() == ONE)
@@ -203,6 +206,7 @@ void	Event::change_dir( void ) {
 			change_lib(2);
 		(*this->_key)->erase((*this->_key)->begin());
 	}
+	this->_dir = dir;
 	return ;
 }
 
@@ -382,7 +386,7 @@ void	Event::open_lib( char *name ) {
 	Api					*(*create)();
 
 	this->_hndl = dlopen(name, RTLD_LAZY | RTLD_LOCAL);
-	if (this->_hndl == NULL)
+	if (!this->_hndl)
 	{
 		std::cerr << "dlopen : "<< dlerror() << std::endl;
 		exit(EXIT_FAILURE);

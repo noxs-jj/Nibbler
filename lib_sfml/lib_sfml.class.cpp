@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/26 15:07:24 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/04/01 13:36:42 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/04/04 14:54:37 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,15 @@ void	Graphic::init( int ac, char** av, int x, int y, char *title, char **map ) {
 }
 
 void	Graphic::close( void ) {
-	this->_window->clear();
-	this->_window->close();
-	delete this->_event;
-	delete this->_window;
+	// this->_window->clear();
+	// this->_window->close();
 	delete this->_queue;
 	delete this->_head;
 	delete this->_fruit;
 	delete this->_special;
 	delete this->_wall;
+	delete this->_event;
+	delete this->_window;
 }
 
 void	Graphic::keyboard( void ) {
