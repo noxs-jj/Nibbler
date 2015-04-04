@@ -84,13 +84,13 @@ void	Graphic::keyboard( void ) {
 	{
 		if (this->_event->type == sf::Event::KeyPressed)
 		{
-			if (this->_event->key.code == sf::Keyboard::Left)
+			if (this->_event->key.code == sf::Keyboard::Left || this->_event->key.code == sf::Keyboard::A)
 				this->_key->push_back(LEFT);
-			else if (this->_event->key.code == sf::Keyboard::Right)
+			else if (this->_event->key.code == sf::Keyboard::Right || this->_event->key.code == sf::Keyboard::D)
 				this->_key->push_back(RIGHT);
-			else if (this->_event->key.code == sf::Keyboard::Up)
+			else if (this->_event->key.code == sf::Keyboard::Up || this->_event->key.code == sf::Keyboard::W)
 				this->_key->push_back(UP);
-			else if (this->_event->key.code == sf::Keyboard::Down)
+			else if (this->_event->key.code == sf::Keyboard::Down || this->_event->key.code == sf::Keyboard::S)
 				this->_key->push_back(DOWN);
 			else if (this->_event->key.code == sf::Keyboard::Escape)
 				this->_key->push_back(27);
