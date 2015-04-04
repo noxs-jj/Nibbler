@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/25 18:45:16 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/04/01 13:05:55 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/04/04 18:59:52 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ private:
 	unsigned int 		_score;
 	int					_special;
 	char 				*_spec;
+	bool				_paused;
 public:
 	Event( void );
 	Event( Event const & src );

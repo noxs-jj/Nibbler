@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/25 18:45:11 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/04/04 15:03:07 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/04/04 19:04:02 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,10 @@ void	Event::change_dir( void ) {
 			change_lib(1);
 		else if ((*this->_key)->front() == THREE)
 			change_lib(2);
+		else if ((*this->_key)->front() == SPACE && this->_paused == true)
+			this->_paused = false;
+		else if ((*this->_key)->front() == SPACE && this->_paused == false)
+			this->_paused = true;
 		(*this->_key)->erase((*this->_key)->begin());
 	}
 	this->_dir = dir;
@@ -227,16 +231,19 @@ void	Event::run( void ) {
 			change_dir();
 			if (this->_game == false)
 				return ;
-			move();
-			if (this->_fruit == false)
-				add_fruit();
-			if (this->_special == 0)
-				add_special();
-			else
+			if (this->_paused == false)
 			{
-				this->_special--;
+				move();
+				if (this->_fruit == false)
+					add_fruit();
 				if (this->_special == 0)
-					this->_spec[0] = ' ';
+					add_special();
+				else
+				{
+					this->_special--;
+					if (this->_special == 0)
+						this->_spec[0] = ' ';
+				}
 			}
 			this->_graphic->render_scene();
 			if (this->_key == NULL || (*this->_key)->size() == 0)
@@ -360,6 +367,7 @@ void	Event::init_map( void )
 
 void	Event::init( t_data *d ) {
 	this->_d = d;
+	this->_paused = false;
 	this->_key = NULL;
 	this->_map = NULL;
 	this->_spec = NULL;

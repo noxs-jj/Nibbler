@@ -33,6 +33,7 @@
 # define ONE	49
 # define TWO	50
 # define THREE	51
+# define SPACE	32
 
 class	Api
 {

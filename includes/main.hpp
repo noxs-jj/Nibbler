@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/23 16:21:21 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/04/01 13:03:47 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/04/04 18:59:07 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # define ONE	49
 # define TWO	50
 # define THREE	51
+# define SPACE	32
 
 # define START_X (MAP_WIDTH / 2)
 # define START_Y (MAP_HEIGHT / 2)
