@@ -26,9 +26,13 @@ void  				Graphic::keyboard( void )
 			{
 				case SDLK_ESCAPE: this->addKey(ECHAP); break;
 				case SDLK_DOWN: this->addKey(UP); break;
+				case SDLK_s: this->addKey(UP); break;
 				case SDLK_UP: this->addKey(DOWN); break;
+				case SDLK_w: this->addKey(DOWN); break;
 				case SDLK_RIGHT: this->addKey(RIGHT); break;
+				case SDLK_d: this->addKey(RIGHT); break;
 				case SDLK_LEFT: this->addKey(LEFT); break;
+				case SDLK_a: this->addKey(LEFT); break;
 			}
 		}
 	}
