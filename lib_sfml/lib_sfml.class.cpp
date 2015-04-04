@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/26 15:07:24 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/04/04 18:54:02 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/04/04 19:13:00 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,13 @@ void	Graphic::keyboard( void ) {
 	{
 		if (this->_event->type == sf::Event::KeyPressed)
 		{
-			if (this->_event->key.code == sf::Keyboard::Left)
+			if (this->_event->key.code == sf::Keyboard::Left || this->_event->key.code == sf::Keyboard::A)
 				this->_key->push_back(LEFT);
-			else if (this->_event->key.code == sf::Keyboard::Right)
+			else if (this->_event->key.code == sf::Keyboard::Right || this->_event->key.code == sf::Keyboard::D)
 				this->_key->push_back(RIGHT);
-			else if (this->_event->key.code == sf::Keyboard::Up)
+			else if (this->_event->key.code == sf::Keyboard::Up || this->_event->key.code == sf::Keyboard::W)
 				this->_key->push_back(UP);
-			else if (this->_event->key.code == sf::Keyboard::Down)
+			else if (this->_event->key.code == sf::Keyboard::Down || this->_event->key.code == sf::Keyboard::S)
 				this->_key->push_back(DOWN);
 			else if (this->_event->key.code == sf::Keyboard::Escape)
 				this->_key->push_back(27);
@@ -98,6 +98,8 @@ void	Graphic::keyboard( void ) {
 				this->_key->push_back(TWO);
 			else if (this->_event->key.code == sf::Keyboard::Num3)
 				this->_key->push_back(THREE);
+			else if (this->_event->key.code == sf::Keyboard::Space)
+				this->_key->push_back(SPACE);
 		}
 	}
 }

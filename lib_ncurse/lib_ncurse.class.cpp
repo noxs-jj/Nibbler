@@ -6,7 +6,7 @@
 /*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/21 12:14:58 by vjacquie          #+#    #+#             */
-/*   Updated: 2015/04/04 19:03:29 by vjacquie         ###   ########.fr       */
+/*   Updated: 2015/04/04 19:09:08 by vjacquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,38 +69,29 @@ void	Graphic::close( void ) {
 
 void	Graphic::keyboard( void ) {
 	int			key;
-	int				touch = 1;
+	int			touch = 1;
 
 	wtimeout(this->_window, 1);
 	while (touch == 1)
 	{
 		key = wgetch(this->_window);
-		if (has_key(key) == true)
+		switch(key)
 		{
-			if (key == KEY_DOWN)
-				this->_key->push_back(DOWN);
-			else if (key == KEY_UP)
-				this->_key->push_back(UP);
-			else if (key == KEY_LEFT)
-				this->_key->push_back(LEFT);
-			else if (key == KEY_RIGHT)
-				this->_key->push_back(RIGHT);
+			case KEY_DOWN: this->_key->push_back(DOWN) ; break;
+			case 's': this->_key->push_back(DOWN); break;
+			case KEY_UP: this->_key->push_back(UP); break;
+			case 'w': this->_key->push_back(UP); break;
+			case KEY_LEFT: this->_key->push_back(LEFT); break;
+			case 'a': this->_key->push_back(LEFT); break;
+			case KEY_RIGHT: this->_key->push_back(RIGHT); break;
+			case 'd': this->_key->push_back(RIGHT); break;
+			case 27: this->_key->push_back(27); break;
+			case ONE: this->_key->push_back(ONE); break;
+			case TWO: this->_key->push_back(TWO); break;
+			case THREE: this->_key->push_back(THREE); break;
+			case SPACE: this->_key->push_back(SPACE); break;
 		}
-		else if (key == 27)
-		{
-			this->_key->push_back(27);
-			return ;
-		}
-		else if (key == ONE)
-			this->_key->push_back(ONE);
-		else if (key == TWO)
-			this->_key->push_back(TWO);
-		else if (key == THREE)
-			this->_key->push_back(THREE);
-		else if (key == SPACE)
-			this->_key->push_back(SPACE);
-		else if (key == -1)
-			touch = 0;
+		break ;
 	}
 }
 

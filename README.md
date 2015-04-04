@@ -1,7 +1,7 @@
 Nibbler
 =======
 
-OpenGL, Ncurse, XLib, C++
+C++, Ncurse, SFML <(OpenGL)> SDL2
 
 #### MOIROUX Jean-Jacques @ 42 Born2code
 - jjmoiroux@gmail.com
