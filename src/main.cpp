@@ -13,6 +13,9 @@
 #include "../includes/main.hpp"
 #include "../includes/event.class.hpp"
 
+#include <sstream>
+#include <cstdlib>
+
 
 int main(int ac, char **av)
 {

@@ -13,7 +13,6 @@
 #ifndef LIB_SFML_CLASS_HPP
 # define LIB_SFML_CLASS_HPP
 
-
 # include <SFML/System.hpp>
 # include <SFML/Window.hpp>
 # include <SFML/Graphics.hpp>

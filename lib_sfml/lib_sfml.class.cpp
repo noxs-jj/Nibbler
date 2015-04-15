@@ -107,32 +107,25 @@ void	Graphic::keyboard( void ) {
 void	Graphic::render_scene( void ) {
 	keyboard();
 	this->_window->clear(sf::Color::Black);
-	for (int y = 0; y < this->_y; ++y)
-	{
-		for (int x = 0; x < this->_x; ++x)
-		{
-			if (this->_map[y][x] == WALL)
-			{
+	for (int y = 0; y < this->_y; ++y) {
+		for (int x = 0; x < this->_x; ++x) {
+			if (this->_map[y][x] == WALL) {
 				this->_wall->setPosition(x * 10.f, y * 10.f);
 				this->_window->draw(*this->_wall);
 			}
-			else if (this->_map[y][x] == HEAD)
-			{
+			else if (this->_map[y][x] == HEAD) {
 				this->_head->setPosition(x * 10.f, y * 10.f);
 				this->_window->draw(*this->_head);
 			}
-			else if (this->_map[y][x] == QUEUE)
-			{
+			else if (this->_map[y][x] == QUEUE) {
 				this->_queue->setPosition(x * 10.f, y * 10.f);
 				this->_window->draw(*this->_queue);
 			}
-			else if (this->_map[y][x] == FRUIT)
-			{
+			else if (this->_map[y][x] == FRUIT) {
 				this->_fruit->setPosition(x * 10.f, y * 10.f);
 				this->_window->draw(*this->_fruit);
 			}
-			else if (this->_map[y][x] == SPECIAL)
-			{
+			else if (this->_map[y][x] == SPECIAL) {
 				this->_special->setPosition(x * 10.f, y * 10.f);
 				this->_window->draw(*this->_special);
 			}

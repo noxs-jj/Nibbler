@@ -35,17 +35,21 @@
 # define WALL_G		255
 # define WALL_B		255
 
-# define QUEUE_R	255
-# define QUEUE_G	0
+# define QUEUE_R	0
+# define QUEUE_G	255
 # define QUEUE_B	0
 
-# define HEAD_R		0
+# define HEAD_R		255
 # define HEAD_G		0
-# define HEAD_B		255
+# define HEAD_B		0
 
 # define FRUIT_R	0
-# define FRUIT_G	255
-# define FRUIT_B	0
+# define FRUIT_G	0
+# define FRUIT_B	255
+
+# define SPECIAL_R	255
+# define SPECIAL_G	255
+# define SPECIAL_B	0
 
 class 					Api;
 
@@ -83,9 +87,7 @@ public:
 	void				draw_head( float case_x, float case_y );
 	void				draw_fruit( float case_x, float case_y );
 	void				draw_wall( float case_x, float case_y );
-
-private:
-
+	void				draw_special( float case_x, float case_y );
 };
 
 #endif

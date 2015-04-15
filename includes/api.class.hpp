@@ -41,16 +41,10 @@ class	Api
 		Api( void );
 		Api( Api const & src );
 		Api & operator=( Api const & rhs );
-		// virtual ~Api();
-		//virtual void				init( int ac, char** av, int x, int y, char *title ) = 0;
-		// besoint de la ligne en dessous pour opengl
 		virtual void				init( int ac, char** av, int x, int y, char *title, char **map ) = 0;
 		virtual void				close( void ) = 0;
-		//virtual void				render_scene( char **map ) = 0;
-		// besoint de la ligne en dessous pour opengl
 		virtual void				render_scene( void ) = 0;
 		virtual std::vector<int>	**get_touch_list( void ) = 0;
-		// virtual	void				echo( void ) = 0;
 };
 
 #endif
