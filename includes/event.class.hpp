@@ -17,31 +17,32 @@
 
 class Event {
 private:
-	t_data				*_d;
-	char				*_lib_name[3];
 	Api					*_graphic;
-	void				*_hndl;
-	char				*_head;
-	char				*_after_head;
-	char				*_queue;
-	char				*_before_queue;
-	int					_posx;
-	int					_posy;
-	int					_winx;
-	int					_winy;
-	std::vector<int>	**_key;
+	bool				_fruit;
+	bool				_game;
+	bool				_paused;
 	char				**_map;
+	char				*_after_head;
+	char				*_before_queue;
+	char				*_head;
+	char				*_lib_name[3];
+	char				*_queue;
+	char 				*_spec;
 	int					**_map_info;
 	int					_dir; // actual direction (1 up, 2 down, 3 left, 4 right)
 	int					_eat; // >= 1 if need to grow
-	bool				_game;
-	int					_speed;
-	bool				_fruit;
-	int 				_game_mode;	// 0: normal, 1:level, 2:pro
-	unsigned int 		_score;
+	int					_posx;
+	int					_posy;
 	int					_special;
-	char 				*_spec;
-	bool				_paused;
+	int					_speed;
+	int					_winx;
+	int					_winy;
+	int 				_game_mode;	// 0: normal, 1:level, 2:pro
+	std::vector<int>	**_key;
+	t_data				*_d;
+	unsigned int 		_score;
+	void				*_hndl;
+
 public:
 	Event( void );
 	Event( Event const & src );
@@ -67,9 +68,6 @@ public:
 	int		check_move( void );
 	void	add_fruit( void );
 	void	add_special( void );
-
-protected:
-
 };
 
 #endif

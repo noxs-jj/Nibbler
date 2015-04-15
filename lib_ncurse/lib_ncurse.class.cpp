@@ -20,8 +20,7 @@ Graphic::Graphic( Graphic const & src ) {
 }
 
 Graphic & Graphic::operator=( Graphic const & rhs ) {
-	if (this != &rhs)
-	{
+	if (this != &rhs) {
 		this->_name = rhs.getName();
 		this->_window = rhs.getWindow();
 		this->_x = rhs.getX();
@@ -72,11 +71,9 @@ void	Graphic::keyboard( void ) {
 	int			touch = 1;
 
 	wtimeout(this->_window, 1);
-	while (touch == 1)
-	{
+	while (touch == 1) {
 		key = wgetch(this->_window);
-		switch(key)
-		{
+		switch(key) {
 			case KEY_DOWN: this->_key->push_back(DOWN) ; break;
 			case 's': this->_key->push_back(DOWN); break;
 			case KEY_UP: this->_key->push_back(UP); break;
@@ -90,6 +87,7 @@ void	Graphic::keyboard( void ) {
 			case TWO: this->_key->push_back(TWO); break;
 			case THREE: this->_key->push_back(THREE); break;
 			case SPACE: this->_key->push_back(SPACE); break;
+			default: break;
 		}
 		break ;
 	}
@@ -103,30 +101,24 @@ void	Graphic::render_scene( void ) {
 	keyboard();
 	werase(this->_window);
 	wattron(this->_window, COLOR_PAIR(1));
-	for (y = 0; y < this->_y; y++)
-	{
-		for (x = 0; x < this->_x; x++)
-		{
-			if (state != 1 && this->_map[y][x] == WALL)
-			{
+	for (y = 0; y < this->_y; y++) {
+		for (x = 0; x < this->_x; x++) {
+			if (state != 1 && this->_map[y][x] == WALL) {
 				wattroff(this->_window, COLOR_PAIR(state));
 				wattron(this->_window, COLOR_PAIR(1));
 				state = 1;
 			}
-			else if (state != 3 && this->_map[y][x] == FRUIT)
-			{
+			else if (state != 3 && this->_map[y][x] == FRUIT) {
 				wattroff(this->_window, COLOR_PAIR(state));
 				wattron(this->_window, COLOR_PAIR(3));
 				state = 3;
 			}
-			else if (state != 2 && (this->_map[y][x] == QUEUE || this->_map[y][x] == HEAD))
-			{
+			else if (state != 2 && (this->_map[y][x] == QUEUE || this->_map[y][x] == HEAD)) {
 				wattroff(this->_window, COLOR_PAIR(state));
 				wattron(this->_window, COLOR_PAIR(2));
 				state = 2;
 			}
-			else if (state != 4 && this->_map[y][x] == SPECIAL)
-			{
+			else if (state != 4 && this->_map[y][x] == SPECIAL){
 				wattroff(this->_window, COLOR_PAIR(state));
 				wattron(this->_window, COLOR_PAIR(4));
 				state = 4;
@@ -151,22 +143,6 @@ std::vector<int>	*Graphic::getKey( void ) const {return (this->_key); }
 
 char				**Graphic::getMap( void ) const {return (this->_map); }
 
-// void				Graphic::delObject( Api *del)
-// {
-// 	delete reinterpret_cast<Graphic*>(del);
-// }
-
-// void		Graphic::echo( void )
-// {
-// 	std::cout << "hey " << std::endl;
-// }
-
-extern "C"	Api				*newObject( void )
-{
+extern "C"	Api				*newObject( void ) {
 	return (new Graphic());
 }
-
-
-
-
-

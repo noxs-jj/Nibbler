@@ -17,8 +17,7 @@ Event::Event( void ) {}
 Event::Event( Event const & src ) { *this = src; }
 
 Event & Event::operator=( Event const & rhs ) {
-	if (this != &rhs)
-	{
+	if (this != &rhs){
 
 	}
 	return (*this);
@@ -46,10 +45,8 @@ int		Event::check_move( void ) {
 }
 
 void	Event::dec_map(int dec) {
-	for (int y = 0; y < this->_winy; ++y)
-	{
-		for (int x = 0; x < this->_winx; ++x)
-		{
+	for (int y = 0; y < this->_winy; ++y) {
+		for (int x = 0; x < this->_winx; ++x) {
 			if (this->_map_info[y][x] > 0)
 				this->_map_info[y][x] -= dec;
 		}
@@ -57,10 +54,8 @@ void	Event::dec_map(int dec) {
 }
 
 void	Event::inc_map( void ) {
-	for (int y = 0; y < this->_winy; ++y)
-	{
-		for (int x = 0; x < this->_winx; ++x)
-		{
+	for (int y = 0; y < this->_winy; ++y) {
+		for (int x = 0; x < this->_winx; ++x) {
 			if (this->_map_info[y][x] > 0)
 				this->_map_info[y][x] += 1;
 		}
@@ -74,10 +69,8 @@ void	Event::pro_spawn_obstacle( int rock )
 
 	x = (rand() + this->_posx / this->_posy * this->_dir) % this->_winx;
 	y = (rand() + this->_posy / this->_posx * this->_dir) % this->_winy;
-	while (rock > 0)
-	{
-		while (this->_map[y][x] != ' ')
-		{
+	while (rock > 0) {
+		while (this->_map[y][x] != ' ') {
 			x = (rand() + this->_posx / this->_posy * this->_dir) % this->_winx;
 			y = (rand() + this->_posy / this->_posx * this->_dir) % this->_winy;
 		}
@@ -113,8 +106,7 @@ void	Event::move( void ) {
 	int 	movx = 0;
 	int 	movy = 0;
 
-	if (check_move() < 0)
-	{
+	if (check_move() < 0) {
 		this->_game = false;
 		return ;
 	}
@@ -138,16 +130,14 @@ void	Event::move( void ) {
 	this->_posy += movy;
 	this->_posx += movx;
 	this->_head = &(this->_map[this->_posy][this->_posx]);
-	if (this->_head[0] == FRUIT)
-	{
+	if (this->_head[0] == FRUIT) {
 		if (this->_game_mode == 2)
 			pro_spawn_obstacle(1);
 		this->_fruit = false;
 		this->_score += 10;
 		this->_eat++;
 	}
-	else if (this->_head[0] == SPECIAL && this->_game_mode != 2)
-	{
+	else if (this->_head[0] == SPECIAL && this->_game_mode != 2) {
 		this->_score += 50;
 		this->_special = 0;
 	}
@@ -157,12 +147,9 @@ void	Event::move( void ) {
 	this->_queue[0] = ' ';
 	this->_queue = this->_before_queue;
 
-	for (int y = 0; y < this->_winy; ++y)
-	{
-		for (int x = 0; x < this->_winx; ++x)
-		{
-			if (this->_map_info[y][x] == 2)
-			{
+	for (int y = 0; y < this->_winy; ++y) {
+		for (int x = 0; x < this->_winx; ++x) {
+			if (this->_map_info[y][x] == 2) {
 				this->_before_queue = &(this->_map[y][x]);
 				return ;
 			}
@@ -224,22 +211,18 @@ void	Event::run( void ) {
 	srand(time(NULL));
 	if (this->_game_mode == 1)
 		run_level();
-	else
-	{
-		while (this->_game == true)
-		{
+	else {
+		while (this->_game == true) {
 			change_dir();
 			if (this->_game == false)
 				return ;
-			if (this->_paused == false)
-			{
+			if (this->_paused == false) {
 				move();
 				if (this->_fruit == false)
 					add_fruit();
 				if (this->_special == 0)
 					add_special();
-				else
-				{
+				else {
 					this->_special--;
 					if (this->_special == 0)
 						this->_spec[0] = ' ';
@@ -263,9 +246,7 @@ void	Event::add_special( void ) {
 		return ;
 	x = (rand() + this->_posx / this->_posy * this->_dir) % this->_winx;
 	y = (rand() + this->_posy / this->_posx * this->_dir) % this->_winy;
-
-	while (this->_map[y][x] != ' ')
-	{
+	while (this->_map[y][x] != ' ') {
 		x = (rand() + this->_posx / this->_posy * this->_dir) % this->_winx;
 		y = (rand() + this->_posy / this->_posx * this->_dir) % this->_winy;
 	}
@@ -280,8 +261,7 @@ void	Event::add_fruit( void ) {
 
 	x = (rand() + this->_posx / this->_posy * this->_dir) % this->_winx;
 	y = (rand() + this->_posy / this->_posx * this->_dir) % this->_winy;
-	while (this->_map[y][x] != ' ')
-	{
+	while (this->_map[y][x] != ' ') {
 		x = (rand() + this->_posx / this->_posy * this->_dir) % this->_winx;
 		y = (rand() + this->_posy / this->_posx * this->_dir) % this->_winy;
 	}
@@ -295,22 +275,18 @@ int 	Event::parse_option(int ac, char **av)
 	int i = 1;
 	int lib = 0;
 
-	while (i < ac)
-	{
-		if (av[i][0] == 'x' && strlen(&av[i][1]) >= 2 && strlen(&av[i][1]) <= 5 && isdigit(av[i][1]))
-		{
+	while (i < ac) {
+		if (av[i][0] == 'x' && strlen(&av[i][1]) >= 2 && strlen(&av[i][1]) <= 5 && isdigit(av[i][1])) {
 			tmp = atoi(&av[i][1]);
 			if (tmp >= 10 && tmp <= 80)
 				this->_winx = tmp;
 		}
-		else if (av[i][0] == 'y' && strlen(&av[i][1]) >= 2 && strlen(&av[i][1]) <= 5 && isdigit(av[i][1]))
-		{
+		else if (av[i][0] == 'y' && strlen(&av[i][1]) >= 2 && strlen(&av[i][1]) <= 5 && isdigit(av[i][1])) {
 			tmp = atoi(&av[i][1]);
 			if (tmp >= 10 && tmp <= 80)
 				this->_winy = tmp;
 		}
-		else if (strstr(av[i], ".so") != NULL && lib < 3)
-		{
+		else if (strstr(av[i], ".so") != NULL && lib < 3) {
 			this->_lib_name[lib] = av[i];
 			lib++;
 		}
@@ -320,8 +296,7 @@ int 	Event::parse_option(int ac, char **av)
 			this->_game_mode = 2;
 		i++;
 	}
-	if (lib <= 0)
-	{
+	if (lib <= 0) {
 		std::cerr << "Error : Lib required" << std::endl;
 		exit(EXIT_FAILURE);
 	}
@@ -332,17 +307,14 @@ void	Event::init_map( void )
 {
 	this->_map = static_cast<char **>(std::malloc(sizeof(char*) * this->_winy ));
 	this->_map_info = static_cast<int **>(std::malloc(sizeof(int*) * this->_winy ));
-	for (int i = 0; i < this->_winy; ++i)
-	{
+	for (int i = 0; i < this->_winy; ++i) {
 		this->_map[i] = static_cast<char *>(std::malloc(sizeof(char) * this->_winx ));
 		this->_map_info[i] = static_cast<int *>(std::malloc(sizeof(int) * this->_winx ));
 		memset(this->_map[i], ' ', this->_winx);
 		memset(this->_map_info[i], '0', this->_winx);
 	}
-	for (int y = 0; y < this->_winy; ++y)
-	{
-		for (int i = 0; i < this->_winx; ++i)
-		{
+	for (int y = 0; y < this->_winy; ++y) {
+		for (int i = 0; i < this->_winx; ++i) {
 			if (y == 0 || y == this->_winy - 1 || i == 0 || i == this->_winx - 1)
 				this->_map[y][i] = WALL;
 		}
@@ -394,13 +366,11 @@ void	Event::open_lib( char *name ) {
 	Api					*(*create)();
 
 	this->_hndl = dlopen(name, RTLD_LAZY | RTLD_LOCAL);
-	if (!this->_hndl)
-	{
+	if (!this->_hndl) {
 		std::cerr << "dlopen : "<< dlerror() << std::endl;
 		exit(EXIT_FAILURE);
 	}
-	if ((create = reinterpret_cast<Api* (*)()>(dlsym(this->_hndl, "newObject"))) == NULL)
-	{ 
+	if ((create = reinterpret_cast<Api* (*)()>(dlsym(this->_hndl, "newObject"))) == NULL) { 
 		std::cerr << "dlsym : " << dlerror() << std::endl;
 		exit(EXIT_FAILURE);
 	}

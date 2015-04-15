@@ -19,8 +19,7 @@ Graphic::Graphic( Graphic const & src ) {
 }
 
 Graphic & Graphic::operator=( Graphic const & rhs ) {
-	if (this != &rhs)
-	{
+	if (this != &rhs){
 		this->_name = rhs.getName();
 		this->_window = rhs.getWindow();
 		this->_x = rhs.getX();
@@ -33,8 +32,6 @@ Graphic & Graphic::operator=( Graphic const & rhs ) {
 
 Graphic::~Graphic( void ) {}
 
-
-
 void	Graphic::init( int ac, char** av, int x, int y, char *title, char **map ) {
 	this->_x = x;
 	this->_y = y;
@@ -46,23 +43,16 @@ void	Graphic::init( int ac, char** av, int x, int y, char *title, char **map ) {
 
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
-
 	this->_event = new sf::Event();
-
 	this->_window = new sf::RenderWindow(sf::VideoMode(y * 10, x * 10), title, sf::Style::Default, settings);
-
 	this->_queue = new sf::CircleShape(5.f);
 	this->_queue->setFillColor(sf::Color::Green);
-
 	this->_head = new sf::CircleShape(5.f);
 	this->_head->setFillColor(sf::Color::Red);
-
 	this->_fruit = new sf::CircleShape(5.f, 4);
 	this->_fruit->setFillColor(sf::Color::Cyan);
-
 	this->_special = new sf::CircleShape(5.f, 4);
 	this->_special->setFillColor(sf::Color::Yellow);
-
 	this->_wall = new sf::CircleShape(5.f);
 	this->_wall->setFillColor(sf::Color::Green);
 }
@@ -78,28 +68,26 @@ void	Graphic::close( void ) {
 }
 
 void	Graphic::keyboard( void ) {
-	while (this->_window->pollEvent(*this->_event))
-	{
-		if (this->_event->type == sf::Event::KeyPressed)
-		{
-			if (this->_event->key.code == sf::Keyboard::Left || this->_event->key.code == sf::Keyboard::A)
-				this->_key->push_back(LEFT);
-			else if (this->_event->key.code == sf::Keyboard::Right || this->_event->key.code == sf::Keyboard::D)
-				this->_key->push_back(RIGHT);
-			else if (this->_event->key.code == sf::Keyboard::Up || this->_event->key.code == sf::Keyboard::W)
-				this->_key->push_back(UP);
-			else if (this->_event->key.code == sf::Keyboard::Down || this->_event->key.code == sf::Keyboard::S)
-				this->_key->push_back(DOWN);
-			else if (this->_event->key.code == sf::Keyboard::Escape)
-				this->_key->push_back(27);
-			else if (this->_event->key.code == sf::Keyboard::Num1)
-				this->_key->push_back(ONE);
-			else if (this->_event->key.code == sf::Keyboard::Num2)
-				this->_key->push_back(TWO);
-			else if (this->_event->key.code == sf::Keyboard::Num3)
-				this->_key->push_back(THREE);
-			else if (this->_event->key.code == sf::Keyboard::Space)
-				this->_key->push_back(SPACE);
+	while (this->_window->pollEvent(*this->_event)) {
+		if (this->_event->type == sf::Event::KeyPressed) {
+			switch (this->_event->key.code) {
+				case sf::Keyboard::Left:	this->_key->push_back(LEFT); break;
+				case sf::Keyboard::A:		this->_key->push_back(LEFT); break;
+				case sf::Keyboard::Right:	this->_key->push_back(RIGHT); break;
+				case sf::Keyboard::D:		this->_key->push_back(RIGHT); break;
+				case sf::Keyboard::Up:		this->_key->push_back(UP); break;
+				case sf::Keyboard::W:		this->_key->push_back(UP); break;
+				case sf::Keyboard::Down:	this->_key->push_back(DOWN); break;
+				case sf::Keyboard::S:		this->_key->push_back(DOWN); break;
+				case sf::Keyboard::Escape:	this->_key->push_back(ECHAP); break;
+				case sf::Keyboard::Q:		this->_key->push_back(ECHAP); break;
+				case sf::Keyboard::Space: 	this->_key->push_back(SPACE); break;
+				case sf::Keyboard::P:		this->_key->push_back(SPACE); break;
+				case sf::Keyboard::Num1:	this->_key->push_back(ONE); break;
+				case sf::Keyboard::Num2:	this->_key->push_back(TWO); break;
+				case sf::Keyboard::Num3:	this->_key->push_back(THREE); break;
+				default: break;
+			}
 		}
 	}
 }
@@ -109,25 +97,33 @@ void	Graphic::render_scene( void ) {
 	this->_window->clear(sf::Color::Black);
 	for (int y = 0; y < this->_y; ++y) {
 		for (int x = 0; x < this->_x; ++x) {
-			if (this->_map[y][x] == WALL) {
-				this->_wall->setPosition(x * 10.f, y * 10.f);
-				this->_window->draw(*this->_wall);
-			}
-			else if (this->_map[y][x] == HEAD) {
-				this->_head->setPosition(x * 10.f, y * 10.f);
-				this->_window->draw(*this->_head);
-			}
-			else if (this->_map[y][x] == QUEUE) {
-				this->_queue->setPosition(x * 10.f, y * 10.f);
+			switch (this->_map[y][x]) {
+				case WALL: {
+					this->_wall->setPosition(x * 10.f, y * 10.f);
+					this->_window->draw(*this->_wall);
+				} break;
+
+				case HEAD: {
+					this->_head->setPosition(x * 10.f, y * 10.f);
+					this->_window->draw(*this->_head);
+				} break;
+
+				case QUEUE: {
+					this->_queue->setPosition(x * 10.f, y * 10.f);
 				this->_window->draw(*this->_queue);
-			}
-			else if (this->_map[y][x] == FRUIT) {
-				this->_fruit->setPosition(x * 10.f, y * 10.f);
-				this->_window->draw(*this->_fruit);
-			}
-			else if (this->_map[y][x] == SPECIAL) {
-				this->_special->setPosition(x * 10.f, y * 10.f);
+				} break;
+
+				case FRUIT: {
+					this->_fruit->setPosition(x * 10.f, y * 10.f);
+					this->_window->draw(*this->_fruit);
+				} break;
+
+				case SPECIAL: {
+					this->_special->setPosition(x * 10.f, y * 10.f);
 				this->_window->draw(*this->_special);
+				} break;
+
+				default: break;
 			}
 		}
 	}
@@ -135,7 +131,7 @@ void	Graphic::render_scene( void ) {
 	keyboard();
 }
 
-std::vector<int> **Graphic::get_touch_list( void ) { return (&this->_key); }
+std::vector<int>	**Graphic::get_touch_list( void ) { return (&this->_key); }
 
 char				*Graphic::getName( void ) const { return (this->_name); }
 
@@ -149,7 +145,7 @@ std::vector<int>	*Graphic::getKey( void ) const {return (this->_key); }
 
 char				**Graphic::getMap( void ) const {return (this->_map); }
 
-extern "C"	Api				*newObject( void )
+extern "C"	Api		*newObject( void )
 {
 	return (new Graphic());
 }

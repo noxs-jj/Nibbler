@@ -18,13 +18,12 @@
 
 class api;
 
-typedef struct		s_key
-{
+typedef struct		s_key {
 	int				key;
 	struct s_key	*next;
 }					t_key;
 
-class Graphic : public Api{
+class Graphic : public Api {
 private:
 	WINDOW				*_window;
 	int					_x;
@@ -51,11 +50,6 @@ public:
 	void				close( void );
 	void				render_scene( void );
 	std::vector<int>	**get_touch_list( void );
-
-	// void				delObject( Api *del );
-	// void				echo( void );
-protected:
-
 };
 
 

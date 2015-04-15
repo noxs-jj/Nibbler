@@ -18,26 +18,24 @@ extern "C"	Api		*newObject( void ) {
 
 void  				Graphic::keyboard( void ) {
 	while (SDL_PollEvent(&this->event)) {
-		if (this->event.type == SDL_KEYDOWN)
-		{
-			switch((this->event).key.keysym.sym)
-			{
-				case SDLK_ESCAPE: this->addKey(ECHAP); break;
-				case SDLK_q: this->addKey(ECHAP); break;
-				case SDLK_DOWN: this->addKey(UP); break;
-				case SDLK_s: this->addKey(UP); break;
-				case SDLK_UP: this->addKey(DOWN); break;
-				case SDLK_w: this->addKey(DOWN); break;
-				case SDLK_RIGHT: this->addKey(RIGHT); break;
-				case SDLK_d: this->addKey(RIGHT); break;
-				case SDLK_LEFT: this->addKey(LEFT); break;
-				case SDLK_a: this->addKey(LEFT); break;
-				case SDLK_SPACE: this->addKey(SPACE); break;
-				case SDLK_p: this->addKey(SPACE); break;
-				case SDLK_1: this->addKey(ONE); break;
-				case SDLK_2: this->addKey(TWO); break;
-				case SDLK_3: this->addKey(THREE); break;
-
+		if (this->event.type == SDL_KEYDOWN) {
+			switch((this->event).key.keysym.sym) {
+				case SDLK_ESCAPE:	this->addKey(ECHAP); break;
+				case SDLK_q:		this->addKey(ECHAP); break;
+				case SDLK_DOWN:		this->addKey(UP); break;
+				case SDLK_s:		this->addKey(UP); break;
+				case SDLK_UP:		this->addKey(DOWN); break;
+				case SDLK_w:		this->addKey(DOWN); break;
+				case SDLK_RIGHT:	this->addKey(RIGHT); break;
+				case SDLK_d:		this->addKey(RIGHT); break;
+				case SDLK_LEFT:		this->addKey(LEFT); break;
+				case SDLK_a:		this->addKey(LEFT); break;
+				case SDLK_SPACE:	this->addKey(SPACE); break;
+				case SDLK_p:		this->addKey(SPACE); break;
+				case SDLK_1:		this->addKey(ONE); break;
+				case SDLK_2:		this->addKey(TWO); break;
+				case SDLK_3:		this->addKey(THREE); break;
+				default: break;
 			}
 		}
 	}
@@ -46,24 +44,21 @@ void  				Graphic::keyboard( void ) {
 void				Graphic::render_scene( void ) { // render map
 		int x = 0;
 		int y = 0;
+
 		glClear(GL_COLOR_BUFFER_BIT);
 		this->keyboard();
 		this->keyboard();
-		while (y < this->mapYsize)
-		{
+		while (y < this->mapYsize) {
 			x = 0;
-			while(x < this->mapXsize)
-			{
-				if (WALL  == this->map[y][x])
-					this->draw_wall(x, y);
-				else if (QUEUE  == this->map[y][x])
-					this->draw_queue(x, y);
-				else if (HEAD == this->map[y][x])
-					this->draw_head(x, y);
-				else if (FRUIT == this->map[y][x])
-					this->draw_fruit(x, y);
-				else if (SPECIAL == this->map[y][x])
-					this->draw_special(x, y);
+			while(x < this->mapXsize) {
+				switch (this->map[y][x]) {
+					case WALL:		this->draw_wall(x, y); break;
+					case QUEUE:		this->draw_queue(x, y); break;
+					case HEAD:		this->draw_head(x, y); break;
+					case FRUIT:		this->draw_fruit(x, y);break;
+					case SPECIAL:	this->draw_special(x, y); break;
+					default: break;
+				}
 				x++;
 			}
 			y++;
@@ -83,7 +78,8 @@ void				Graphic::init( int ac, char **av, int x, int y, char *title, char **map 
 	this->window = SDL_CreateWindow(title,
 									SDL_WINDOWPOS_CENTERED,
 									SDL_WINDOWPOS_CENTERED,
-									x * X_MULTI, y * Y_MULTI,
+									x * X_MULTI,
+									y * Y_MULTI,
 									SDL_WINDOW_OPENGL |
 									SDL_WINDOW_INPUT_GRABBED |
 									SDL_WINDOW_SHOWN);
@@ -158,9 +154,7 @@ void				Graphic::draw_wall( float case_x, float case_y ) { // draw on case of sn
 	glEnd();
 }
 
-void				Graphic::addKey(int keyInput) {
-	this->key_list->push_back(keyInput);
-}
+void				Graphic::addKey(int keyInput) { this->key_list->push_back(keyInput);}
 
 std::vector<int>	**Graphic::get_touch_list( void ) { return (&(this->key_list)); }
 
