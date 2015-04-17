@@ -33,7 +33,7 @@ OBJ = $(SRC:.cpp=.cpp.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CXX) $(CFLAGS) $(OBJ) -o $(NAME)
+	$(CXX) $(CFLAGS) $(OBJ) $(SFML_LIBS) -o $(NAME)
 
 full: $(NAME)
 	@brew update && brew install sdl && reset

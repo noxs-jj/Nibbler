@@ -10,6 +10,12 @@
 #                                                                              #
 #******************************************************************************#
 
+# https://www.libsdl.org/release/SDL2-2.0.3.tar.gz
+# curl -o SDL2-2.0.3.tar.gz https://www.libsdl.org/release/SDL2-2.0.3.tar.gz
+# go to lib_sdl/SDL2-2.0.3
+# ./configure
+# make
+
 CLANG = clang++
 
 NAME = lib_sdl_2d.so

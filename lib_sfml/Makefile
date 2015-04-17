@@ -9,12 +9,21 @@
 #    Updated: 2015/03/28 21:14:10 by jmoiroux         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
+#
+#
+# LDFLAGS=-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -L $(SFML)/lib -Wl,-rpath=$(SFML)/lib -Wl,-rpath-link=$(SFML)/lib
 
 CLANG = clang++
 
 NAME = lib_sfml_2d.so
 
-GL = -framework opengl -L ~/.brew/Cellar/sfml/2.2/lib -lsfml-graphics -lsfml-window -lsfml-system
+SFML = ~/.brew/Cellar/sfml/2.2
+
+GL = -framework opengl -L $(SFML)/lib -Wl,-rpath,$(SFML)/lib -lsfml-graphics -lsfml-window -lsfml-system
+
+# GL = -framework opengl -L ~/.brew/Cellar/sfml/2.2/lib -lsfml-graphics -lsfml-window -lsfml-system
+
+
 
 CFLAGS = -Wall -Werror -Wextra
 

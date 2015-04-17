@@ -42,29 +42,29 @@ void  				Graphic::keyboard( void ) {
 }
 
 void				Graphic::render_scene( void ) { // render map
-		int x = 0;
-		int y = 0;
+	int x = 0;
+	int y = 0;
 
-		glClear(GL_COLOR_BUFFER_BIT);
-		this->keyboard();
-		this->keyboard();
-		while (y < this->mapYsize) {
-			x = 0;
-			while(x < this->mapXsize) {
-				switch (this->map[y][x]) {
-					case WALL:		this->draw_wall(x, y); break;
-					case QUEUE:		this->draw_queue(x, y); break;
-					case HEAD:		this->draw_head(x, y); break;
-					case FRUIT:		this->draw_fruit(x, y);break;
-					case SPECIAL:	this->draw_special(x, y); break;
-					default: break;
-				}
-				x++;
+	glClear(GL_COLOR_BUFFER_BIT);
+	this->keyboard();
+	this->keyboard();
+	while (y < this->mapYsize) {
+		x = 0;
+		while(x < this->mapXsize) {
+			switch (this->map[y][x]) {
+				case WALL:		this->draw_wall(x, y); break;
+				case QUEUE:		this->draw_queue(x, y); break;
+				case HEAD:		this->draw_head(x, y); break;
+				case FRUIT:		this->draw_fruit(x, y);break;
+				case SPECIAL:	this->draw_special(x, y); break;
+				default: break;
 			}
-			y++;
+			x++;
 		}
-		glFlush();
-		SDL_GL_SwapWindow(this->window);
+		y++;
+	}
+	glFlush();
+	SDL_GL_SwapWindow(this->window);
 }
 
 void				Graphic::init( int ac, char **av, int x, int y, char *title, char **map ) {
