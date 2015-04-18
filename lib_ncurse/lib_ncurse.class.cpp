@@ -19,9 +19,7 @@ extern "C"	Api		*newObject( void ) {
 Graphic::Graphic( void ) :	_window(NULL),
 							_key(NULL) {}
 
-Graphic::Graphic( Graphic const & src ) {
-	*this = src;
-}
+Graphic::Graphic( Graphic const & src ) { *this = src; }
 
 Graphic & Graphic::operator=( Graphic const & rhs ) {
 	if (this != &rhs) {
@@ -78,19 +76,19 @@ void	Graphic::keyboard( void ) {
 	while (touch == 1) {
 		key = wgetch(this->_window);
 		switch(key) {
-			case KEY_DOWN: this->_key->push_back(DOWN) ; break;
-			case 's': this->_key->push_back(DOWN); break;
-			case KEY_UP: this->_key->push_back(UP); break;
-			case 'w': this->_key->push_back(UP); break;
-			case KEY_LEFT: this->_key->push_back(LEFT); break;
-			case 'a': this->_key->push_back(LEFT); break;
-			case KEY_RIGHT: this->_key->push_back(RIGHT); break;
-			case 'd': this->_key->push_back(RIGHT); break;
-			case 27: this->_key->push_back(27); break;
-			case ONE: this->_key->push_back(ONE); break;
-			case TWO: this->_key->push_back(TWO); break;
-			case THREE: this->_key->push_back(THREE); break;
-			case SPACE: this->_key->push_back(SPACE); break;
+			case KEY_DOWN:	this->_key->push_back(DOWN) ; break;
+			case 's':		this->_key->push_back(DOWN); break;
+			case KEY_UP:	this->_key->push_back(UP); break;
+			case 'w':		this->_key->push_back(UP); break;
+			case KEY_LEFT:	this->_key->push_back(LEFT); break;
+			case 'a':		this->_key->push_back(LEFT); break;
+			case KEY_RIGHT:	this->_key->push_back(RIGHT); break;
+			case 'd':		this->_key->push_back(RIGHT); break;
+			case 27:		this->_key->push_back(27); break;
+			case ONE:		this->_key->push_back(ONE); break;
+			case TWO:		this->_key->push_back(TWO); break;
+			case THREE:		this->_key->push_back(THREE); break;
+			case SPACE:		this->_key->push_back(SPACE); break;
 			default: break;
 		}
 		break ;

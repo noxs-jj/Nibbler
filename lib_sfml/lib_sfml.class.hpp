@@ -20,7 +20,7 @@
 
 #include <vector>
 
-class api;
+class 				api;
 
 typedef struct		s_key {
 	int				key;
@@ -40,13 +40,13 @@ private:
 	sf::CircleShape		*_fruit;
 	sf::CircleShape		*_special;
 	sf::CircleShape		*_wall;
-
 	sf::Event 			*_event;
+
+	Graphic( Graphic const & src );
+	Graphic & operator=( Graphic const & rhs );
 	
 public:
 	Graphic( void );
-	Graphic( Graphic const & src );
-	Graphic & operator=( Graphic const & rhs );
 	virtual ~Graphic( void );
 
 	char				*getName( void ) const;
@@ -56,17 +56,10 @@ public:
 	std::vector<int>	*getKey( void ) const;
 	char				**getMap( void ) const;
 	void				keyboard( void );
-
 	void				init( int ac, char** av, int x, int y, char *title, char **map );
 	void				close( void );
 	void				render_scene( void );
 	std::vector<int>	**get_touch_list( void );
-
-	// void				delObject( Api *del );
-	// void				echo( void );
-protected:
-
 };
-
 
 #endif

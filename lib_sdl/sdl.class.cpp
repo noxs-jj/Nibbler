@@ -69,12 +69,6 @@ void				Graphic::render_scene( void ) { // render map
 }
 
 void				Graphic::init( int ac, char **av, int x, int y, char *title, char **map ) {
-	float	scale = 0.1f;
-
-	if (x > y)
-		scale /= x;
-	else
-		scale /= y;
 	if ( -1 == SDL_Init(SDL_INIT_EVERYTHING) )
 		std::cout << "Failed to initialize SDL : " << SDL_GetError();
 	this->window = SDL_CreateWindow(title,
@@ -109,8 +103,7 @@ void				Graphic::close( void ) {
 	std::cerr << "SDL close() end" << std::endl;
 }
 
-
-void				Graphic::draw_spot( float case_x, float case_y ) { // draw on case of smake head
+void				Graphic::draw_spot( float case_x, float case_y ) {
 	SDL_Rect rectangle;
 	rectangle.x = case_x * X_MULTI;
 	rectangle.y = case_y * Y_MULTI;
@@ -132,15 +125,9 @@ Graphic &			Graphic::operator=(Graphic const & rhs) {
 	return *this;
 }
 
-Graphic::Graphic( Graphic const & rhs ) {
-	*this = rhs;
-}
+Graphic::Graphic( Graphic const & rhs ) { *this = rhs; }
 
 Graphic::Graphic( void ) : winx(0), winy(0), mapXsize(0), mapYsize(0),
-	map(NULL), key_list(NULL), empty(true) { //construct
-}
+	map(NULL), key_list(NULL), empty(true) {}
 
-Graphic::~Graphic( void ) {	// destruct
-	std::cerr << "SDL destruct" << std::endl;
-	this->key_list->clear();
-}
+Graphic::~Graphic( void ) { this->key_list->clear(); }

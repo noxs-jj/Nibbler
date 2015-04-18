@@ -12,11 +12,10 @@
 
 #ifndef GRAPHIC_HPP
 # define GRAPHIC_HPP
-
 # include "../includes/api.class.hpp"
 # include <ncurses.h>
 
-class api;
+class 				api;
 
 typedef struct		s_key {
 	int				key;
@@ -31,11 +30,12 @@ private:
 	char				*_name;
 	std::vector<int> 	*_key;
 	char				**_map;
+
+	Graphic( Graphic const & src );
+	Graphic & operator=( Graphic const & rhs );
 	
 public:
 	Graphic( void );
-	Graphic( Graphic const & src );
-	Graphic & operator=( Graphic const & rhs );
 	virtual ~Graphic( void );
 
 	char				*getName( void ) const;
@@ -45,7 +45,6 @@ public:
 	std::vector<int>	*getKey( void ) const;
 	char				**getMap( void ) const;
 	void				keyboard( void );
-
 	void				init( int ac, char** av, int x, int y, char *title, char **map );
 	void				close( void );
 	void				render_scene( void );

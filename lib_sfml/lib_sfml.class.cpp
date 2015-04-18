@@ -12,11 +12,13 @@
 
 #include "lib_sfml.class.hpp"
 
+extern "C"	Api		*newObject( void ) {
+	return (new Graphic());
+}
+
 Graphic::Graphic( void ) :	_key(NULL) {}
 
-Graphic::Graphic( Graphic const & src ) {
-	*this = src;
-}
+Graphic::Graphic( Graphic const & src ) { *this = src; }
 
 Graphic & Graphic::operator=( Graphic const & rhs ) {
 	if (this != &rhs){
@@ -30,9 +32,7 @@ Graphic & Graphic::operator=( Graphic const & rhs ) {
 	return (*this);
 }
 
-Graphic::~Graphic( void ) {
-	std::cerr << "SFML destruct" << std::endl;
-}
+Graphic::~Graphic( void ) {}
 
 void	Graphic::init( int ac, char** av, int x, int y, char *title, char **map ) {
 	this->_x = x;
@@ -42,10 +42,13 @@ void	Graphic::init( int ac, char** av, int x, int y, char *title, char **map ) {
 	this->_key = new std::vector<int>;
 	static_cast<void>(ac);
 	static_cast<void>(av);
-
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
 	this->_event = new sf::Event();
+
+
+
+	// BUG A CHERCHE
 	std::cerr << "sfml 1" << std::endl;
 	try {
 		this->_window = new sf::RenderWindow(
@@ -57,12 +60,11 @@ void	Graphic::init( int ac, char** av, int x, int y, char *title, char **map ) {
 	catch (std::exception & e) {
 		std::cerr << "SFML EXCEPTION --] " << e.what() << std::endl;
 	}
-	// this->_window = new sf::RenderWindow(
-	// 								sf::VideoMode(y * 10, x * 10),
-	// 								title,
-	// 								sf::Style::Default,
-	// 								settings);
 	std::cerr << "sfml 2" << std::endl;
+	// BUG A CHERCHE
+
+
+
 	this->_queue = new sf::CircleShape(5.f);
 	this->_queue->setFillColor(sf::Color::Green);
 	this->_head = new sf::CircleShape(5.f);
@@ -76,7 +78,6 @@ void	Graphic::init( int ac, char** av, int x, int y, char *title, char **map ) {
 }
 
 void	Graphic::close( void ) {
-	std::cerr << "SFML close()" << std::endl;
 	delete this->_queue;
 	delete this->_head;
 	delete this->_fruit;
@@ -163,7 +164,3 @@ int					Graphic::getY( void ) const { return (this->_y); }
 std::vector<int>	*Graphic::getKey( void ) const {return (this->_key); }
 
 char				**Graphic::getMap( void ) const {return (this->_map); }
-
-extern "C"	Api		*newObject( void ) {
-	return (new Graphic());
-}

@@ -12,7 +12,6 @@
 
 #ifndef SDL_CLASS_HPP
 # define SDL_CLASS_HPP
-
 # include "../includes/api.class.hpp"
 # include <stdio.h>
 # include <stdlib.h>
@@ -25,8 +24,8 @@
 
 # define STARTX		100
 # define STARTY		100
-# define X_MULTI	10.0f		//(x * 15) * number case width
-# define Y_MULTI	10.0f		//(y * 15) * number case height
+# define X_MULTI	10.0f		//(x * 10) * number case width
+# define Y_MULTI	10.0f		//(y * 10) * number case height
 # define LINE_WIDTH	1.0f
 # define POINT_SIZE	2.0f
 # define SCALE_GL	0.01f
@@ -67,22 +66,21 @@ public:
 	SDL_Window *		window;
 	SDL_Renderer *		renderer;
 
-	void				addKey(int keyInput);
-
 	Graphic( void );
 	virtual ~Graphic( void );
+
+	void				addKey(int keyInput);
 	void				init( int ac, char** av, int x, int y, char *title, char **map );
 	void				close( void );
 	void				render_scene( void );
 	void				show_scene( void );
 	std::vector<int>	**get_touch_list( void );
 	void  				keyboard( void );
+	void				draw_spot( float case_x, float case_y );
 
-
+private:
 	Graphic	& 			operator=( Graphic const & rhs );
 	Graphic( Graphic const & rhs );
-
-	void				draw_spot( float case_x, float case_y );
 };
 
 #endif

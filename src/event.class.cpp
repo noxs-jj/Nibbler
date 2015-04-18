@@ -107,7 +107,6 @@ void	Event::move( void ) {
 		this->_game = false;
 		return ;
 	}
-
 	if (this->_eat > 0)
 		inc_map();
 	if (this->_dir == 1)
@@ -154,8 +153,7 @@ void	Event::move( void ) {
 	}
 }
 
-void	Event::change_lib(int lib)
-{
+void	Event::change_lib(int lib) {
 	if (this->_lib_name[lib] == NULL)
 		return ;
 	this->_graphic->close();
@@ -163,7 +161,6 @@ void	Event::change_lib(int lib)
 	open_lib(this->_lib_name[lib]);
 	this->_graphic->init(this->_d->ac, this->_d->av, this->_winx, this->_winy, NULL, this->_map);
 	this->_graphic->render_scene();
-
 }
 
 
@@ -198,12 +195,9 @@ void	Event::change_dir( void ) {
 	return ;
 }
 
-void	Event::run_level( void ) {
-
-}
+void	Event::run_level( void ) {}
 
 void	Event::run( void ) {
-	
 	this->_game = true;
 	srand(time(NULL));
 	if (this->_game_mode == 1)
@@ -266,8 +260,7 @@ void	Event::add_fruit( void ) {
 	this->_fruit = true;
 }
 
-int 	Event::parse_option(int ac, char **av)
-{
+int 	Event::parse_option(int ac, char **av) {
 	int tmp = 0;
 	int i = 1;
 	int lib = 0;
@@ -300,8 +293,7 @@ int 	Event::parse_option(int ac, char **av)
 	return (0);
 }
 
-void	Event::init_map( void )
-{
+void	Event::init_map( void ) {
 	this->_map = static_cast<char **>(std::malloc(sizeof(char*) * this->_winy ));
 	this->_map_info = static_cast<int **>(std::malloc(sizeof(int*) * this->_winy ));
 	for (int i = 0; i < this->_winy; ++i) {
