@@ -13,9 +13,12 @@
 #ifndef LIB_SFML_CLASS_HPP
 # define LIB_SFML_CLASS_HPP
 
-# include <SFML/System.hpp>
-# include <SFML/Window.hpp>
-# include <SFML/Graphics.hpp>
+// # include <SFML/System.hpp>
+// # include <SFML/Window.hpp>
+// # include <SFML/Graphics.hpp>
+# include "../graphics_libs/sfml/2.2/include/SFML/System.hpp"
+# include "../graphics_libs/sfml/2.2/include/SFML/Window.hpp"
+# include "../graphics_libs/sfml/2.2/include/SFML/Graphics.hpp"
 # include "../includes/api.class.hpp"
 
 #include <vector>
