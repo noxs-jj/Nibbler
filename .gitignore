@@ -20,3 +20,5 @@ src/*.o
 #*
 example
 nibbler
+**/*.tar
+**/*.tar.bz2
