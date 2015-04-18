@@ -10,32 +10,33 @@
 #                                                                              #
 #******************************************************************************#
 
-CLANG =			clang++
+# http://www.noxs.net/42project/resources/sfml.tar.bz2
+# http://www.sfml-dev.org/files/SFML-2.2-osx-clang-universal.tar.gz
 
-NAME =			lib_sfml_2d.so
+CLANG = clang++
 
-DIR_SFML =		sfml/2.2
+NAME = lib_sfml_2d.so
 
-GL =			-framework opengl \
-				$(DIR_SFML)/lib/libsfml-graphics.2.2.0.dylib \
-				$(DIR_SFML)/lib/libsfml-window.2.2.0.dylib \
-				$(DIR_SFML)/lib/libsfml-system.2.2.0.dylib \
-				-L $(DIR_SFML)/lib -Wl,-rpath,$(DIR_SFML)/lib \
-				-Wl,-rpath,lib_sfml/sfml/2.2/lib
+DIR_SFML = sfml/2.2
 
-CFLAGS =		-Wall -Werror -Wextra
+GL =	-framework opengl \
+		$(DIR_SFML)/lib/libsfml-graphics.2.2.0.dylib \
+		$(DIR_SFML)/lib/libsfml-window.2.2.0.dylib \
+		$(DIR_SFML)/lib/libsfml-system.2.2.0.dylib \
+		-L $(DIR_SFML)/lib -Wl,-rpath,$(DIR_SFML)/lib \
+		-Wl,-rpath,lib_sfml/sfml/2.2/lib
 
-LIB_FLAG =		-shared -fPIC
+CFLAGS = -Wall -Werror -Wextra
 
-SFML_FLAGS =	-I $(DIR_SFML)/include
+LIB_FLAG = -shared -fPIC
 
-HEADER =		lib_sfml.class.hpp
+SFML_FLAGS = -I $(DIR_SFML)/include
 
-SRC =			../src/Api.class.cpp lib_sfml.class.cpp
+HEADER = lib_sfml.class.hpp
 
-OBJ = 			$(SRC:.cpp=.cpp.o)
+SRC =	../src/Api.class.cpp lib_sfml.class.cpp
 
-
+OBJ = $(SRC:.cpp=.cpp.o)
 
 %.cpp.o: %.cpp
 	@$(CLANG) $(CFLAGS) $(SFML_FLAGS) -c $< -o $@

@@ -83,11 +83,7 @@ public:
 	Graphic	& 			operator=( Graphic const & rhs );
 	Graphic( Graphic const & rhs );
 
-	void				draw_queue( float case_x, float case_y );
-	void				draw_head( float case_x, float case_y );
-	void				draw_fruit( float case_x, float case_y );
-	void				draw_wall( float case_x, float case_y );
-	void				draw_special( float case_x, float case_y );
+	void				draw_spot( float case_x, float case_y );
 };
 
 #endif

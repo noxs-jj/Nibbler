@@ -30,7 +30,9 @@ Graphic & Graphic::operator=( Graphic const & rhs ) {
 	return (*this);
 }
 
-Graphic::~Graphic( void ) {}
+Graphic::~Graphic( void ) {
+	std::cerr << "SFML destruct" << std::endl;
+}
 
 void	Graphic::init( int ac, char** av, int x, int y, char *title, char **map ) {
 	this->_x = x;
@@ -44,7 +46,23 @@ void	Graphic::init( int ac, char** av, int x, int y, char *title, char **map ) {
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
 	this->_event = new sf::Event();
-	this->_window = new sf::RenderWindow(sf::VideoMode(y * 10, x * 10), title, sf::Style::Default, settings);
+	std::cerr << "sfml 1" << std::endl;
+	try {
+		this->_window = new sf::RenderWindow(
+									sf::VideoMode(y * 10, x * 10, 32),
+									title,
+									sf::Style::Default,
+									settings);
+	}
+	catch (std::exception & e) {
+		std::cerr << "SFML EXCEPTION --] " << e.what() << std::endl;
+	}
+	// this->_window = new sf::RenderWindow(
+	// 								sf::VideoMode(y * 10, x * 10),
+	// 								title,
+	// 								sf::Style::Default,
+	// 								settings);
+	std::cerr << "sfml 2" << std::endl;
 	this->_queue = new sf::CircleShape(5.f);
 	this->_queue->setFillColor(sf::Color::Green);
 	this->_head = new sf::CircleShape(5.f);
@@ -58,6 +76,7 @@ void	Graphic::init( int ac, char** av, int x, int y, char *title, char **map ) {
 }
 
 void	Graphic::close( void ) {
+	std::cerr << "SFML close()" << std::endl;
 	delete this->_queue;
 	delete this->_head;
 	delete this->_fruit;
@@ -110,7 +129,7 @@ void	Graphic::render_scene( void ) {
 
 				case QUEUE: {
 					this->_queue->setPosition(x * 10.f, y * 10.f);
-				this->_window->draw(*this->_queue);
+					this->_window->draw(*this->_queue);
 				} break;
 
 				case FRUIT: {
@@ -120,7 +139,7 @@ void	Graphic::render_scene( void ) {
 
 				case SPECIAL: {
 					this->_special->setPosition(x * 10.f, y * 10.f);
-				this->_window->draw(*this->_special);
+					this->_window->draw(*this->_special);
 				} break;
 
 				default: break;
@@ -145,7 +164,6 @@ std::vector<int>	*Graphic::getKey( void ) const {return (this->_key); }
 
 char				**Graphic::getMap( void ) const {return (this->_map); }
 
-extern "C"	Api		*newObject( void )
-{
+extern "C"	Api		*newObject( void ) {
 	return (new Graphic());
 }

@@ -22,8 +22,8 @@ Event & Event::operator=( Event const & rhs ) {
 	}
 	return (*this);
 }
-Event::~Event( void ) {}
 
+Event::~Event( void ) {}
 
 int		Event::check_move( void ) {
 	int 	movx = 0;
@@ -82,19 +82,16 @@ void	Event::pro_spawn_obstacle( int rock )
 void	Event::pro_get_special( void ) {
 	int i = rand() % 50;
 
-	if (i >= 20 && i <= 30)	// bonus
-	{
+	if (i >= 20 && i <= 30) {	// bonus
 		this->_score += 100;
 		this->_special = 0;
 	}
-	else if ((i % 2) == 0)	// malus
-	{
+	else if ((i % 2) == 0) {	// malus
 		this->_score = ((this->_score - 100 >= 100) ? (this->_score - 100) : 0);
 		this->_eat += 1;
 		this->_special = 0;
 	}
-	else	// malus
-	{
+	else {	// malus
 		this->_eat += 2;
 		pro_spawn_obstacle(2);
 		this->_special = 0;

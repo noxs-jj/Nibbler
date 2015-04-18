@@ -32,7 +32,7 @@ OBJ = $(SRC:.cpp=.cpp.o)
 
 all: $(NAME)
 
-$(NAME): ncurse sdl2 sfml $(OBJ)
+$(NAME): ncurse sfml sdl2 $(OBJ)
 	@cp lib_ncurse/lib_ncurse.so .
 	@cp lib_sdl/lib_sdl_2d.so .
 	@cp lib_sfml/lib_sfml_2d.so .
@@ -63,9 +63,6 @@ clean:
 	@rm -rf $(OBJ)
 
 fclean: clean
-	@make -C lib_ncurse fclean
-	@make -C lib_sdl fclean
-	@make -C lib_sfml fclean
 	@rm *.so
 	@rm -rf $(NAME)
 

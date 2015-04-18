@@ -35,7 +35,7 @@ OBJ =		$(SRC:.cpp=.cpp.o)
 
 all: $(NAME)
 
-$(NAME): extract $(OBJ) $(HEADER)
+$(NAME): $(OBJ) $(HEADER)
 	@$(CLANG) $(CFLAGS) $(LIB_FLAG) `sdl2-config --libs` -o $(NAME) $(OBJ) $(GL)
 
 extract:

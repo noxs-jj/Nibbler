@@ -50,15 +50,18 @@ void				Graphic::render_scene( void ) { // render map
 	this->keyboard();
 	while (y < this->mapYsize) {
 		x = 0;
-		while(x < this->mapXsize) {
-			switch (this->map[y][x]) {
-				case WALL:		this->draw_wall(x, y); break;
-				case QUEUE:		this->draw_queue(x, y); break;
-				case HEAD:		this->draw_head(x, y); break;
-				case FRUIT:		this->draw_fruit(x, y);break;
-				case SPECIAL:	this->draw_special(x, y); break;
-				default: break;
-			}
+		while (x < this->mapXsize) {
+			glBegin(GL_QUADS);
+				switch (this->map[y][x]) {
+					case WALL:		glColor3ub(WALL_R, WALL_G, WALL_B); break;
+					case QUEUE:		glColor3ub(QUEUE_R, QUEUE_G, QUEUE_B); break;
+					case HEAD:		glColor3ub(HEAD_R, HEAD_G, HEAD_B); break;
+					case FRUIT:		glColor3ub(FRUIT_R, FRUIT_G, FRUIT_B); break;
+					case SPECIAL:	glColor3ub(SPECIAL_R, SPECIAL_G, SPECIAL_B); break;
+					default:		glColor3ub(0, 0, 0); break;
+				}
+				this->draw_spot(x, y);
+			glEnd();
 			x++;
 		}
 		y++;
@@ -97,68 +100,27 @@ void				Graphic::init( int ac, char **av, int x, int y, char *title, char **map 
 	this->key_list = new std::vector<int>;
 }
 
-
 void				Graphic::close( void ) {
+	std::cerr << "SDL close() start" << std::endl;
 	SDL_GL_DeleteContext(this->opengl3_context);
 	SDL_DestroyWindow(this->window);
 	SDL_Quit();
+	std::cerr << "SDL close() end" << std::endl;
 }
 
-void				Graphic::draw_head( float case_x, float case_y ) { // draw on case of smake head
-	glBegin(GL_QUADS);
-		glColor3ub(HEAD_R, HEAD_G, HEAD_B);
-		glVertex2f(-(this->winx / 2) + case_x * X_MULTI, -(this->winy / 2) + case_y * Y_MULTI - Y_MULTI);			// LEFT TOP
-		glVertex2f(-(this->winx / 2) + case_x * X_MULTI + X_MULTI, -(this->winy / 2) + case_y * Y_MULTI - Y_MULTI);	// RIGHT TOP
-		glVertex2f(-(this->winx / 2) + case_x * X_MULTI + X_MULTI, -(this->winy / 2) + case_y * Y_MULTI);			// RIGHT BOTTOM
-		glVertex2f(-(this->winx / 2) + case_x * X_MULTI, -(this->winy / 2) + case_y * Y_MULTI);						// LEFT BOTTOM
-	glEnd();
-}
 
-void				Graphic::draw_special( float case_x, float case_y ) { // draw on case of FRUIT
-	glBegin(GL_QUADS);
-		glColor3ub(SPECIAL_R, SPECIAL_G, SPECIAL_B);
-		glVertex2f(-(this->winx / 2) + case_x * X_MULTI, -(this->winy / 2) + case_y * Y_MULTI - Y_MULTI);			// LEFT TOP
-		glVertex2f(-(this->winx / 2) + case_x * X_MULTI + X_MULTI, -(this->winy / 2) + case_y * Y_MULTI - Y_MULTI);	// RIGHT TOP
-		glVertex2f(-(this->winx / 2) + case_x * X_MULTI + X_MULTI, -(this->winy / 2) + case_y * Y_MULTI);			// RIGHT BOTTOM
-		glVertex2f(-(this->winx / 2) + case_x * X_MULTI, -(this->winy / 2) + case_y * Y_MULTI);						// LEFT BOTTOM
-	glEnd();
-}
-
-void				Graphic::draw_fruit( float case_x, float case_y ) { // draw on case of FRUIT
-	glBegin(GL_QUADS);
-		glColor3ub(FRUIT_R, FRUIT_G, FRUIT_B);
-		glVertex2f(-(this->winx / 2) + case_x * X_MULTI, -(this->winy / 2) + case_y * Y_MULTI - Y_MULTI);			// LEFT TOP
-		glVertex2f(-(this->winx / 2) + case_x * X_MULTI + X_MULTI, -(this->winy / 2) + case_y * Y_MULTI - Y_MULTI);	// RIGHT TOP
-		glVertex2f(-(this->winx / 2) + case_x * X_MULTI + X_MULTI, -(this->winy / 2) + case_y * Y_MULTI);			// RIGHT BOTTOM
-		glVertex2f(-(this->winx / 2) + case_x * X_MULTI, -(this->winy / 2) + case_y * Y_MULTI);						// LEFT BOTTOM
-	glEnd();
-}
-
-void				Graphic::draw_queue( float case_x, float case_y ) { // draw on case of snake queue
-	glBegin(GL_QUADS);
-		glColor3ub(QUEUE_R, QUEUE_G, QUEUE_B);
-		glVertex2f(-(this->winx / 2) + case_x * X_MULTI, -(this->winy / 2) + case_y * Y_MULTI - Y_MULTI);			// LEFT TOP
-		glVertex2f(-(this->winx / 2) + case_x * X_MULTI + X_MULTI, -(this->winy / 2) + case_y * Y_MULTI - Y_MULTI);	// RIGHT TOP
-		glVertex2f(-(this->winx / 2) + case_x * X_MULTI + X_MULTI, -(this->winy / 2) + case_y * Y_MULTI);			// RIGHT BOTTOM
-		glVertex2f(-(this->winx / 2) + case_x * X_MULTI, -(this->winy / 2) + case_y * Y_MULTI);						// LEFT BOTTOM
-	glEnd();
-}
-
-void				Graphic::draw_wall( float case_x, float case_y ) { // draw on case of snake queue
-	glBegin(GL_QUADS);
-		glColor3ub(WALL_R, WALL_G, WALL_B);
-		glVertex2f(-(this->winx / 2) + case_x * X_MULTI, -(this->winy / 2) + case_y * Y_MULTI - Y_MULTI);			// LEFT TOP
-		glVertex2f(-(this->winx / 2) + case_x * X_MULTI + X_MULTI, -(this->winy / 2) + case_y * Y_MULTI - Y_MULTI);	// RIGHT TOP
-		glVertex2f(-(this->winx / 2) + case_x * X_MULTI + X_MULTI, -(this->winy / 2) + case_y * Y_MULTI);			// RIGHT BOTTOM
-		glVertex2f(-(this->winx / 2) + case_x * X_MULTI, -(this->winy / 2) + case_y * Y_MULTI);						// LEFT BOTTOM
-	glEnd();
+void				Graphic::draw_spot( float case_x, float case_y ) { // draw on case of smake head
+	glVertex2f(-(this->winx / 2) + (case_x * X_MULTI), -(this->winy / 2) + (case_y * Y_MULTI) - Y_MULTI );				// LEFT TOP
+	glVertex2f(-(this->winx / 2) + (case_x * X_MULTI) + X_MULTI, -(this->winy / 2) + (case_y * Y_MULTI) - Y_MULTI );	// RIGHT TOP
+	glVertex2f(-(this->winx / 2) + (case_x * X_MULTI) + X_MULTI, -(this->winy / 2) + (case_y * Y_MULTI) );				// RIGHT BOTTOM
+	glVertex2f(-(this->winx / 2) + (case_x * X_MULTI), -(this->winy / 2) + (case_y * Y_MULTI) );						// LEFT BOTTOM
 }
 
 void				Graphic::addKey(int keyInput) { this->key_list->push_back(keyInput);}
 
 std::vector<int>	**Graphic::get_touch_list( void ) { return (&(this->key_list)); }
 
-Graphic &	Graphic::operator=(Graphic const & rhs) {
+Graphic &			Graphic::operator=(Graphic const & rhs) {
 	if (this != &rhs) {
 		this->winx = rhs.winx;
 		this->winy = rhs.winy;
@@ -176,5 +138,6 @@ Graphic::Graphic( void ) : winx(0), winy(0), mapXsize(0), mapYsize(0),
 }
 
 Graphic::~Graphic( void ) {	// destruct
+	std::cerr << "SDL destruct" << std::endl;
 	this->key_list->clear();
 }

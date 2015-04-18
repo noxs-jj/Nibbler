@@ -12,6 +12,10 @@
 
 #include "lib_ncurse.class.hpp"
 
+extern "C"	Api		*newObject( void ) {
+	return (new Graphic());
+}
+
 Graphic::Graphic( void ) :	_window(NULL),
 							_key(NULL) {}
 
@@ -142,7 +146,3 @@ int					Graphic::getY( void ) const { return (this->_y); }
 std::vector<int>	*Graphic::getKey( void ) const {return (this->_key); }
 
 char				**Graphic::getMap( void ) const {return (this->_map); }
-
-extern "C"	Api				*newObject( void ) {
-	return (new Graphic());
-}
