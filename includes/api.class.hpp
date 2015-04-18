@@ -35,12 +35,12 @@
 # define THREE	51
 # define SPACE	32
 
-class	Api
-{
+class	Api {
 	public:
 		Api( void );
 		Api( Api const & src );
 		Api & operator=( Api const & rhs );
+		virtual ~Api( void );
 		virtual void				init( int ac, char** av, int x, int y, char *title, char **map ) = 0;
 		virtual void				close( void ) = 0;
 		virtual void				render_scene( void ) = 0;

@@ -53,25 +53,6 @@ sfml:
 	@make -C lib_sfml
 	@echo "\tBuild Dynamic Lib SFML SUCCESS"
 
-# full: $(NAME)
-# 	brew update && brew install sdl && reset
-# 	make -C lib_sdl && echo "\t\tCompil lib_sdl_2d.so SUCCESS"
-# 	make -C lib_ncurse && echo "\t\tCompil lib_ncurse.so SUCCESS"
-# 	make -C lib_sfml && echo "\t\tCompil lib_sfml_2d.so SUCCESS"
-# 	export LD_LIBRARY_PATH=~/.brew/Cellar/sfml/2.2/lib
-# 	./set_shell.sh
-# 	cp lib_ncurse/lib_ncurse.so .
-# 	cp lib_sdl/lib_sdl_2d.so .
-# 	cp lib_sfml/lib_sfml_2d.so .
-# 	echo "\n\n\t\tAll Lib_xx_.so Compil SUCCESS\n\n"
-
-# fullclean:
-# 	make -C lib_ncurse fclean
-# 	make -C lib_sdl fclean
-# 	make -C lib_sfml fclean
-# 	rm *.so
-# 	rm nibbler	
-
 example: src/main.cpp libcircle.so
 	@g++ -o example src/main.cpp -ldl
 

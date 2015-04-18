@@ -10,22 +10,23 @@
 #                                                                              #
 # **************************************************************************** #
 
-CXX = g++
+CXX =			clang++
 
-NAME = lib_ncurse.so
+NAME =			lib_ncurse.so
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS =		-Wall -Werror -Wextra
 
-LIB_FLAG = -shared -fPIC
+LIB_FLAG =		-shared -fPIC
 
-NCURSE_FLAGS = -lncurses
+NCURSE_FLAGS =	-lncurses
 
-HEADER = lib_ncurse.class.hpp
+HEADER =		lib_ncurse.class.hpp
 
-SRC =	lib_ncurse.class.cpp \
-		../Api.class.cpp		
+SRC =			../src/Api.class.cpp lib_ncurse.class.cpp
 
-OBJ = $(SRC:.cpp=.cpp.o)
+OBJ =			$(SRC:.cpp=.cpp.o)
+
+
 
 %.cpp.o: %.cpp
 	@$(CXX) $(CFLAGS) $(CFLAGS) -c $< -o $@

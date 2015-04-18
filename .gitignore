@@ -22,3 +22,4 @@ example
 nibbler
 **/*.tar
 **/*.tar.bz2
+lib_sfml/sfml/*

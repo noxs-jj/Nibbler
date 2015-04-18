@@ -71,7 +71,7 @@ public:
 	void				addKey(int keyInput);
 
 	Graphic( void );
-	~Graphic( void );
+	virtual ~Graphic( void );
 	void				init( int ac, char** av, int x, int y, char *title, char **map );
 	void				close( void );
 	void				render_scene( void );

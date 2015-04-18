@@ -36,7 +36,7 @@ public:
 	Graphic( void );
 	Graphic( Graphic const & src );
 	Graphic & operator=( Graphic const & rhs );
-	~Graphic( void );
+	virtual ~Graphic( void );
 
 	char				*getName( void ) const;
 	WINDOW				*getWindow( void ) const;

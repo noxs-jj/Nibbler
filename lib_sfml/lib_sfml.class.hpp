@@ -22,8 +22,7 @@
 
 class api;
 
-typedef struct		s_key
-{
+typedef struct		s_key {
 	int				key;
 	struct s_key	*next;
 }					t_key;
@@ -48,7 +47,7 @@ public:
 	Graphic( void );
 	Graphic( Graphic const & src );
 	Graphic & operator=( Graphic const & rhs );
-	~Graphic( void );
+	virtual ~Graphic( void );
 
 	char				*getName( void ) const;
 	sf::RenderWindow	*getWindow( void ) const;

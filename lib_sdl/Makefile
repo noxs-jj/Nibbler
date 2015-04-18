@@ -10,23 +10,25 @@
 #                                                                              #
 #******************************************************************************#
 
-CLANG = clang++
+CLANG =		clang++
 
-NAME = lib_sdl_2d.so
+NAME =		lib_sdl_2d.so
 
-NAME_TEST = test_sdl
+NAME_TEST =	test_sdl
 
-GL = -framework opengl
+GL =		-framework opengl
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS =	-Wall -Werror -Wextra
 
-LIB_FLAG = -shared -fPIC
+LIB_FLAG =	-shared -fPIC
 
-HEADER = sdl.class.hpp
+HEADER =	sdl.class.hpp
 
-SRC =	../Api.class.cpp sdl.class.cpp
+SRC =		../src/Api.class.cpp sdl.class.cpp
 
-OBJ = $(SRC:.cpp=.cpp.o)
+OBJ =		$(SRC:.cpp=.cpp.o)
+
+
 
 %.cpp.o: %.cpp
 	@$(CLANG) $(CFLAGS) `sdl2-config --cflags` -c $< -o $@
