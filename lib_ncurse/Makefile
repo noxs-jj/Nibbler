@@ -33,13 +33,13 @@ OBJ = $(SRC:.cpp=.cpp.o)
 all: $(NAME)
 
 $(NAME): $(OBJ) $(HEADER)
-	$(CXX) $(CFLAGS) $(NCURSE_FLAGS) $(LIB_FLAG) -o $(NAME) $(OBJ)
+	@$(CXX) $(CFLAGS) $(NCURSE_FLAGS) $(LIB_FLAG) -o $(NAME) $(OBJ)
 
 clean:
-	rm -rf $(OBJ)
+	@rm -rf $(OBJ)
 
 fclean: clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
 
 re: fclean all
 

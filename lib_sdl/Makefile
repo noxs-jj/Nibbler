@@ -10,12 +10,6 @@
 #                                                                              #
 #******************************************************************************#
 
-# https://www.libsdl.org/release/SDL2-2.0.3.tar.gz
-# curl -o SDL2-2.0.3.tar.gz https://www.libsdl.org/release/SDL2-2.0.3.tar.gz
-# go to lib_sdl/SDL2-2.0.3
-# ./configure
-# make
-
 CLANG = clang++
 
 NAME = lib_sdl_2d.so
@@ -30,33 +24,35 @@ LIB_FLAG = -shared -fPIC
 
 HEADER = sdl.class.hpp
 
-SRC =	../Api.class.cpp \
-		sdl.class.cpp		
+SRC =	../Api.class.cpp sdl.class.cpp
 
 OBJ = $(SRC:.cpp=.cpp.o)
 
 %.cpp.o: %.cpp
-	$(CLANG) $(CFLAGS) `sdl2-config --cflags` -c $< -o $@
+	@$(CLANG) $(CFLAGS) `sdl2-config --cflags` -c $< -o $@
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(HEADER)
-	$(CLANG) $(CFLAGS) $(LIB_FLAG) `sdl2-config --libs` -o $(NAME) $(OBJ) $(GL)
+$(NAME): extract $(OBJ) $(HEADER)
+	@$(CLANG) $(CFLAGS) $(LIB_FLAG) `sdl2-config --libs` -o $(NAME) $(OBJ) $(GL)
+
+extract:
+	@brew update && brew install sdl
 
 run:
-	$(CLANG) $(CFLAGS) -o run_test $(NAME) $(GL)
+	@$(CLANG) $(CFLAGS) -o run_test $(NAME) $(GL)
 
 test:
-	clear ; $(CLANG) -Wall -Werror -Wextra -stdlib=libc++ -w -o $(NAME_TEST) \
+	@clear ; $(CLANG) -Wall -Werror -Wextra -stdlib=libc++ -w -o $(NAME_TEST) \
 	sdl.class.cpp ../Api.class.cpp main_test.cpp \
 	`sdl2-config --libs` `sdl2-config --cflags` \
 	-framework opengl
 
 clean:
-	rm -rf $(OBJ)
+	@rm -rf $(OBJ)
 
 fclean: clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
 
 re: fclean all
 
