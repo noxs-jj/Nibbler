@@ -22,10 +22,10 @@ void  				Graphic::keyboard( void ) {
 			switch((this->event).key.keysym.sym) {
 				case SDLK_ESCAPE:	this->addKey(ECHAP); break;
 				case SDLK_q:		this->addKey(ECHAP); break;
-				case SDLK_DOWN:		this->addKey(UP); break;
-				case SDLK_s:		this->addKey(UP); break;
-				case SDLK_UP:		this->addKey(DOWN); break;
-				case SDLK_w:		this->addKey(DOWN); break;
+				case SDLK_DOWN:		this->addKey(DOWN); break;
+				case SDLK_s:		this->addKey(DOWN); break;
+				case SDLK_UP:		this->addKey(UP); break;
+				case SDLK_w:		this->addKey(UP); break;
 				case SDLK_RIGHT:	this->addKey(RIGHT); break;
 				case SDLK_d:		this->addKey(RIGHT); break;
 				case SDLK_LEFT:		this->addKey(LEFT); break;
@@ -45,29 +45,27 @@ void				Graphic::render_scene( void ) { // render map
 	int x = 0;
 	int y = 0;
 
-	glClear(GL_COLOR_BUFFER_BIT);
+	SDL_SetRenderDrawColor(this->renderer, 0, 0, 0, 255);
+	SDL_RenderClear( this->renderer );
 	this->keyboard();
 	this->keyboard();
 	while (y < this->mapYsize) {
 		x = 0;
 		while (x < this->mapXsize) {
-			glBegin(GL_QUADS);
-				switch (this->map[y][x]) {
-					case WALL:		glColor3ub(WALL_R, WALL_G, WALL_B); break;
-					case QUEUE:		glColor3ub(QUEUE_R, QUEUE_G, QUEUE_B); break;
-					case HEAD:		glColor3ub(HEAD_R, HEAD_G, HEAD_B); break;
-					case FRUIT:		glColor3ub(FRUIT_R, FRUIT_G, FRUIT_B); break;
-					case SPECIAL:	glColor3ub(SPECIAL_R, SPECIAL_G, SPECIAL_B); break;
-					default:		glColor3ub(0, 0, 0); break;
-				}
-				this->draw_spot(x, y);
-			glEnd();
+			switch (this->map[y][x]) {
+				case WALL:		SDL_SetRenderDrawColor(this->renderer, WALL_R, WALL_G, WALL_B, 255); break;
+				case QUEUE:		SDL_SetRenderDrawColor(this->renderer, QUEUE_R, QUEUE_G, QUEUE_B, 255); break;
+				case HEAD:		SDL_SetRenderDrawColor(this->renderer, HEAD_R, HEAD_G, HEAD_B, 255); break;
+				case FRUIT:		SDL_SetRenderDrawColor(this->renderer, FRUIT_R, FRUIT_G, FRUIT_B, 255); break;
+				case SPECIAL:	SDL_SetRenderDrawColor(this->renderer, SPECIAL_R, SPECIAL_G, SPECIAL_B, 255); break;
+				default:		SDL_SetRenderDrawColor(this->renderer, 0, 0, 0, 255); break;
+			}
+			this->draw_spot(x, y);
 			x++;
 		}
 		y++;
 	}
-	glFlush();
-	SDL_GL_SwapWindow(this->window);
+	SDL_RenderPresent( this->renderer );
 }
 
 void				Graphic::init( int ac, char **av, int x, int y, char *title, char **map ) {
@@ -77,7 +75,8 @@ void				Graphic::init( int ac, char **av, int x, int y, char *title, char **map 
 		scale /= x;
 	else
 		scale /= y;
-	SDL_Init(SDL_INIT_VIDEO);
+	if ( -1 == SDL_Init(SDL_INIT_EVERYTHING) )
+		std::cout << "Failed to initialize SDL : " << SDL_GetError();
 	this->window = SDL_CreateWindow(title,
 									SDL_WINDOWPOS_CENTERED,
 									SDL_WINDOWPOS_CENTERED,
@@ -86,10 +85,12 @@ void				Graphic::init( int ac, char **av, int x, int y, char *title, char **map 
 									SDL_WINDOW_OPENGL |
 									SDL_WINDOW_INPUT_GRABBED |
 									SDL_WINDOW_SHOWN);
-	this->opengl3_context = SDL_GL_CreateContext(this->window);
-	glScalef(scale, scale, scale);
-	glPointSize(POINT_SIZE);
-	glLineWidth(LINE_WIDTH);
+	if ( NULL == this->window )
+		std::cout << "Failed to create window : " << SDL_GetError();
+	this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED);
+	if ( NULL == this->renderer )
+		std::cout << "Failed to create renderer : " << SDL_GetError();
+	SDL_RenderSetLogicalSize( this->renderer, x * X_MULTI, y * Y_MULTI );
 	(void)ac;
 	(void)av;
 	this->winx = x * X_MULTI;
@@ -102,7 +103,7 @@ void				Graphic::init( int ac, char **av, int x, int y, char *title, char **map 
 
 void				Graphic::close( void ) {
 	std::cerr << "SDL close() start" << std::endl;
-	SDL_GL_DeleteContext(this->opengl3_context);
+	SDL_DestroyRenderer(this->renderer);
 	SDL_DestroyWindow(this->window);
 	SDL_Quit();
 	std::cerr << "SDL close() end" << std::endl;
@@ -110,10 +111,12 @@ void				Graphic::close( void ) {
 
 
 void				Graphic::draw_spot( float case_x, float case_y ) { // draw on case of smake head
-	glVertex2f(-(this->winx / 2) + (case_x * X_MULTI), -(this->winy / 2) + (case_y * Y_MULTI) - Y_MULTI );				// LEFT TOP
-	glVertex2f(-(this->winx / 2) + (case_x * X_MULTI) + X_MULTI, -(this->winy / 2) + (case_y * Y_MULTI) - Y_MULTI );	// RIGHT TOP
-	glVertex2f(-(this->winx / 2) + (case_x * X_MULTI) + X_MULTI, -(this->winy / 2) + (case_y * Y_MULTI) );				// RIGHT BOTTOM
-	glVertex2f(-(this->winx / 2) + (case_x * X_MULTI), -(this->winy / 2) + (case_y * Y_MULTI) );						// LEFT BOTTOM
+	SDL_Rect rectangle;
+	rectangle.x = case_x * X_MULTI;
+	rectangle.y = case_y * Y_MULTI;
+	rectangle.w = X_MULTI;
+	rectangle.h = Y_MULTI;
+	SDL_RenderFillRect(this->renderer, &rectangle);
 }
 
 void				Graphic::addKey(int keyInput) { this->key_list->push_back(keyInput);}
