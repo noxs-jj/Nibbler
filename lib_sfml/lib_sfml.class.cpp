@@ -22,12 +22,12 @@ Graphic::Graphic( Graphic const & src ) { *this = src; }
 
 Graphic & Graphic::operator=( Graphic const & rhs ) {
 	if (this != &rhs){
-		this->_name = rhs.getName();
-		this->_window = rhs.getWindow();
-		this->_x = rhs.getX();
-		this->_y = rhs.getY();
-		this->_key = rhs.getKey();
-		this->_map = rhs.getMap();
+		this->_name =		rhs.getName();
+		this->_window =		rhs.getWindow();
+		this->_x =			rhs.getX();
+		this->_y =			rhs.getY();
+		this->_key =		rhs.getKey();
+		this->_map =		rhs.getMap();
 	}
 	return (*this);
 }
@@ -35,17 +35,20 @@ Graphic & Graphic::operator=( Graphic const & rhs ) {
 Graphic::~Graphic( void ) {}
 
 void	Graphic::init( int ac, char** av, int x, int y, char *title, char **map ) {
-	this->_x = x;
-	this->_y = y;
-	this->_name = title;
-	this->_map = map;
-	this->_key = new std::vector<int>;
+	sf::ContextSettings settings;
+
+	this->_x =						x;
+	this->_y =						y;
+	this->_name =					title;
+	this->_map =					map;
+	this->_key =					new std::vector<int>;
 	static_cast<void>(ac);
 	static_cast<void>(av);
-	sf::ContextSettings settings;
-	settings.antialiasingLevel = 8;
-	this->_event = new sf::Event();
-
+	settings.antialiasingLevel =	8;
+	this->_event = 					new sf::Event();
+	sf::VideoMode 					desktop = sf::VideoMode::getDesktopMode();
+	sf::Vector2i					pos((desktop.width / 2) - ((x * 10) / 2),
+										(desktop.height / 2) - ((y * 10) / 2));
 
 
 	// BUG A CHERCHE
@@ -56,6 +59,7 @@ void	Graphic::init( int ac, char** av, int x, int y, char *title, char **map ) {
 									title,
 									sf::Style::Default,
 									settings);
+		this->_window->setPosition(pos);
 	}
 	catch (std::exception & e) {
 		std::cerr << "SFML EXCEPTION --] " << e.what() << std::endl;
