@@ -156,15 +156,9 @@ void	Graphic::render_scene( void ) {
 }
 
 std::vector<int>	**Graphic::get_touch_list( void ) { return (&this->_key); }
-
 char				*Graphic::getName( void ) const { return (this->_name); }
-
 sf::RenderWindow	*Graphic::getWindow( void ) const { return (this->_window); }
-
 int					Graphic::getX( void ) const { return (this->_x); }
-
 int					Graphic::getY( void ) const { return (this->_y); }
-
 std::vector<int>	*Graphic::getKey( void ) const {return (this->_key); }
-
 char				**Graphic::getMap( void ) const {return (this->_map); }

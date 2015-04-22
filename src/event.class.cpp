@@ -21,14 +21,13 @@ int		Event::check_move( void ) {
 	int 	movx = 0;
 	int 	movy = 0;
 
-	if (this->_dir == 1)
-		movy = -1;
-	else if (this->_dir == 2)
-		movy = 1;
-	else if (this->_dir == 3)
-		movx = -1;
-	else if (this->_dir == 4)
-		movx = 1;
+	switch (this->_dir) {
+		case 1: movy = -1; break;
+		case 2: movy = 1; break;
+		case 3: movx = -1; break;
+		case 4: movx = 1; break;
+		default: break;
+	}
 	if (this->_map[this->_posy + movy][this->_posx + movx] == WALL
 		|| this->_map[this->_posy + movy][this->_posx + movx] == QUEUE)
 		return (-1);
@@ -99,14 +98,13 @@ void	Event::move( void ) {
 	}
 	if (this->_eat > 0)
 		inc_map();
-	if (this->_dir == 1)
-		movy = -1;
-	else if (this->_dir == 2)
-		movy = 1;
-	else if (this->_dir == 3)
-		movx = -1;
-	else if (this->_dir == 4)
-		movx = 1;
+	switch (this->_dir) {
+		case 1: movy = -1; break;
+		case 2: movy = 1; break;
+		case 3: movx = -1; break;
+		case 4: movx = 1; break;
+		default: break;
+	}
 	this->_map_info[this->_posy + movy][this->_posx + movx] = this->_map_info[this->_posy][this->_posx] + 1;
 	dec_map(1);
 	if (this->_eat > 0)
@@ -158,59 +156,24 @@ void	Event::change_dir( void ) {
 
 	while ( this->_key != NULL && (*this->_key)->size() != 0 ) {
 		switch ( (*this->_key)->front() ) {
-			case UP:	{ if (this->_posy - 1 >= 0 && this->_dir != 2)
-						dir = 1; } break;
-			case DOWN:	{ if (this->_posy + 1 < MAP_HEIGHT && this->_dir != 1)
-						dir = 2; } break;
-			case LEFT:	{ if (this->_posx - 1 >= 0 && this->_dir != 4)
-						dir = 3; } break;
-			case RIGHT:	{ if (this->_posx + 1 < MAP_WIDTH && this->_dir != 3)
-						dir = 4; } break;
+			case UP:	{ if (this->_posy - 1 >= 0 && this->_dir != 2) dir = 1; } break;
+			case DOWN:	{ if (this->_posy + 1 < MAP_HEIGHT && this->_dir != 1) dir = 2; } break;
+			case LEFT:	{ if (this->_posx - 1 >= 0 && this->_dir != 4) dir = 3; } break;
+			case RIGHT:	{ if (this->_posx + 1 < MAP_WIDTH && this->_dir != 3) dir = 4; } break;
 			case ECHAP:	{ this->_game = false; } break;
-			case SPACE:	{ if (this->_paused == true)
-						this->_paused = false; } break;
-			case SPACE:	{ if (this->_paused == false)
-						this->_paused = true; } break;
 			case ONE:	{ change_lib(0); } break;
 			case TWO:	{ change_lib(1); } break;
 			case THREE:	{ change_lib(2); } break;
+			case SPACE:	{ if (this->_paused == true) { this->_paused = false; }
+							else { this->_paused = true; } } break;
 			default: break;
 		}
+		(*this->_key)->erase((*this->_key)->begin());
 	}
 
 	this->_dir = dir;
 	return ;
 }
-
-/*
-int 	dir = this->_dir;
-
-	while (this->_key != NULL && (*this->_key)->size() != 0) {
-		if ((*this->_key)->front() == (UP) && this->_posy - 1 >= 0 && this->_dir != 2)
-			dir = 1;
-		else if ((*this->_key)->front() == (DOWN) && this->_posy + 1 < MAP_HEIGHT && this->_dir != 1)
-			dir = 2;
-		else if ((*this->_key)->front() == (LEFT) && this->_posx - 1 >= 0 && this->_dir != 4)
-			dir = 3;
-		else if ((*this->_key)->front() == (RIGHT) && this->_posx + 1 < MAP_WIDTH && this->_dir != 3)
-			dir = 4;
-		else if ((*this->_key)->front() == (ECHAP))
-			this->_game = false;
-		else if ((*this->_key)->front() == ONE)
-			change_lib(0);
-		else if ((*this->_key)->front() == TWO)
-			change_lib(1);
-		else if ((*this->_key)->front() == THREE)
-			change_lib(2);
-		else if ((*this->_key)->front() == SPACE && this->_paused == true)
-			this->_paused = false;
-		else if ((*this->_key)->front() == SPACE && this->_paused == false)
-			this->_paused = true;
-		(*this->_key)->erase((*this->_key)->begin());
-	}
-	this->_dir = dir;
-	return ;
-*/
 
 void	Event::run_level( void ) {}
 
