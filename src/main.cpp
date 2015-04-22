@@ -20,8 +20,13 @@ int main(int ac, char **av)
 
 	d.ac = ac;
 	d.av = av;
-	event.init(&d);
-	event.run();
-	event.close_all();
+	try {
+		event.init(&d);
+		event.run();
+		event.close_all();
+	}
+	catch (std::exception & e) {
+		return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }

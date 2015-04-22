@@ -69,30 +69,36 @@ void				Graphic::render_scene( void ) { // render map
 }
 
 void				Graphic::init( int ac, char **av, int x, int y, char *title, char **map ) {
-	if ( -1 == SDL_Init(SDL_INIT_EVERYTHING) )
+	if ( -1 == SDL_Init(SDL_INIT_EVERYTHING) ) {
 		std::cout << "Failed to initialize SDL : " << SDL_GetError();
-	this->window = SDL_CreateWindow(title,
-									SDL_WINDOWPOS_CENTERED,
-									SDL_WINDOWPOS_CENTERED,
-									x * X_MULTI,
-									y * Y_MULTI,
-									SDL_WINDOW_OPENGL |
-									SDL_WINDOW_INPUT_GRABBED |
-									SDL_WINDOW_SHOWN);
-	if ( NULL == this->window )
+		throw std::exception();
+	}
+	this->window = 		SDL_CreateWindow(title,
+										SDL_WINDOWPOS_CENTERED,
+										SDL_WINDOWPOS_CENTERED,
+										x * X_MULTI,
+										y * Y_MULTI,
+										SDL_WINDOW_OPENGL |
+										SDL_WINDOW_INPUT_GRABBED |
+										SDL_WINDOW_SHOWN);
+	if ( NULL == this->window ) {
 		std::cout << "Failed to create window : " << SDL_GetError();
+		throw std::exception();
+	}
 	this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED);
-	if ( NULL == this->renderer )
+	if ( NULL == this->renderer ) {
 		std::cout << "Failed to create renderer : " << SDL_GetError();
+		throw std::exception();
+	}
 	SDL_RenderSetLogicalSize( this->renderer, x * X_MULTI, y * Y_MULTI );
-	(void)ac;
-	(void)av;
-	this->winx = x * X_MULTI;
-	this->winy = y * Y_MULTI;
-	this->mapXsize = x;
-	this->mapYsize = y;
-	this->map = map;
-	this->key_list = new std::vector<int>;
+	static_cast<void>(ac);
+	static_cast<void>(av);
+	this->winx = 		x * X_MULTI;
+	this->winy = 		y * Y_MULTI;
+	this->mapXsize = 	x;
+	this->mapYsize = 	y;
+	this->map = 		map;
+	this->key_list = 	new std::vector<int>;
 }
 
 void				Graphic::close( void ) {
@@ -105,6 +111,7 @@ void				Graphic::close( void ) {
 
 void				Graphic::draw_spot( float case_x, float case_y ) {
 	SDL_Rect rectangle;
+
 	rectangle.x = case_x * X_MULTI;
 	rectangle.y = case_y * Y_MULTI;
 	rectangle.w = X_MULTI;

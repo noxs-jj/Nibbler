@@ -16,8 +16,7 @@ extern "C"	Api		*newObject( void ) {
 	return (new Graphic());
 }
 
-Graphic::Graphic( void ) :	_window(NULL),
-							_key(NULL) {}
+Graphic::Graphic( void ) :	_window(NULL), _key(NULL) {}
 
 Graphic::Graphic( Graphic const & src ) { *this = src; }
 
@@ -131,16 +130,10 @@ void	Graphic::render_scene( void ) {
 	wrefresh(this->_window);
 }
 
-std::vector<int> **Graphic::get_touch_list( void ) { return (&this->_key); }
-
+std::vector<int> 	**Graphic::get_touch_list( void ) { return (&this->_key); }
 char				*Graphic::getName( void ) const { return (this->_name); }
-
 WINDOW				*Graphic::getWindow( void ) const { return (this->_window); }
-
 int					Graphic::getX( void ) const { return (this->_x); }
-
 int					Graphic::getY( void ) const { return (this->_y); }
-
 std::vector<int>	*Graphic::getKey( void ) const {return (this->_key); }
-
 char				**Graphic::getMap( void ) const {return (this->_map); }

@@ -43,10 +43,11 @@ private:
 	unsigned int 		_score;
 	void				*_hndl;
 
-public:
-	Event( void );
 	Event( Event const & src );
 	Event & operator=( Event const & rhs );
+
+public:
+	Event( void );
 	~Event( void );
 
 	void	init(t_data *d);

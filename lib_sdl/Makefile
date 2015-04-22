@@ -35,6 +35,7 @@ OBJ =		$(SRC:.cpp=.cpp.o)
 
 all: $(NAME)
 
+# brew update && brew install SDL2 && reset
 $(NAME): $(OBJ) $(HEADER)
 	@$(CLANG) $(CFLAGS) $(LIB_FLAG) `sdl2-config --libs` -o $(NAME) $(OBJ) $(GL)
 

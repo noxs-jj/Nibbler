@@ -13,16 +13,8 @@
 #include "../includes/event.class.hpp"
 
 Event::Event( void ) {}
-
-Event::Event( Event const & src ) { *this = src; }
-
-Event & Event::operator=( Event const & rhs ) {
-	if (this != &rhs){
-
-	}
-	return (*this);
-}
-
+Event::Event( Event const & src ) { static_cast<void>(src); }
+Event & Event::operator=( Event const & rhs ) { static_cast<void>(rhs); return *this; }
 Event::~Event( void ) {}
 
 int		Event::check_move( void ) {
@@ -37,7 +29,6 @@ int		Event::check_move( void ) {
 		movx = -1;
 	else if (this->_dir == 4)
 		movx = 1;
-
 	if (this->_map[this->_posy + movy][this->_posx + movx] == WALL
 		|| this->_map[this->_posy + movy][this->_posx + movx] == QUEUE)
 		return (-1);
@@ -97,7 +88,6 @@ void	Event::pro_get_special( void ) {
 		this->_special = 0;
 	}
 }
-
 
 void	Event::move( void ) {
 	int 	movx = 0;
@@ -163,12 +153,10 @@ void	Event::change_lib(int lib) {
 	this->_graphic->render_scene();
 }
 
-
 void	Event::change_dir( void ) {
 	int 	dir = this->_dir;
 
-	while (this->_key != NULL && (*this->_key)->size() != 0)
-	{
+	while (this->_key != NULL && (*this->_key)->size() != 0) {
 		if ((*this->_key)->front() == (UP) && this->_posy - 1 >= 0 && this->_dir != 2)
 			dir = 1;
 		else if ((*this->_key)->front() == (DOWN) && this->_posy + 1 < MAP_HEIGHT && this->_dir != 1)
@@ -266,15 +254,35 @@ int 	Event::parse_option(int ac, char **av) {
 	int lib = 0;
 
 	while (i < ac) {
-		if (av[i][0] == 'x' && strlen(&av[i][1]) >= 2 && strlen(&av[i][1]) <= 5 && isdigit(av[i][1])) {
-			tmp = atoi(&av[i][1]);
-			if (tmp >= 10 && tmp <= 80)
-				this->_winx = tmp;
+		if (av[i][0] == 'x' && strlen(&av[i][1]) >= 2 && strlen(&av[i][1]) <= 5) {
+			if (isdigit(av[i][1])) {
+				tmp = atoi(&av[i][1]);
+				if (tmp >= 10 && tmp <= 80)
+					this->_winx = tmp;
+				else {
+					std::cerr << "Event::parse_option - width between 10 to 80." << std::endl;
+					throw std::exception();
+				}
+			}
+			else if (av[i][1] == '-') {
+				std::cerr << "Event::parse_option - width must be positive." << std::endl;
+				throw std::exception();
+			}
 		}
-		else if (av[i][0] == 'y' && strlen(&av[i][1]) >= 2 && strlen(&av[i][1]) <= 5 && isdigit(av[i][1])) {
-			tmp = atoi(&av[i][1]);
-			if (tmp >= 10 && tmp <= 80)
-				this->_winy = tmp;
+		else if (av[i][0] == 'y' && strlen(&av[i][1]) >= 2 && strlen(&av[i][1]) <= 5 ) {
+			if (isdigit(av[i][1])) {
+				tmp = atoi(&av[i][1]);
+				if (tmp >= 10 && tmp <= 80)
+					this->_winy = tmp;
+				else {
+					std::cerr << "Event::parse_option - height between 10 to 80." << std::endl;
+					throw std::exception();
+				}
+			}
+			else if (av[i][1] == '-') {
+				std::cerr << "Event::parse_option - height must be positive." << std::endl;
+				throw std::exception();
+			}
 		}
 		else if (strstr(av[i], ".so") != NULL && lib < 3) {
 			this->_lib_name[lib] = av[i];
@@ -287,8 +295,8 @@ int 	Event::parse_option(int ac, char **av) {
 		i++;
 	}
 	if (lib <= 0) {
-		std::cerr << "Error : Lib required" << std::endl;
-		exit(EXIT_FAILURE);
+		std::cerr << "Event::parse_option - Lib required" << std::endl;
+		throw std::exception();
 	}
 	return (0);
 }
@@ -296,9 +304,17 @@ int 	Event::parse_option(int ac, char **av) {
 void	Event::init_map( void ) {
 	this->_map = static_cast<char **>(std::malloc(sizeof(char*) * this->_winy ));
 	this->_map_info = static_cast<int **>(std::malloc(sizeof(int*) * this->_winy ));
+	if (NULL == this->_map || NULL == this->_map_info) {
+		std::cerr << "Event::init_map - Malloc error on _map, _map_info";
+		throw std::exception();
+	}
 	for (int i = 0; i < this->_winy; ++i) {
 		this->_map[i] = static_cast<char *>(std::malloc(sizeof(char) * this->_winx ));
 		this->_map_info[i] = static_cast<int *>(std::malloc(sizeof(int) * this->_winx ));
+		if (NULL == this->_map[i] || NULL == this->_map_info[i]) {
+			std::cerr << "Event::init_map - Malloc error on _map[i], _map_info[i]";
+			throw std::exception();
+		}
 		memset(this->_map[i], ' ', this->_winx);
 		memset(this->_map_info[i], '0', this->_winx);
 	}
@@ -357,11 +373,11 @@ void	Event::open_lib( char *name ) {
 	this->_hndl = dlopen(name, RTLD_LAZY | RTLD_LOCAL);
 	if (!this->_hndl) {
 		std::cerr << "dlopen : "<< dlerror() << std::endl;
-		exit(EXIT_FAILURE);
+		throw std::exception();
 	}
 	if ((create = reinterpret_cast<Api* (*)()>(dlsym(this->_hndl, "newObject"))) == NULL) { 
 		std::cerr << "dlsym : " << dlerror() << std::endl;
-		exit(EXIT_FAILURE);
+		throw std::exception();
 	}
 	this->_graphic = create();
 }
