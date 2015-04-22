@@ -156,6 +156,35 @@ void	Event::change_lib(int lib) {
 void	Event::change_dir( void ) {
 	int 	dir = this->_dir;
 
+	while ( this->_key != NULL && (*this->_key)->size() != 0 ) {
+		switch ( (*this->_key)->front() ) {
+			case UP:	{ if (this->_posy - 1 >= 0 && this->_dir != 2)
+						dir = 1; } break;
+			case DOWN:	{ if (this->_posy + 1 < MAP_HEIGHT && this->_dir != 1)
+						dir = 2; } break;
+			case LEFT:	{ if (this->_posx - 1 >= 0 && this->_dir != 4)
+						dir = 3; } break;
+			case RIGHT:	{ if (this->_posx + 1 < MAP_WIDTH && this->_dir != 3)
+						dir = 4; } break;
+			case ECHAP:	{ this->_game = false; } break;
+			case SPACE:	{ if (this->_paused == true)
+						this->_paused = false; } break;
+			case SPACE:	{ if (this->_paused == false)
+						this->_paused = true; } break;
+			case ONE:	{ change_lib(0); } break;
+			case TWO:	{ change_lib(1); } break;
+			case THREE:	{ change_lib(2); } break;
+			default: break;
+		}
+	}
+
+	this->_dir = dir;
+	return ;
+}
+
+/*
+int 	dir = this->_dir;
+
 	while (this->_key != NULL && (*this->_key)->size() != 0) {
 		if ((*this->_key)->front() == (UP) && this->_posy - 1 >= 0 && this->_dir != 2)
 			dir = 1;
@@ -181,7 +210,7 @@ void	Event::change_dir( void ) {
 	}
 	this->_dir = dir;
 	return ;
-}
+*/
 
 void	Event::run_level( void ) {}
 
