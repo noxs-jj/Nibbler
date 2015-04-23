@@ -57,7 +57,7 @@ clean:
 
 fclean: clean
 	@rm -rf $(NAME)
-	rm -rf sdl2
+	@rm -rf sdl2
 
 re: fclean all
 
