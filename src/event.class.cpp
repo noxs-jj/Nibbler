@@ -175,37 +175,31 @@ void	Event::change_dir( void ) {
 	return ;
 }
 
-void	Event::run_level( void ) {}
-
 void	Event::run( void ) {
 	this->_game = true;
 	srand(time(NULL));
-	if (this->_game_mode == 1)
-		run_level();
-	else {
-		while (this->_game == true) {
-			change_dir();
-			if (this->_game == false)
-				return ;
-			if (this->_paused == false) {
-				move();
-				if (this->_fruit == false)
-					add_fruit();
+	while (this->_game == true) {
+		change_dir();
+		if (this->_game == false)
+			return ;
+		if (this->_paused == false) {
+			move();
+			if (this->_fruit == false)
+				add_fruit();
+			if (this->_special == 0)
+				add_special();
+			else {
+				this->_special--;
 				if (this->_special == 0)
-					add_special();
-				else {
-					this->_special--;
-					if (this->_special == 0)
-						this->_spec[0] = ' ';
-				}
+					this->_spec[0] = ' ';
 			}
-			this->_graphic->render_scene();
-			if (this->_key == NULL || (*this->_key)->size() == 0)
-				this->_key = this->_graphic->get_touch_list();
-			if (this->_game_mode == 2)
-				this->_speed = ((BASIC_SPEED - this->_score <= 0) ? 1 : (BASIC_SPEED - this->_score));
-			usleep(this->_speed);
 		}
+		this->_graphic->render_scene();
+		if (this->_key == NULL || (*this->_key)->size() == 0)
+			this->_key = this->_graphic->get_touch_list();
+		if (this->_game_mode == 2)
+			this->_speed = ((BASIC_SPEED - this->_score <= 0) ? 1 : (BASIC_SPEED - this->_score));
+		usleep(this->_speed);
 	}
 }
 
@@ -246,7 +240,7 @@ int 	Event::parse_option(int ac, char **av) {
 	int lib = 0;
 
 	while (i < ac) {
-		if (av[i][0] == 'x' && strlen(&av[i][1]) >= 2 && strlen(&av[i][1]) <= 5) {
+		if (av[i][0] == 'x' && strlen(&av[i][1]) >= 2) {
 			if (isdigit(av[i][1])) {
 				tmp = atoi(&av[i][1]);
 				if (tmp >= 10 && tmp <= 80)
@@ -260,8 +254,12 @@ int 	Event::parse_option(int ac, char **av) {
 				std::cerr << "Event::parse_option - width must be positive." << std::endl;
 				throw std::exception();
 			}
+			else {
+				std::cerr << "Event::parse_option - bad number." << std::endl;
+				throw std::exception();
+			}
 		}
-		else if (av[i][0] == 'y' && strlen(&av[i][1]) >= 2 && strlen(&av[i][1]) <= 5 ) {
+		else if (av[i][0] == 'y' && strlen(&av[i][1]) >= 2) {
 			if (isdigit(av[i][1])) {
 				tmp = atoi(&av[i][1]);
 				if (tmp >= 10 && tmp <= 80)
@@ -275,13 +273,15 @@ int 	Event::parse_option(int ac, char **av) {
 				std::cerr << "Event::parse_option - height must be positive." << std::endl;
 				throw std::exception();
 			}
+			else {
+				std::cerr << "Event::parse_option - bad number." << std::endl;
+				throw std::exception();
+			}
 		}
 		else if (strstr(av[i], ".so") != NULL && lib < 3) {
 			this->_lib_name[lib] = av[i];
 			lib++;
 		}
-		else if (strstr(av[i], "-level") != NULL && lib < 3)
-			this->_game_mode = 1;
 		else if (strstr(av[i], "-pro") != NULL && lib < 3)
 			this->_game_mode = 2;
 		i++;
@@ -364,11 +364,11 @@ void	Event::open_lib( char *name ) {
 
 	this->_hndl = dlopen(name, RTLD_LAZY | RTLD_LOCAL);
 	if (!this->_hndl) {
-		std::cerr << "dlopen : "<< dlerror() << std::endl;
+		std::cerr << "open_lib: dlopen : "<< dlerror() << std::endl;
 		throw std::exception();
 	}
 	if ((create = reinterpret_cast<Api* (*)()>(dlsym(this->_hndl, "newObject"))) == NULL) { 
-		std::cerr << "dlsym : " << dlerror() << std::endl;
+		std::cerr << "open_lib: dlsym : " << dlerror() << std::endl;
 		throw std::exception();
 	}
 	this->_graphic = create();

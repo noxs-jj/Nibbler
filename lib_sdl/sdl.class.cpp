@@ -102,11 +102,9 @@ void				Graphic::init( int ac, char **av, int x, int y, char *title, char **map 
 }
 
 void				Graphic::close( void ) {
-	std::cerr << "SDL close() start" << std::endl;
 	SDL_DestroyRenderer(this->renderer);
 	SDL_DestroyWindow(this->window);
 	SDL_Quit();
-	std::cerr << "SDL close() end" << std::endl;
 }
 
 void				Graphic::draw_spot( float case_x, float case_y ) {

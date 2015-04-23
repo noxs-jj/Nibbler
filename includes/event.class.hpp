@@ -37,7 +37,7 @@ private:
 	int					_speed;
 	int					_winx;
 	int					_winy;
-	int 				_game_mode;	// 0: normal, 1:level, 2:pro
+	int 				_game_mode;	// 0: normal, 2:pro
 	std::vector<int>	**_key;
 	t_data				*_d;
 	unsigned int 		_score;
@@ -58,7 +58,6 @@ public:
 	int 	parse_option(int ac, char **av);
 
 	void	run( void );
-	void	run_level( void );
 
 	void	pro_get_special( void );
 	void	pro_spawn_obstacle( int rock );

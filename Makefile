@@ -67,6 +67,9 @@ clean:
 fclean: clean
 	@rm *.so
 	@rm -rf $(NAME)
+	@make -C lib_ncurse fclean
+	@make -C lib_sdl fclean
+	@make -C lib_sfml fclean
 
 re: fclean all
 

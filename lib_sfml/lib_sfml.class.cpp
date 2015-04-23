@@ -49,10 +49,6 @@ void	Graphic::init( int ac, char** av, int x, int y, char *title, char **map ) {
 	sf::VideoMode 					desktop = sf::VideoMode::getDesktopMode();
 	sf::Vector2i					pos((desktop.width / 2) - ((x * 10) / 2),
 										(desktop.height / 2) - ((y * 10) / 2));
-
-
-	// BUG A CHERCHE
-	std::cerr << "sfml 1" << std::endl;
 	try {
 		this->_window = new sf::RenderWindow(
 									sf::VideoMode(y * 10, x * 10, 32),
@@ -64,11 +60,6 @@ void	Graphic::init( int ac, char** av, int x, int y, char *title, char **map ) {
 	catch (std::exception & e) {
 		std::cerr << "SFML EXCEPTION --] " << e.what() << std::endl;
 	}
-	std::cerr << "sfml 2" << std::endl;
-	// BUG A CHERCHE
-
-
-
 	this->_queue = new sf::CircleShape(5.f);
 	this->_queue->setFillColor(sf::Color::Green);
 	this->_head = new sf::CircleShape(5.f);

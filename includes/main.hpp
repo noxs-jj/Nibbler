@@ -23,7 +23,7 @@
 # include <string.h>
 # include "../includes/api.class.hpp"
 
-# define PARAM "./nibbler [xPOSX] [yPOSY] [-level | -pro] <lib>"
+# define PARAM "./nibbler [xPOSX] [yPOSY] [-pro] <lib>"
 
 # define MAP_WIDTH 40
 # define MAP_HEIGHT 40
