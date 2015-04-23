@@ -10,9 +10,6 @@
 #                                                                              #
 #******************************************************************************#
 
-# http://www.noxs.net/42project/resources/sfml.tar.bz2
-# http://www.sfml-dev.org/files/SFML-2.2-osx-clang-universal.tar.gz
-
 CLANG = clang++
 
 NAME = lib_sfml_2d.so
@@ -60,7 +57,6 @@ clean:
 
 fclean: clean
 	@rm -rf $(NAME)
-	@rm -rf sfml
 
 re: fclean all
 

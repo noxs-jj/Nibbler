@@ -119,10 +119,6 @@ void				Graphic::draw_spot( float case_x, float case_y ) {
 	SDL_RenderFillRect(this->renderer, &rectangle);
 }
 
-void				Graphic::addKey(int keyInput) { this->key_list->push_back(keyInput);}
-
-std::vector<int>	**Graphic::get_touch_list( void ) { return (&(this->key_list)); }
-
 Graphic &			Graphic::operator=(Graphic const & rhs) {
 	if (this != &rhs) {
 		this->winx = rhs.winx;
@@ -132,9 +128,10 @@ Graphic &			Graphic::operator=(Graphic const & rhs) {
 	return *this;
 }
 
-Graphic::Graphic( Graphic const & rhs ) { *this = rhs; }
-
 Graphic::Graphic( void ) : winx(0), winy(0), mapXsize(0), mapYsize(0),
-	map(NULL), key_list(NULL), empty(true) {}
+							map(NULL), key_list(NULL), empty(true) {}
 
+void				Graphic::addKey(int keyInput) { this->key_list->push_back(keyInput);}
+std::vector<int>	**Graphic::get_touch_list( void ) { return (&(this->key_list)); }
+Graphic::Graphic( Graphic const & rhs ) { *this = rhs; }
 Graphic::~Graphic( void ) { this->key_list->clear(); }

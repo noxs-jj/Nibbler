@@ -39,7 +39,9 @@ $(NAME): ncurse sfml sdl2 $(OBJ)
 	@$(CXX) $(CFLAGS) $(OBJ) -o $(NAME)
 	@echo "\tBuild Bin 'nibbler' SUCCESS"
 	@echo "\n\t./nibbler lib_ncurse.so lib_sdl_2d.so lib_sfml_2d.so"
-	@echo "\n\t./nibbler *.so\n"
+	@echo "\n\t./nibbler *.so"
+	@echo "\n\t./nibbler x[width] y[height] lib.so"
+	
 
 ncurse:
 	@make -C lib_ncurse

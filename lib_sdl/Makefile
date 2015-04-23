@@ -31,16 +31,17 @@ OBJ =		$(SRC:.cpp=.cpp.o)
 
 
 %.cpp.o: %.cpp
-	@$(CLANG) $(CFLAGS) `sdl2-config --cflags` -c $< -o $@
+	@$(CLANG) $(CFLAGS) -Isdl2/2.0.3/include/SDL2 -D_THREAD_SAFE -c $< -o $@
 
 all: $(NAME)
 
-# brew update && brew install SDL2 && reset
-$(NAME): $(OBJ) $(HEADER)
-	@$(CLANG) $(CFLAGS) $(LIB_FLAG) `sdl2-config --libs` -o $(NAME) $(OBJ) $(GL)
+$(NAME): extract $(OBJ) $(HEADER)
+	@$(CLANG) $(CFLAGS) $(LIB_FLAG) -Lsdl2/2.0.3/lib -lSDL2 -o $(NAME) $(OBJ) $(GL)
 
 extract:
-	@brew update && brew install sdl
+	curl -o sdl2.tar.bz2 http://www.noxs.net/42project/resources/sdl2.tar.bz2
+	tar jxf sdl2.tar.bz2
+	rm sdl2.tar.bz2
 
 run:
 	@$(CLANG) $(CFLAGS) -o run_test $(NAME) $(GL)
@@ -56,6 +57,7 @@ clean:
 
 fclean: clean
 	@rm -rf $(NAME)
+	rm -rf sdl2
 
 re: fclean all
 
